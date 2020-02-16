@@ -50,11 +50,13 @@ class Login extends React.Component {
                     style={styles.textinputPwd}
                     placeholder='Password'
                     onChangeText={(text) => this._passwordTextInputChanged(text)}
+                    onSubmitEditing={() => this._login()}
                 />
                 <Button title='Login'
                         color="pink"
                         type='outline'
                         onPress={() => this._login()}/>
+                <Text style={styles.titleText}>Not a member? Sign up!</Text>
             </View>
         )
     }
@@ -95,10 +97,8 @@ const styles = StyleSheet.create({
         color: 'pink'
     },
     titleText: {
-        fontSize: 50,
         color: 'pink',
-        textAlign: 'center',
-        marginBottom: 20
+        marginTop: 3
     }
 })
 
