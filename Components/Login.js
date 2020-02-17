@@ -1,6 +1,7 @@
 // Components/Login.js
 import React from 'react'
 import { StyleSheet, View, TextInput, Button, Text, Image } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient';
 
 class Login extends React.Component {
 
@@ -25,38 +26,31 @@ class Login extends React.Component {
     render() {
         return (
             <View style={styles.main_container}>
-                <Image
-                    style={{marginTop: 10,
-                        flex: 1,
-                        width: null,
-                        height: null,
-                        resizeMode: 'contain'}}
-                    source={require('../content/img/title.png')}
-                />
-                <Image
-                    style={{flex: 1,
-                        paddingBottom: 50,
-                        width: null,
-                        height: null,
-                        resizeMode: 'contain'}}
-                    source={require('../content/img/logo.png')}
-                />
-                <TextInput
-                    style={styles.textinputMail}
-                    placeholder='Email'
-                    onChangeText={(text) => this._mailTextInputChanged(text)}
-                />
-                <TextInput
-                    style={styles.textinputPwd}
-                    placeholder='Password'
-                    onChangeText={(text) => this._passwordTextInputChanged(text)}
-                    onSubmitEditing={() => this._login()}
-                />
-                <Button title='Login'
-                        color="pink"
+                <LinearGradient
+                    colors={['#ff978d', '#E577A2']}
+                    style={{flex:1, paddingTop: 50, paddingBottom: 40, paddingLeft: 40, paddingRight: 40}}
+                    start={[1, 0]}
+                    end={[0, 1]}>
+                    {/* <Image
+
+                    /> */}
+                    <TextInput
+                        style={styles.textinputEmail}
+                        placeholder='Email'
+                        onChangeText={(text) => this._mailTextInputChanged(text)}
+                    />
+                    <TextInput
+                        style={styles.textinputPwd}
+                        placeholder='Password'
+                        onChangeText={(text) => this._passwordTextInputChanged(text)}
+                        onSubmitEditing={() => this._login()}
+                    />
+                    <Button title='Login'
+                        color="white"
                         type='outline'
-                        onPress={() => this._login()}/>
-                <Text style={styles.titleText}>Not a member? Sign up!</Text>
+                        onPress={() => this._login()} />
+                    <Text style={styles.titleText}>Not a member? Sign up!</Text>
+                </LinearGradient>
             </View>
         )
     }
@@ -65,36 +59,26 @@ class Login extends React.Component {
 const styles = StyleSheet.create({
     main_container: {
         flex: 1,
-        marginLeft: 30,
-        marginRight: 30,
-        justifyContent: 'center',
-        paddingBottom: 50
+        flexDirection: "column",
+        height: 500
     },
-    textinputMail: {
-        height: 50,
-        width: 250,
-        borderColor: 'pink',
+    textinputEmail: {
+        flex: 2,
+        borderColor: 'white',
         borderWidth: 2,
-        borderRadius: 5,
+        borderRadius: 15,
         paddingLeft: 5,
         marginBottom: 0,
-        marginTop: 100,
-        marginLeft: 'auto',
-        marginRight: 'auto',
         color: 'pink'
     },
     textinputPwd: {
-        height: 50,
-        width: 250,
-        borderColor: 'pink',
+        flex: 2,
+        borderColor: 'red',
         borderWidth: 2,
-        borderRadius: 5,
+        borderRadius: 15,
         paddingLeft: 5,
-        marginBottom: 20,
-        marginTop: 10,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        color: 'pink'
+        marginBottom: 0,
+        color: 'pink' 
     },
     titleText: {
         color: 'pink',
