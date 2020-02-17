@@ -1,7 +1,7 @@
 // Components/Login.js
 import React from 'react'
-import { StyleSheet, View, TextInput, Button, Text, Image } from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient';
+import { StyleSheet, View, TextInput, Text, Image, TouchableOpacity } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient'
 
 class Login extends React.Component {
 
@@ -27,29 +27,75 @@ class Login extends React.Component {
         return (
             <View style={styles.main_container}>
                 <LinearGradient
-                    colors={['#ff978d', '#E577A2']}
-                    style={{flex:1, paddingTop: 50, paddingBottom: 40, paddingLeft: 40, paddingRight: 40}}
+                    colors={['#E577A2', '#ff978d']} 
+                    style={{flex:1, paddingTop: 70, paddingBottom: 40, paddingLeft: 40, paddingRight: 40}}
                     start={[1, 0]}
                     end={[0, 1]}>
-                    {/* <Image
-
-                    /> */}
-                    <TextInput
-                        style={styles.textinputEmail}
-                        placeholder='Email'
-                        onChangeText={(text) => this._mailTextInputChanged(text)}
-                    />
-                    <TextInput
-                        style={styles.textinputPwd}
-                        placeholder='Password'
-                        onChangeText={(text) => this._passwordTextInputChanged(text)}
-                        onSubmitEditing={() => this._login()}
-                    />
-                    <Button title='Login'
-                        color="white"
-                        type='outline'
-                        onPress={() => this._login()} />
-                    <Text style={styles.titleText}>Not a member? Sign up!</Text>
+                    <View style={styles.viewImg}>
+                        <Image
+                            style={{
+                                alignItems: 'center',
+                                width: 150,
+                                height: 160,
+                                marginBottom: 10,
+                            }}
+                            source={require('../content/img/logo.png')}
+                        />
+                        <Image
+                            style={{
+                                alignItems: 'center',
+                                width: 150,
+                                height: 28,
+                            }}
+                            source={require('../content/img/logo-textuel-blanc.png')}
+                        />
+                    </View>
+                    <View style={styles.viewForm}>
+                        <View style={styles.viewInputEmail}>
+                            <Image
+                                style={{
+                                    marginLeft: 5,
+                                    marginRight: 5,
+                                    width: 40,
+                                    height: 40,
+                                }}
+                                source={require('../content/img/personne.png')}
+                            />
+                            <TextInput
+                                style={styles.textInputEmail}
+                                placeholder='Adresse email'
+                                placeholderTextColor='grey'
+                                onChangeText={(text) => this._mailTextInputChanged(text)}
+                            />
+                        </View>
+                        <View style={styles.viewInputPwd}>
+                            <Image
+                                style={{
+                                    width: 50,
+                                    height: 50,
+                                }}
+                                source={require('../content/img/cadenas.png')}
+                            />
+                            <TextInput
+                                style={styles.textInputPwd}
+                                secureTextEntry='true'
+                                placeholder='Mot de passe'
+                                placeholderTextColor='grey'
+                                onChangeText={(text) => this._passwordTextInputChanged(text)}
+                                onSubmitEditing={() => this._login()}
+                            />
+                        </View>
+                    </View>
+                    <View style={styles.viewBtn}>
+                        <TouchableOpacity
+                            style={styles.divBtn}
+                            onPress={() => this._login()}>
+                                <Text style={styles.textBtn}>Connecte toi !</Text>
+                        </TouchableOpacity>
+                        <Text style={styles.titleText}>Pas encore membre ?</Text>
+                    </View>
+                    
+                    
                 </LinearGradient>
             </View>
         )
@@ -59,29 +105,63 @@ class Login extends React.Component {
 const styles = StyleSheet.create({
     main_container: {
         flex: 1,
-        flexDirection: "column",
-        height: 500
+        flexDirection: 'column',
+        width: '100%',
     },
-    textinputEmail: {
+    viewImg: {
         flex: 2,
-        borderColor: 'white',
-        borderWidth: 2,
-        borderRadius: 15,
-        paddingLeft: 5,
-        marginBottom: 0,
-        color: 'pink'
+        flexDirection: 'column',
+        alignItems: 'center',
     },
-    textinputPwd: {
-        flex: 2,
-        borderColor: 'red',
-        borderWidth: 2,
+    viewForm: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
+    viewInputEmail: {
+        backgroundColor: 'white',
+        flexDirection: 'row',
         borderRadius: 15,
-        paddingLeft: 5,
+        height: 60,
         marginBottom: 0,
-        color: 'pink' 
+        alignItems: 'center',
+    },
+    textInputEmail: {
+        height: 60,
+        width: '100%',
+    },
+    viewInputPwd: {
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        height: 60,
+        borderRadius: 15,
+        marginBottom: 0,
+        alignItems: 'center',
+    },
+    textInputPwd: {
+        height: 60,
+        width: '100%',
+    },
+    viewBtn: {
+        flex: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    divBtn: {
+        backgroundColor: 'white',
+        borderRadius: 15,
+        height: 60,
+        justifyContent: 'center',
+        paddingLeft: 10,
+        alignItems: 'center',
+        width: '100%',
+    },
+    textBtn: {
+        color: '#ff978d',
+        textTransform: 'uppercase',
     },
     titleText: {
-        color: 'pink',
+        color: 'white',
         marginTop: 3
     }
 })
