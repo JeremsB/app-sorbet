@@ -7,12 +7,38 @@ class Login extends React.Component {
 
     constructor(props) {
         super(props)
-        this.mail = ""
-        this.password = ""
+        this.state={
+            userEmail:'',
+            userPassword:'',
+        }
     }
 
-    _mailTextInputChanged(text) {
-        this.mail = text // Modification du texte recherché à chaque saisie de texte, sans passer par le setState
+    login = () =>{
+        const {userEmail} = this.state;
+        const {userPassword} = this.state;
+
+        fetch('https://sorbet.bet/api/login.php',{
+            method: 'post',
+            header:{
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body:JSON.stringify({
+                email: userEmail,
+                password: userPassword,
+            })
+        })
+        .then((response) => response.json())
+            .then((responseJson) => {
+                alert(responseJson)
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+    /*
+    _mailTextInputChanged(userEmail) {
+        this.mail = userEmail // Modification du texte recherché à chaque saisie de texte, sans passer par le setState
     }
 
     _passwordTextInputChanged(text) {
@@ -22,7 +48,7 @@ class Login extends React.Component {
     _login() {
         console.log("Hello test")
     }
-
+    */
     render() {
         return (
             <View style={styles.main_container}>
@@ -65,7 +91,7 @@ class Login extends React.Component {
                                 style={styles.textInputEmail}
                                 placeholder='Adresse email'
                                 placeholderTextColor='grey'
-                                onChangeText={(text) => this._mailTextInputChanged(text)}
+                                onChangeText={userEmail => this.setState({userEmail})}
                             />
                         </View>
                         <View style={styles.viewInputPwd}>
@@ -78,18 +104,19 @@ class Login extends React.Component {
                             />
                             <TextInput
                                 style={styles.textInputPwd}
-                                secureTextEntry='true'
-                                placeholder='Mot de passe'
+                                //secureTextEntry = '1'
+                                //pb sur Android, il attend un boolean et il peut pas convertir un string '' en bool
+                                placeholder = 'Mot de passe'
                                 placeholderTextColor='grey'
-                                onChangeText={(text) => this._passwordTextInputChanged(text)}
-                                onSubmitEditing={() => this._login()}
+                                onChangeText={userPassword => this.setState({userPassword})}
+                                onSubmitEditing={() => this.login()}
                             />
                         </View>
                     </View>
                     <View style={styles.viewBtn}>
                         <TouchableOpacity
                             style={styles.divBtn}
-                            onPress={() => this._login()}>
+                            onPress={() => this.login()}>
                                 <Text style={styles.textBtn}>Connecte toi !</Text>
                         </TouchableOpacity>
                         <Text style={styles.titleText}>Pas encore membre ?</Text>
