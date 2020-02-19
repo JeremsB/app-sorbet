@@ -18,6 +18,8 @@ const SearchStackNavigator = createStackNavigator({
             title: 'Register'
         }
     }
+},
+{
+    headerMode: 'none',
 })
-
 export default createAppContainer(SearchStackNavigator)

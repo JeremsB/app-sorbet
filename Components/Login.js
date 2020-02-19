@@ -53,8 +53,8 @@ class Login extends React.Component {
                         <Image
                             style={{
                                 alignItems: 'center',
-                                width: 150,
-                                height: 160,
+                                width: 100,
+                                height: 107,
                                 marginBottom: 10,
                             }}
                             source={require('../content/img/logo.png')}
@@ -181,6 +181,7 @@ const styles = StyleSheet.create({
     textBtn: {
         color: '#ff978d',
         textTransform: 'uppercase',
+        fontSize: 20,
     },
     titleText: {
         color: 'white',
