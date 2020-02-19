@@ -13,7 +13,11 @@ class Login extends React.Component {
         }
     }
 
-    login = () =>{
+    _navRegister() {
+        this.props.navigation.navigate("Register");
+    }
+
+    _login() {
         const {userEmail} = this.state;
         const {userPassword} = this.state;
 
@@ -36,19 +40,7 @@ class Login extends React.Component {
                 console.error(error);
             });
     }
-    /*
-    _mailTextInputChanged(userEmail) {
-        this.mail = userEmail // Modification du texte recherché à chaque saisie de texte, sans passer par le setState
-    }
 
-    _passwordTextInputChanged(text) {
-        this.password = text
-    }
-
-    _login() {
-        console.log("Hello test")
-    }
-    */
     render() {
         return (
             <View style={styles.main_container}>
@@ -104,22 +96,25 @@ class Login extends React.Component {
                             />
                             <TextInput
                                 style={styles.textInputPwd}
-                                //secureTextEntry = '1'
+                                secureTextEntry = {true}
                                 //pb sur Android, il attend un boolean et il peut pas convertir un string '' en bool
                                 placeholder = 'Mot de passe'
                                 placeholderTextColor='grey'
                                 onChangeText={userPassword => this.setState({userPassword})}
-                                onSubmitEditing={() => this.login()}
+                                onSubmitEditing={() => this._login()}
                             />
                         </View>
                     </View>
                     <View style={styles.viewBtn}>
                         <TouchableOpacity
                             style={styles.divBtn}
-                            onPress={() => this.login()}>
+                            onPress={() => this._login()}>
                                 <Text style={styles.textBtn}>Connecte toi !</Text>
                         </TouchableOpacity>
-                        <Text style={styles.titleText}>Pas encore membre ?</Text>
+                        <TouchableOpacity
+                            onPress={() => this._navRegister()}>
+                            <Text style={styles.titleText}>Pas encore membre ?</Text>
+                        </TouchableOpacity>
                     </View>
                     
                     

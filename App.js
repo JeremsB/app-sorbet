@@ -1,8 +1,8 @@
 import React from 'react';
-import Login from './Components/Login'
+import Navigation from './Navigation/Navigation'
 
 export default function App() {
   return (
-      <Login/>
+      <Navigation/>
   );
 }

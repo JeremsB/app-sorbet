@@ -50,14 +50,7 @@ class Register extends React.Component {
     render() {
         return (
             <View style={styles.main_container}>
-                <Image
-                    style={{marginTop: 10,
-                        flex: 1,
-                        width: null,
-                        height: null,
-                        resizeMode: 'contain'}}
-                    source={require('../content/img/title.png')}
-                />
+
                 <TextInput
                     style={styles.textinputMail}
                     placeholder='Login'
