@@ -1,6 +1,6 @@
 // Components/Login.js
 import React from 'react'
-import { StyleSheet, View, TextInput, Text, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, TextInput, Text, Image, TouchableOpacity, Alert } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 
 class Login extends React.Component {
@@ -34,10 +34,14 @@ class Login extends React.Component {
         })
         .then((response) => response.json())
             .then((responseJson) => {
-                alert(responseJson)
-                this.props.navigation.navigate("Home", {
-                    user: responseJson
-                });
+                if (responseJson == 'champs')
+                    Alert.alert("Erreur formulaire","Veuillez remplir tous les champs")
+                else if (responseJson == 'email_inconnu')
+                    Alert.alert("Authentification incorrecte","Email / Mot de passe incorrect")
+                else
+                    this.props.navigation.navigate("Home", {
+                        user: responseJson
+                    });
             })
             .catch((error) => {
                 console.error(error);

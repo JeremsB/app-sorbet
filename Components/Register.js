@@ -1,6 +1,9 @@
 // Components/Register.js
 import React from 'react'
-import { StyleSheet, View, TextInput, Button, Text, Image } from 'react-native'
+import {StyleSheet, View, TextInput, Button, Text, Image, Alert, TouchableOpacity} from 'react-native'
+import DatePicker from 'react-native-datepicker'
+import {LinearGradient} from "expo-linear-gradient";
+
 
 class Register extends React.Component {
 
@@ -14,6 +17,10 @@ class Register extends React.Component {
         password:'',
         //passwordConf:''
         }
+    }
+
+    _navLogin() {
+        this.props.navigation.navigate("Login");
     }
 
     _register = () =>{
@@ -40,7 +47,14 @@ class Register extends React.Component {
         })
         .then((response) => response.json())
             .then((responseJson) => {
-                alert(responseJson)
+                if (responseJson == 'email_already')
+                    Alert.alert("Email déja utilisé","Connectez vous")
+                else if (responseJson == 'query_fail')
+                    Alert.alert("Authentification","Echec de l'authentifiaction, merci de reéssayer ultérieurement")
+                else if (responseJson == 'ok')
+                    this.props.navigation.navigate("Login")
+                else
+                    Alert.alert("Erreur", "Une erreur est survenue")
             })
             .catch((error) => {
                 console.error(error);
@@ -50,31 +64,58 @@ class Register extends React.Component {
     render() {
         return (
             <View style={styles.main_container}>
-
+                <LinearGradient
+                    colors={['#E577A2', '#ff978d']}
+                    style={{flex:1, paddingTop: 70, paddingBottom: 40, paddingLeft: 40, paddingRight: 40}}
+                    start={[1, 0]}
+                    end={[0, 1]}>
+                <Text>Pseudo</Text>
                 <TextInput
-                    style={styles.textinputMail}
-                    placeholder='Login'
+                    style={styles.viewInputEmail}
+                    //placeholder='Login'
                     onChangeText= {login => this.setState({login})}
                 />
+                <Text>Nom</Text>
                 <TextInput
-                    style={styles.textinputMail}
-                    placeholder='Last name'
+                    style={styles.viewInputEmail}
+                    //placeholder='Last name'
                     onChangeText= {lastname => this.setState({lastname})}
                 />
+                <Text>Prénom</Text>
                 <TextInput
-                    style={styles.textinputMail}
-                    placeholder='First name'
+                    style={styles.viewInputEmail}
+                    //placeholder='First name'
                     onChangeText= {firstname => this.setState({firstname})}
                 />
                 {/* TODO Birth à ajouter */}
+                <Text>Date de naissance</Text>
+                <DatePicker
+                    style={styles.viewInputEmail}
+                    date={this.state.date}
+                    mode="date"
+                    //placeholder="select date"
+                    format="YYYY-MM-DD"
+                    minDate="2014-05-01"
+                    maxDate="2016-06-01"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                        dateInput: {
+                            marginLeft: 36
+                        }
+                    }}
+                    onDateChange={(date) => {this.setState({date: date})}}
+                />
+                <Text>Email</Text>
                 <TextInput
-                    style={styles.textinputMail}
-                    placeholder='Email'
+                    style={styles.viewInputEmail}
+                    //placeholder='Email'
                     onChangeText= {email => this.setState({email})}
                 />
+                <Text>Password</Text>
                 <TextInput
-                    style={styles.textinputPwd}
-                    placeholder='Password'
+                    style={styles.viewInputEmail}
+                    //placeholder='Password'
                     onChangeText= {password => this.setState({password})}
                 />
                 {/*<TextInput
@@ -82,10 +123,19 @@ class Register extends React.Component {
                     placeholder='Confirm Password'
                     onChangeText= {passwordConf => this.setState({passwordConf})}
                 />*/}
-                <Button title='Register'
-                        color="pink"
-                        type='outline'
-                        onPress={() => this._register()}/>
+                <View style={styles.viewBtn}>
+                    <TouchableOpacity
+                        style={styles.divBtn}
+                        onPress={() => this._register()}>
+                        <Text style={styles.textBtn}>Connecte toi !</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => this._navLogin()}>
+                        <Text style={styles.titleText}>Déja inscrit ?</Text>
+                    </TouchableOpacity>
+                </View>
+
+                </LinearGradient>
             </View>
         )
     }
@@ -94,42 +144,65 @@ class Register extends React.Component {
 const styles = StyleSheet.create({
     main_container: {
         flex: 1,
-        marginLeft: 30,
-        marginRight: 30,
-        justifyContent: 'center',
-        paddingBottom: 50
+        flexDirection: 'column',
+        width: '100%',
     },
-    textinputMail: {
-        height: 50,
-        width: 250,
-        borderColor: 'pink',
-        borderWidth: 2,
-        borderRadius: 5,
-        paddingLeft: 5,
+    viewImg: {
+        flex: 2,
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    viewForm: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
+    viewInputEmail: {
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        borderRadius: 15,
+        height: 60,
         marginBottom: 0,
-        marginTop: 100,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        color: 'pink'
+        alignItems: 'center',
     },
-    textinputPwd: {
-        height: 50,
-        width: 250,
-        borderColor: 'pink',
-        borderWidth: 2,
-        borderRadius: 5,
-        paddingLeft: 5,
-        marginBottom: 20,
-        marginTop: 10,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        color: 'pink'
+    textInputEmail: {
+        height: 60,
+        width: '100%',
+    },
+    viewInputPwd: {
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        height: 60,
+        borderRadius: 15,
+        marginBottom: 0,
+        alignItems: 'center',
+    },
+    textInputPwd: {
+        height: 60,
+        width: '100%',
+    },
+    viewBtn: {
+        flex: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    divBtn: {
+        backgroundColor: 'white',
+        borderRadius: 15,
+        height: 60,
+        justifyContent: 'center',
+        paddingLeft: 10,
+        alignItems: 'center',
+        width: '100%',
+    },
+    textBtn: {
+        color: '#ff978d',
+        textTransform: 'uppercase',
+        fontSize: 20,
     },
     titleText: {
-        fontSize: 50,
-        color: 'pink',
-        textAlign: 'center',
-        marginBottom: 20
+        color: 'white',
+        marginTop: 3
     }
 })
 

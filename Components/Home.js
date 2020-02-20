@@ -19,7 +19,11 @@ class Home extends React.Component {
                     start={[1, 0]}
                     end={[0, 1]}>
 
-                    <Text>{user.email}</Text>
+                    <Text>Email: {user.email}</Text>
+                    <Text>Last name: {user.lastname}</Text>
+                    <Text>First name: {user.firstname}</Text>
+                    <Text>Login: {user.login}</Text>
+                    <Text>Profil: {user.profile}</Text>
                 </LinearGradient>
             </View>
         )
