@@ -60,14 +60,13 @@ class Register extends React.Component {
                     style={styles.textinputMail}
                     placeholder='Last name'
                     onChangeText= {lastname => this.setState({lastname})}
-
                 />
                 <TextInput
                     style={styles.textinputMail}
                     placeholder='First name'
                     onChangeText= {firstname => this.setState({firstname})}
                 />
-                {/* Birth à ajouter */}
+                {/* TODO Birth à ajouter */}
                 <TextInput
                     style={styles.textinputMail}
                     placeholder='Email'

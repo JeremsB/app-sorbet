@@ -4,18 +4,25 @@ import { createStackNavigator } from 'react-navigation-stack'
 import { createAppContainer } from 'react-navigation'
 import Login from '../Components/Login'
 import Register from '../Components/Register'
+import Home from '../Components/Home'
 
 const SearchStackNavigator = createStackNavigator({
-    Login: { // Ici j'ai appelé la vue "Search" mais on peut mettre ce que l'on veut. C'est le nom qu'on utilisera pour appeler cette vue
+    Login: {
         screen: Login,
         navigationOptions: {
             title: 'Login'
         }
     },
-    Register: { // Ici j'ai appelé la vue "Search" mais on peut mettre ce que l'on veut. C'est le nom qu'on utilisera pour appeler cette vue
+    Register: {
         screen: Register,
         navigationOptions: {
             title: 'Register'
+        }
+    },
+    Home: {
+        screen: Home,
+        navigationOptions: {
+            title: 'Home'
         }
     }
 },

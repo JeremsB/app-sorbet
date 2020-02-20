@@ -35,6 +35,9 @@ class Login extends React.Component {
         .then((response) => response.json())
             .then((responseJson) => {
                 alert(responseJson)
+                this.props.navigation.navigate("Home", {
+                    user: responseJson
+                });
             })
             .catch((error) => {
                 console.error(error);
