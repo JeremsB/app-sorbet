@@ -115,7 +115,7 @@ class Register extends React.Component {
                 <Text>Password</Text>
                 <TextInput
                     style={styles.viewInputEmail}
-                    //placeholder='Password'
+                    secureTextEntry = {true}
                     onChangeText= {password => this.setState({password})}
                 />
                 {/*<TextInput
