@@ -53,7 +53,7 @@ class Login extends React.Component {
             <View style={styles.main_container}>
                 <LinearGradient
                     colors={['#E577A2', '#ff978d']} 
-                    style={{flex:1, paddingTop: 70, paddingBottom: 40, paddingLeft: 40, paddingRight: 40}}
+                    style={{flex:1, paddingTop: 30, paddingBottom: 50, paddingLeft: 50, paddingRight: 50}}
                     start={[1, 0]}
                     end={[0, 1]}>
                     <View style={styles.viewImg}>
@@ -63,6 +63,7 @@ class Login extends React.Component {
                                 width: 100,
                                 height: 107,
                                 marginBottom: 10,
+                                marginTop: 40,
                             }}
                             source={require('../content/img/logo.png')}
                         />

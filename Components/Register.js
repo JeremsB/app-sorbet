@@ -1,8 +1,10 @@
 // Components/Register.js
 import React from 'react'
-import {StyleSheet, View, TextInput, Button, Text, Image, Alert, TouchableOpacity} from 'react-native'
+import { StyleSheet, View, TextInput, Button, Text, Image, Alert, TouchableOpacity, Switch, KeyboardAvoidingView} from 'react-native'
 import DatePicker from 'react-native-datepicker'
 import {LinearGradient} from "expo-linear-gradient";
+import { ScrollView } from 'react-native-gesture-handler';
+TextInput.defaultProps.selectionColor = 'white'; // Couleur du curseur IOS reste à trouver pour Android
 
 
 class Register extends React.Component {
@@ -16,7 +18,13 @@ class Register extends React.Component {
         email:'',
         password:'',
         //passwordConf:''
+        switchValue: false,
         }
+    }
+
+    toggleSwitch = (value) => {
+        this.setState({ switchValue: value })
+        console.log('Switch is: ' + value)
     }
 
     _navLogin() {
@@ -59,6 +67,8 @@ class Register extends React.Component {
             .catch((error) => {
                 console.error(error);
             });
+
+            
     }
 
     render() {
@@ -66,75 +76,111 @@ class Register extends React.Component {
             <View style={styles.main_container}>
                 <LinearGradient
                     colors={['#E577A2', '#ff978d']}
-                    style={{flex:1, paddingTop: 70, paddingBottom: 40, paddingLeft: 40, paddingRight: 40}}
+                    style={{ paddingTop: 30, paddingBottom: 50, paddingLeft: 50, paddingRight: 50 }}
                     start={[1, 0]}
                     end={[0, 1]}>
-                <Text>Pseudo</Text>
-                <TextInput
-                    style={styles.viewInputEmail}
-                    //placeholder='Login'
-                    onChangeText= {login => this.setState({login})}
-                />
-                <Text>Nom</Text>
-                <TextInput
-                    style={styles.viewInputEmail}
-                    //placeholder='Last name'
-                    onChangeText= {lastname => this.setState({lastname})}
-                />
-                <Text>Prénom</Text>
-                <TextInput
-                    style={styles.viewInputEmail}
-                    //placeholder='First name'
-                    onChangeText= {firstname => this.setState({firstname})}
-                />
-                {/* TODO Birth à ajouter */}
-                <Text>Date de naissance</Text>
-                <DatePicker
-                    style={styles.viewInputEmail}
-                    date={this.state.date}
-                    mode="date"
-                    //placeholder="select date"
-                    format="YYYY-MM-DD"
-                    minDate="2014-05-01"
-                    maxDate="2016-06-01"
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    customStyles={{
-                        dateInput: {
-                            marginLeft: 36
-                        }
-                    }}
-                    onDateChange={(date) => {this.setState({date: date})}}
-                />
-                <Text>Email</Text>
-                <TextInput
-                    style={styles.viewInputEmail}
-                    //placeholder='Email'
-                    onChangeText= {email => this.setState({email})}
-                />
-                <Text>Password</Text>
-                <TextInput
-                    style={styles.viewInputEmail}
-                    secureTextEntry = {true}
-                    onChangeText= {password => this.setState({password})}
-                />
-                {/*<TextInput
-                    style={styles.textinputPwd}
-                    placeholder='Confirm Password'
-                    onChangeText= {passwordConf => this.setState({passwordConf})}
-                />*/}
-                <View style={styles.viewBtn}>
-                    <TouchableOpacity
-                        style={styles.divBtn}
-                        onPress={() => this._register()}>
-                        <Text style={styles.textBtn}>Connecte toi !</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => this._navLogin()}>
-                        <Text style={styles.titleText}>Déja inscrit ?</Text>
-                    </TouchableOpacity>
-                </View>
+                    <View>
+                        <Image
+                            style={{
+                                width: 80,
+                                height: 80,
+                                marginLeft: -45,
+                            }}
+                            source={require('../content/img/logo-white.png')}
+                        />
+                    </View>
+                    <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+                        <ScrollView
+                            showsVerticalScrollIndicator={false}>
 
+                            <View>
+                                <Text style={styles.label}>Nom d'utilisateur</Text>
+                                <TextInput
+                                    style={styles.viewInput}
+                                    autoFocus={true}
+                                    //placeholder='Login'
+                                    onChangeText={login => this.setState({ login })}
+                                />
+                                <Text style={styles.label}>Nom</Text>
+                                <TextInput
+                                    style={styles.viewInput}
+                                    //placeholder='Last name'
+                                    onChangeText={lastname => this.setState({ lastname })}
+                                />
+                                <Text style={styles.label}>Prénom</Text>
+                                <TextInput
+                                    style={styles.viewInput}
+                                    //placeholder='First name'
+                                    onChangeText={firstname => this.setState({ firstname })}
+                                />
+                                {/* TODO Birth à ajouter */}
+                                <Text style={styles.label}>Date de naissance</Text>
+                                <DatePicker
+                                    style={styles.viewInput}
+                                    date={this.state.date}
+                                    mode="date"
+                                    //placeholder="select date"
+                                    format="YYYY-MM-DD"
+                                    minDate="2000-05-01"
+                                    maxDate="2030-06-01"
+                                    confirmBtnText="Confirm"
+                                    cancelBtnText="Cancel"
+                                    customStyles={{
+                                        dateInput: {
+                                            marginLeft: 36
+                                        }
+                                    }}
+                                    onDateChange={(date) => { this.setState({ date: date }) }}
+                                />
+                                <Text style={styles.label}>Email</Text>
+                                <TextInput
+                                    style={styles.viewInput}
+                                    //placeholder='Email'
+                                    onChangeText={email => this.setState({ email })}
+                                />
+                                <Text style={styles.label}>Mot de passe</Text>
+                                <TextInput
+                                    style={styles.viewInput}
+                                    secureTextEntry={true}
+                                    onChangeText={password => this.setState({ password })}
+                                />
+                                <Text style={styles.label}>Confirmer le mot de passe</Text>
+                                <TextInput
+                                    style={styles.viewInput}
+                                // onChangeText= {passwordConf => this.setState({passwordConf})}
+                                />
+                                <View style={styles.viewSwitch}>
+                                    <Text style={styles.textSwitch}>Activer les notifications</Text>
+                                    <Switch
+                                        toggleSwitch={this.toggleSwitch}
+                                        switchValue={this.state.switchValue} />
+                                </View>
+                                <View style={styles.viewSwitch}>
+                                    <Text style={styles.textSwitch}>J'accepte les CGU</Text>
+                                    <Switch
+                                        toggleSwitch={this.toggleSwitch}
+                                        switchValue={this.state.switchValue} />
+                                </View>
+                                <View style={styles.viewSwitch}>
+                                    <Text style={styles.textSwitch}>J'accepte de recevoir des mails</Text>
+                                    <Switch
+                                        toggleSwitch={this.toggleSwitch}
+                                        switchValue={this.state.switchValue} />
+                                </View>
+                            </View>
+                            <View style={styles.viewBtn}>
+                                <TouchableOpacity
+                                    style={styles.divBtn}
+                                    onPress={() => this._register()}>
+                                    <Text style={styles.textBtn}>Inscris toi !</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => this._navLogin()}>
+                                    <Text style={styles.titleText}>Déjà inscrit ?</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </ScrollView>
+                    </KeyboardAvoidingView>
                 </LinearGradient>
             </View>
         )
@@ -143,48 +189,56 @@ class Register extends React.Component {
 
 const styles = StyleSheet.create({
     main_container: {
-        flex: 1,
         flexDirection: 'column',
         width: '100%',
     },
+    label: {
+        color: '#ffffff',
+        marginBottom: 10,
+        marginTop: 10,
+    },
     viewImg: {
-        flex: 2,
         flexDirection: 'column',
         alignItems: 'center',
     },
     viewForm: {
-        flex: 1,
         flexDirection: 'column',
         justifyContent: 'space-between',
     },
-    viewInputEmail: {
-        backgroundColor: 'white',
+    viewInput: {
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
         flexDirection: 'row',
-        borderRadius: 15,
-        height: 60,
+        borderRadius: 10,
+        height: 50,
         marginBottom: 0,
         alignItems: 'center',
+        color: '#ffffff',
+        paddingLeft: 20,
     },
     textInputEmail: {
         height: 60,
         width: '100%',
     },
-    viewInputPwd: {
-        backgroundColor: 'white',
-        flexDirection: 'row',
-        height: 60,
-        borderRadius: 15,
-        marginBottom: 0,
-        alignItems: 'center',
-    },
     textInputPwd: {
         height: 60,
         width: '100%',
     },
+    viewSwitch: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: 10,
+        marginBottom: 10,
+    },
+    textSwitch: {
+        color: '#ffffff',
+        fontSize: 12,
+    },
     viewBtn: {
-        flex: 2,
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop: 20,
+        marginBottom: 20,
     },
     divBtn: {
         backgroundColor: 'white',
@@ -202,7 +256,7 @@ const styles = StyleSheet.create({
     },
     titleText: {
         color: 'white',
-        marginTop: 3
+        marginTop: 10
     }
 })
 

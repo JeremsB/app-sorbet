@@ -19,7 +19,7 @@ class Home extends React.Component {
             <View style={styles.main_container}>
                 <LinearGradient
                     colors={['#E577A2', '#ff978d']}
-                    style={{flex:1, paddingTop: 70, paddingBottom: 40, paddingLeft: 40, paddingRight: 40}}
+                    style={{flex:1, paddingTop: 70, paddingBottom: 50, paddingLeft: 50, paddingRight: 50}}
                     start={[1, 0]}
                     end={[0, 1]}>
 
