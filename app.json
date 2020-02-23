@@ -23,6 +23,7 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.mds.sorbet",
       "supportsTablet": true
     },
     "android": {

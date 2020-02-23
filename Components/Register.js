@@ -4,6 +4,8 @@ import { StyleSheet, View, TextInput, Button, Text, Image, Alert, TouchableOpaci
 import DatePicker from 'react-native-datepicker'
 import {LinearGradient} from "expo-linear-gradient";
 import { ScrollView } from 'react-native-gesture-handler';
+import moment from "moment";
+
 TextInput.defaultProps.selectionColor = 'white'; // Couleur du curseur IOS reste à trouver pour Android
 
 
@@ -15,16 +17,15 @@ class Register extends React.Component {
         login:'',
         lastname:'',
         firstname:'',
+        birth:'',
         email:'',
         password:'',
-        //passwordConf:''
-        switchValue: false,
+        passwordConf:'',
+        notif: false,
+        cgu: false,
+        newsletter: false,
+        majeur: false
         }
-    }
-
-    toggleSwitch = (value) => {
-        this.setState({ switchValue: value })
-        console.log('Switch is: ' + value)
     }
 
     _navLogin() {
@@ -35,9 +36,14 @@ class Register extends React.Component {
         const {login} = this.state;
         const {lastname} = this.state;
         const {firstname} = this.state;
+        const {birth} = this.state;
         const {email} = this.state;
         const {password} = this.state;
-        //const {passwordConf} = this.state;
+        const {passwordConf} = this.state;
+        const {notif} = this.state;
+        const {cgu} = this.state;
+        const {newsletter} = this.state;
+        const {majeur} = this.state;
 
         fetch('https://sorbet.bet/api/register.php', {
             method: 'post',
@@ -49,17 +55,42 @@ class Register extends React.Component {
                 login: login,
                 lastname: lastname,
                 firstname: firstname,
+                birth: birth,
                 email: email,
                 password: password,
+                passwordConf: passwordConf,
+                notif: notif,
+                cgu: cgu,
+                newsletter: newsletter,
+                majeur: majeur
             })
         })
         .then((response) => response.json())
             .then((responseJson) => {
-                if (responseJson == 'email_already')
+                if (responseJson == 'email_missing')
+                    Alert.alert("Champ manquant","Veuillez entrer un email")
+                else if (responseJson == 'lastname_missing')
+                    Alert.alert("Champ manquant","Veuillez entrer un nom")
+                else if (responseJson == 'firstname_missing')
+                    Alert.alert("Champ manquant","Veuillez entrer un prénom")
+                else if (responseJson == 'login_missing')
+                    Alert.alert("Champ manquant","Veuillez entrer un nom d'utilisateur")
+                else if (responseJson == 'password_missing')
+                    Alert.alert("Champ manquant","Veuillez entrer un mot de passe")
+                else if (responseJson == 'email_already')
                     Alert.alert("Email déja utilisé","Connectez vous")
+                else if (responseJson == 'login_already')
+                    Alert.alert("Nom d'utilisateur déja utilisé","Veuillez saisir un autre nom d'utilisateur")
+                else if (responseJson == 'diff_password')
+                    Alert.alert("Mots de passes différents","Veuillez saisir deux mots de passes identiques")
+                else if (responseJson == 'under_18')
+                    Alert.alert("18+","Vous devez certifier être majeur pour continuer")
+                else if (responseJson == 'cgu_missing')
+                    Alert.alert("Conditions générales d'utilisation","Vous devez accepter nos CGU pour continuer")
                 else if (responseJson == 'query_fail')
                     Alert.alert("Authentification","Echec de l'authentifiaction, merci de reéssayer ultérieurement")
                 else if (responseJson == 'ok')
+                    Alert.alert("Inscription réussie","Bienvenue sur Sorbet', vous pouvez à présent vous connecter!"),
                     this.props.navigation.navigate("Login")
                 else
                     Alert.alert("Erreur", "Une erreur est survenue")
@@ -113,24 +144,33 @@ class Register extends React.Component {
                                     //placeholder='First name'
                                     onChangeText={firstname => this.setState({ firstname })}
                                 />
-                                {/* TODO Birth à ajouter */}
                                 <Text style={styles.label}>Date de naissance</Text>
                                 <DatePicker
-                                    style={styles.viewInput}
-                                    date={this.state.date}
+                                    style={styles.viewInputDate}
+                                    date={this.state.birth}
                                     mode="date"
-                                    //placeholder="select date"
+                                    showIcon={false}
                                     format="YYYY-MM-DD"
-                                    minDate="2000-05-01"
-                                    maxDate="2030-06-01"
+                                    placeholder={"YYYY-MM-DD"}
+                                    minDate={moment().subtract(500, "years")}
+                                    maxDate={moment().subtract(18, "years")}
                                     confirmBtnText="Confirm"
                                     cancelBtnText="Cancel"
                                     customStyles={{
                                         dateInput: {
-                                            marginLeft: 36
+                                            marginTop: 10,
+                                            borderColor: 'rgba(0, 0, 0, 0)'
+                                        },
+                                        dateText: {
+                                            fontSize: 16,
+                                            color: '#ffffff',
+                                        },
+                                        PlaceholderText: {
+                                            fontSize: 16,
+                                            color: 'rgba(0, 0, 0, 0)',
                                         }
                                     }}
-                                    onDateChange={(date) => { this.setState({ date: date }) }}
+                                    onDateChange={(birth) => { this.setState({ birth: birth })}                                    }
                                 />
                                 <Text style={styles.label}>Email</Text>
                                 <TextInput
@@ -147,25 +187,48 @@ class Register extends React.Component {
                                 <Text style={styles.label}>Confirmer le mot de passe</Text>
                                 <TextInput
                                     style={styles.viewInput}
-                                // onChangeText= {passwordConf => this.setState({passwordConf})}
+                                    secureTextEntry={true}
+                                    onChangeText= {passwordConf => this.setState({passwordConf})}
                                 />
                                 <View style={styles.viewSwitch}>
                                     <Text style={styles.textSwitch}>Activer les notifications</Text>
                                     <Switch
-                                        toggleSwitch={this.toggleSwitch}
-                                        switchValue={this.state.switchValue} />
+                                        value={this.state.notif}
+                                        onValueChange={(value) => {
+                                            this.setState({
+                                                notif: value
+                                            })
+                                        }}/>
                                 </View>
                                 <View style={styles.viewSwitch}>
                                     <Text style={styles.textSwitch}>J'accepte les CGU</Text>
                                     <Switch
-                                        toggleSwitch={this.toggleSwitch}
-                                        switchValue={this.state.switchValue} />
+                                        value={this.state.cgu}
+                                        onValueChange={(value) => {
+                                            this.setState({
+                                                cgu: value
+                                            })
+                                        }}/>
                                 </View>
                                 <View style={styles.viewSwitch}>
                                     <Text style={styles.textSwitch}>J'accepte de recevoir des mails</Text>
                                     <Switch
-                                        toggleSwitch={this.toggleSwitch}
-                                        switchValue={this.state.switchValue} />
+                                        value={this.state.newsletter}
+                                        onValueChange={(value) => {
+                                            this.setState({
+                                                newsletter: value
+                                            })
+                                        }}/>
+                                </View>
+                                <View style={styles.viewSwitch}>
+                                    <Text style={styles.textSwitch}>En cochant cette case je certifie être majeur</Text>
+                                    <Switch
+                                        value={this.state.majeur}
+                                        onValueChange={(value) => {
+                                            this.setState({
+                                                majeur: value
+                                            })
+                                        }}/>
                                 </View>
                             </View>
                             <View style={styles.viewBtn}>
@@ -214,6 +277,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         color: '#ffffff',
         paddingLeft: 20,
+    },
+    viewInputDate: {
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        //flexDirection: 'row',
+        borderRadius: 10,
+        height: 50,
+        //marginBottom: 0,
+        alignItems: 'center',
+        color: '#ffffff',
+        //paddingLeft: 20,
     },
     textInputEmail: {
         height: 60,
