@@ -2,6 +2,13 @@
 import React from 'react'
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
+import { connect } from 'react-redux'
+
+const mapStateToProps = (state) => {
+    return {
+        userData: state.userData
+    }
+}
 
 class Home extends React.Component {
 
@@ -14,7 +21,8 @@ class Home extends React.Component {
     }
 
     render() {
-        const user = this.props.navigation.getParam("user");
+        //const user = this.props.navigation.getParam("user");
+        console.log(this.props)
         return (
             <View style={styles.main_container}>
                 <LinearGradient
@@ -23,11 +31,12 @@ class Home extends React.Component {
                     start={[1, 0]}
                     end={[0, 1]}>
 
-                    <Text>Email: {user.email}</Text>
-                    <Text>Last name: {user.lastname}</Text>
-                    <Text>First name: {user.firstname}</Text>
-                    <Text>Login: {user.login}</Text>
-                    <Text>Profil: {user.profile}</Text>
+                    {/*
+                    <Text>Email: {userData.email}</Text>
+                    <Text>Last name: {userData.lastname}</Text>
+                    <Text>First name: {userData.firstname}</Text>
+                    <Text>Login: {userData.login}</Text>
+                    <Text>Profil: {userData.profile}</Text>*/}
 
                     <TouchableOpacity
                         style={styles.divBtn}
@@ -62,4 +71,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Home
+export default connect(mapStateToProps)(Home)
