@@ -1,64 +1,31 @@
-// Components/CreateBet.js
 import React from 'react'
-import { StyleSheet, View, TextInput, Text, Image, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, View, TextInput, Text, Image, TouchableOpacity } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { connect } from 'react-redux'
 
-class CreateBet extends React.Component {
+class Profile extends React.Component {
 
     constructor(props) {
         super(props)
     }
 
-    _createBet() {
-        const {userEmail} = this.state;
-        const {userPassword} = this.state;
-
-        fetch('https://sorbet.bet/api/create-bet.php',{
-            method: 'post',
-            header:{
-                'Accept': 'application/json',
-                'Content-type': 'application/json'
-            },
-            body:JSON.stringify({
-                email: userEmail,
-                password: userPassword,
-            })
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                if (responseJson == 'champs')
-                    Alert.alert("Erreur formulaire","Veuillez remplir tous les champs")
-                else if (responseJson == 'email_inconnu')
-                    Alert.alert("Authentification incorrecte","Email / Mot de passe incorrect")
-                else
-                    this.props.navigation.navigate("Home", {
-                        user: responseJson
-                    });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }
-
     render() {
-        //const userData = this.props.navigation.getParam("user");
-        console.log(this.props);
+        //const user = this.props.navigation.getParam("user");
+        //console.log(this.props.navigation.getParam("user"));
+        const userData = this.props.navigation.getParam("user");
         return (
             <View style={styles.main_container}>
                 <LinearGradient
                     colors={['#E577A2', '#ff978d']}
-                    style={{flex:1, paddingTop: 70, paddingBottom: 40, paddingLeft: 40, paddingRight: 40}}
+                    style={{flex:1, paddingTop: 70, paddingBottom: 50, paddingLeft: 50, paddingRight: 50}}
                     start={[1, 0]}
                     end={[0, 1]}>
-                    <View style={styles.viewBtn}>
-                        {/*<TouchableOpacity
-                            style={styles.divBtn}
-                            onPress={() => this._createBet()}>
-                            <Text style={styles.textBtn}>Créer pari</Text>
-                        </TouchableOpacity>*/}
-                    </View>
 
+                    <Text>Email: {userData.email}</Text>
+                    <Text>Last name: {userData.lastname}</Text>
+                    <Text>First name: {userData.firstname}</Text>
+                    <Text>Login: {userData.login}</Text>
+                    <Text>Profil: {userData.profile}</Text>
 
                 </LinearGradient>
             </View>
@@ -137,4 +104,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(CreateBet)
+export default connect(mapStateToProps)(Profile)

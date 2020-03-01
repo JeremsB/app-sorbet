@@ -2,12 +2,15 @@
 
 import { createStackNavigator } from 'react-navigation-stack'
 import { createAppContainer } from 'react-navigation'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
 import Login from '../Components/Login'
 import Register from '../Components/Register'
 import Home from '../Components/Home'
 import CreateBet from '../Components/CreateBet'
+import AddUser from '../Components/AddUser'
+import Profile from '../Components/Profile'
 
-const SearchStackNavigator = createStackNavigator({
+const HomeStackNavigator = createStackNavigator({
     Login: {
         screen: Login,
         navigationOptions: {
@@ -21,19 +24,24 @@ const SearchStackNavigator = createStackNavigator({
         }
     },
     Home: {
-        screen: Home,
-        navigationOptions: {
-            title: 'Home'
-        }
-    },
-    CreateBet: {
-        screen: CreateBet,
-        navigationOptions: {
-            title: 'CreateBet'
-        }
+        screen: createBottomTabNavigator({
+            Accueil: {
+                screen: Home
+            },
+            Paris: {
+                screen: AddUser
+            },
+            Parier: {
+                screen: CreateBet
+            },
+            Profil: {
+                screen: Profile
+            }
+        })
     }
 },
 {
     headerMode: 'none',
 })
-export default createAppContainer(SearchStackNavigator)
+
+export default createAppContainer(HomeStackNavigator)

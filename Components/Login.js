@@ -39,7 +39,7 @@ class Login extends React.Component {
                 else if (responseJson == 'email_inconnu')
                     Alert.alert("Authentification incorrecte","Email / Mot de passe incorrect")
                 else
-                    this.props.navigation.navigate("Home", {
+                    this.props.navigation.navigate("Profil", {
                         user: responseJson
                     });
             })
@@ -105,7 +105,6 @@ class Login extends React.Component {
                             <TextInput
                                 style={styles.textInputPwd}
                                 secureTextEntry = {true}
-                                //pb sur Android, il attend un boolean et il peut pas convertir un string '' en bool
                                 placeholder = 'Mot de passe'
                                 placeholderTextColor='grey'
                                 onChangeText={userPassword => this.setState({userPassword})}

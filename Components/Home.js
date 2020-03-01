@@ -4,25 +4,19 @@ import {StyleSheet, View, Text, TouchableOpacity} from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { connect } from 'react-redux'
 
-const mapStateToProps = (state) => {
-    return {
-        userData: state.userData
-    }
-}
-
 class Home extends React.Component {
 
     constructor(props) {
         super(props)
     }
 
-    _navCreateBet() {
-        this.props.navigation.navigate("CreateBet");
+    _navAddUser(id_user) {
+        //const userData = this.props.navigation.getParam("user");
+        this.props.navigation.navigate("AddUser", id_user);
+       // this.props.navigation.navigate("AddUser",userData);
     }
 
     render() {
-        //const user = this.props.navigation.getParam("user");
-        console.log(this.props)
         return (
             <View style={styles.main_container}>
                 <LinearGradient
@@ -31,18 +25,7 @@ class Home extends React.Component {
                     start={[1, 0]}
                     end={[0, 1]}>
 
-                    {/*
-                    <Text>Email: {userData.email}</Text>
-                    <Text>Last name: {userData.lastname}</Text>
-                    <Text>First name: {userData.firstname}</Text>
-                    <Text>Login: {userData.login}</Text>
-                    <Text>Profil: {userData.profile}</Text>*/}
 
-                    <TouchableOpacity
-                        style={styles.divBtn}
-                        onPress={() => this._navCreateBet()}>
-                        <Text style={styles.textBtn}>Créer un Sorbet'</Text>
-                    </TouchableOpacity>
                 </LinearGradient>
             </View>
         )
@@ -70,5 +53,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
     }
 })
+
+const mapStateToProps = (state) => {
+    return {
+        userData: state.userData
+    }
+}
 
 export default connect(mapStateToProps)(Home)
