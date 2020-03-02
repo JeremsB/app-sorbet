@@ -12,7 +12,7 @@ class Profile extends React.Component {
     render() {
         //const user = this.props.navigation.getParam("user");
         //console.log(this.props.navigation.getParam("user"));
-        const userData = this.props.navigation.getParam("user");
+        // const userData = this.props.navigation.getParam("user");
         return (
             <View style={styles.main_container}>
                 <LinearGradient
@@ -21,11 +21,11 @@ class Profile extends React.Component {
                     start={[1, 0]}
                     end={[0, 1]}>
 
-                    <Text>Email: {userData.email}</Text>
+                    {/* <Text>Email: {userData.email}</Text>
                     <Text>Last name: {userData.lastname}</Text>
                     <Text>First name: {userData.firstname}</Text>
                     <Text>Login: {userData.login}</Text>
-                    <Text>Profil: {userData.profile}</Text>
+                    <Text>Profil: {userData.profile}</Text> */}
 
                 </LinearGradient>
             </View>
