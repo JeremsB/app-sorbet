@@ -52,11 +52,11 @@ class CreateBet extends React.Component {
                     start={[1, 0]}
                     end={[0, 1]}>
                     <View style={styles.viewBtn}>
-                        {/*<TouchableOpacity
+                        <TouchableOpacity
                             style={styles.divBtn}
                             onPress={() => this._createBet()}>
                             <Text style={styles.textBtn}>Créer pari</Text>
-                        </TouchableOpacity>*/}
+                        </TouchableOpacity>
                     </View>
 
 

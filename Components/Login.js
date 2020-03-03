@@ -154,9 +154,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     viewForm: {
-        flex: 1,
+        flex: 2,
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
     },
     viewInputEmail: {
         backgroundColor: 'white',

@@ -1,6 +1,6 @@
 // Components/Register.js
 import React from 'react'
-import { StyleSheet, View, TextInput, Button, Text, Image, Alert, TouchableOpacity, Switch, KeyboardAvoidingView} from 'react-native'
+import { StyleSheet, View, TextInput, Text, Image, Alert, TouchableOpacity, Switch, KeyboardAvoidingView} from 'react-native'
 import DatePicker from 'react-native-datepicker'
 import {LinearGradient} from "expo-linear-gradient";
 import { ScrollView } from 'react-native-gesture-handler';
