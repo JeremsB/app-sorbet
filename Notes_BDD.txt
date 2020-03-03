@@ -1,0 +1,19 @@
+Users:
+(146) Bonsoir / Bonsoir@test.com / mdp: bonsoir
+(147) Bobby / bobby@test.com / mdp: bobby
+(150) Bonjour / Bonjour@test.com / mdp: bonjour
+(151) Bobba / bobba@test.com / mdp: bobba
+
+Marques:
+(148) Mcdo Bruz / mcdo-bruz@test.com /mdp: mcdo
+(149) E. Leclerc Cleunay / leclerc-cleunay@test.com /mdp: leclerc
+
+Bonsoir et Bobby sont amis
+Bobby et Bobba sont amis
+Bonjour et Bobby sont amis
+Bonjour a envoyé une demande d'ajout à Bonsoir qui n'y a pas encore repondu
+
+Bonsoir follow Mcdo et Leclerc
+Bobby follow uniquement Mcdo
+Bonjour follow aucune marque
+Bobba follow uniquement Leclerc
