@@ -29,10 +29,16 @@ const HomeStackNavigator = createStackNavigator({
             Accueil: {
                 screen: Home,
                 navigationOptions: {
-                    tabBarIcon: () => { // On définit le rendu de nos icônes par les images récemment ajoutés au projet
-                      return <Image
-                        source={require('../content/img/boules.png')}
-                        style={styles.icon}/> // On applique un style pour les redimensionner comme il faut
+                    tabBarIcon: ({ focused }) => {
+                        const image = focused
+                        ? require('../content/img/boules.png')
+                        : require('../content/img/boules-blanc.png')
+                        return (
+                            <Image
+                                source={image}
+                                style={styles.icon}
+                            />
+                        )
                     }
                 }
             },
@@ -40,40 +46,75 @@ const HomeStackNavigator = createStackNavigator({
             Parier: {
                 screen: CreateBet,
                 navigationOptions: {
-                    tabBarIcon: () => { // On définit le rendu de nos icônes par les images récemment ajoutés au projet
-                      return <Image
-                        source={require('../content/img/ajouter.png')}
-                        style={styles.icon}/> // On applique un style pour les redimensionner comme il faut
+                    tabBarIcon: ({ focused }) => {
+                        const image = focused
+                        ? require('../content/img/ajouter.png')
+                        : require('../content/img/ajouter-blanc.png')
+                        return (
+                            <Image
+                                source={image}
+                                style={styles.icon}
+                            />
+                        )
                     }
                 }
             },
             Paris: {
                 screen: AddUser,
                 navigationOptions: {
-                    tabBarIcon: () => { // On définit le rendu de nos icônes par les images récemment ajoutés au projet
-                      return <Image
-                        source={require('../content/img/rechercher.png')}
-                        style={styles.icon}/> // On applique un style pour les redimensionner comme il faut
+                    tabBarIcon: ({ focused }) => {
+                        const image = focused
+                        ? require('../content/img/rechercher.png')
+                        : require('../content/img/rechercher-blanc.png')
+                        return (
+                            <Image
+                                source={image}
+                                style={styles.icon}
+                            />
+                        )
                     }
                 }
             },
             Profil: {
                 screen: Profile,
                 navigationOptions: {
-                    tabBarIcon: () => { // On définit le rendu de nos icônes par les images récemment ajoutés au projet
-                      return <Image
-                        source={require('../content/img/personne.png')}
-                        style={styles.icon}/> // On applique un style pour les redimensionner comme il faut
+                    tabBarIcon: ({ focused }) => {
+                        const image = focused
+                        ? require('../content/img/personne.png')
+                        : require('../content/img/personne-blanc.png')
+                        return (
+                            <Image
+                                source={image}
+                                style={styles.icon}
+                            />
+                        )
                     }
                 }
             }
         },
             {
-               tabBarOptions: {
-                    activeBackgroundColor: '#ffffff', // Couleur d'arrière-plan de l'onglet sélectionné
+                tabBarPosition: 'bottom',
+                tabBarOptions: {
+                    style: { // Style de la nav complete
+                        backgroundColor: 'rgba(0, 0, 0, 0)',
+                        borderTopColor: 'transparent',
+                        position: 'absolute',
+                        left: 30,
+                        right: 30,
+                        bottom: 50,
+                    },
+                    tabStyle: { // Style des items dans la nav
+                        marginEnd: 10,
+                        marginStart: 10,
+                        paddingVertical: 30,
+                        borderRadius: 15,
+                    },
+                    activeBackgroundRadius: 15,
+                    activeBackgroundColor: 'rgba(255, 255, 255, 1)', // Couleur d'arrière-plan de l'onglet sélectionné
                     inactiveBackgroundColor: 'transparent', // Couleur d'arrière-plan des onglets non sélectionnés
                     showLabel: false, // On masque les titres
                     showIcon: true, // On informe le TabNavigator qu'on souhaite afficher les icônes définis
+                    
                 }
             }
         )
@@ -84,9 +125,9 @@ const HomeStackNavigator = createStackNavigator({
 })
 
 const styles = StyleSheet.create({
-    icon: {
-      width: 30,
-      height: 30
+    icon: { // Style de l'img icon
+        width: 60,
+        height: 60,
     }
   })
 
