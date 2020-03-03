@@ -101,7 +101,7 @@ const HomeStackNavigator = createStackNavigator({
                         position: 'absolute',
                         left: 30,
                         right: 30,
-                        bottom: 50,
+                        bottom: 30,
                     },
                     tabStyle: { // Style des items dans la nav
                         marginEnd: 10,
@@ -125,7 +125,7 @@ const HomeStackNavigator = createStackNavigator({
 })
 
 const styles = StyleSheet.create({
-    icon: { // Style de l'img icon
+    icon: { // Style de l'img iconHomeStackNavigator
         width: 60,
         height: 60,
     }

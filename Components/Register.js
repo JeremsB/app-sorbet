@@ -280,13 +280,9 @@ const styles = StyleSheet.create({
     },
     viewInputDate: {
         backgroundColor: 'rgba(0, 0, 0, 0.2)',
-        //flexDirection: 'row',
         borderRadius: 10,
         height: 50,
-        //marginBottom: 0,
         alignItems: 'center',
-        color: '#ffffff',
-        //paddingLeft: 20,
     },
     textInputEmail: {
         height: 60,
@@ -306,6 +302,7 @@ const styles = StyleSheet.create({
     textSwitch: {
         color: '#ffffff',
         fontSize: 12,
+        width: '80%',
     },
     viewBtn: {
         alignItems: 'center',

@@ -112,7 +112,7 @@ class Login extends React.Component {
                             />
                         </View>
                     </View>
-                    {/* <View style={styles.viewBtn}>
+                    <View style={styles.viewBtn}>
                         <TouchableOpacity
                             style={styles.divBtn}
                             onPress={() => this._login()}>
@@ -122,8 +122,8 @@ class Login extends React.Component {
                             onPress={() => this._navRegister()}>
                             <Text style={styles.titleText}>Pas encore membre ?</Text>
                         </TouchableOpacity>
-                    </View> */}
-                    <View style={styles.viewBtn}>
+                    </View>
+                    {/* <View style={styles.viewBtn}>
                         <TouchableOpacity
                             style={styles.divBtn}
                             onPress={() => this.props.navigation.navigate("Profil")}>
@@ -133,7 +133,7 @@ class Login extends React.Component {
                             onPress={() => this._navRegister()}>
                             <Text style={styles.titleText}>Pas encore membre ?</Text>
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
                     
                     
                 </LinearGradient>
@@ -156,14 +156,14 @@ const styles = StyleSheet.create({
     viewForm: {
         flex: 2,
         flexDirection: 'column',
-        justifyContent: 'space-around',
+        justifyContent: 'center',
     },
     viewInputEmail: {
         backgroundColor: 'white',
         flexDirection: 'row',
         borderRadius: 15,
         height: 60,
-        marginBottom: 0,
+        marginBottom: 20,
         alignItems: 'center',
     },
     textInputEmail: {
