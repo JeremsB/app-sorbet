@@ -53,7 +53,7 @@ class Login extends React.Component {
             <View style={styles.main_container}>
                 <LinearGradient
                     colors={['#E577A2', '#ff978d']} 
-                    style={{flex:1, paddingTop: 30, paddingBottom: 50, paddingLeft: 50, paddingRight: 50}}
+                    style={{flex:1, paddingTop: 30, paddingBottom: 50, paddingLeft: 30, paddingRight: 30}}
                     start={[1, 0]}
                     end={[0, 1]}>
                     <View style={styles.viewImg}>
@@ -85,12 +85,12 @@ class Login extends React.Component {
                                     width: 40,
                                     height: 40,
                                 }}
-                                source={require('../content/img/personne.png')}
+                                source={require('../content/img/personne-blanc.png')}
                             />
                             <TextInput
                                 style={styles.textInputEmail}
                                 placeholder='Adresse email'
-                                placeholderTextColor='grey'
+                                placeholderTextColor='#ffffff'
                                 onChangeText={userEmail => this.setState({userEmail})}
                             />
                         </View>
@@ -100,13 +100,13 @@ class Login extends React.Component {
                                     width: 50,
                                     height: 50,
                                 }}
-                                source={require('../content/img/cadenas.png')}
+                                source={require('../content/img/cadenas-blanc.png')}
                             />
                             <TextInput
                                 style={styles.textInputPwd}
                                 secureTextEntry = {true}
                                 placeholder = 'Mot de passe'
-                                placeholderTextColor='grey'
+                                placeholderTextColor='#ffffff'
                                 onChangeText={userPassword => this.setState({userPassword})}
                                 onSubmitEditing={() => this._login()}
                             />
@@ -118,10 +118,16 @@ class Login extends React.Component {
                             onPress={() => this._login()}>
                                 <Text style={styles.textBtn}>Connecte toi !</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => this._navRegister()}>
-                            <Text style={styles.titleText}>Pas encore membre ?</Text>
-                        </TouchableOpacity>
+                        <View style ={styles.viewFgtPsw}>
+                            <TouchableOpacity
+                                onPress={() => this._navRegister()}>
+                                <Text style={styles.titleText}>Pas encore membre ?</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => this._navRegister()}>
+                                <Text style={styles.titleText}>Mot de passe oublié ?</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     {/* <View style={styles.viewBtn}>
                         <TouchableOpacity
@@ -159,7 +165,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     viewInputEmail: {
-        backgroundColor: 'white',
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
         flexDirection: 'row',
         borderRadius: 15,
         height: 60,
@@ -169,9 +175,10 @@ const styles = StyleSheet.create({
     textInputEmail: {
         height: 60,
         width: '100%',
+        color: '#ffffff',
     },
     viewInputPwd: {
-        backgroundColor: 'white',
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
         flexDirection: 'row',
         height: 60,
         borderRadius: 15,
@@ -181,6 +188,7 @@ const styles = StyleSheet.create({
     textInputPwd: {
         height: 60,
         width: '100%',
+        color: '#ffffff',
     },
     viewBtn: {
         flex: 2,
@@ -201,9 +209,15 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
         fontSize: 20,
     },
+    viewFgtPsw: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+    },
     titleText: {
         color: 'white',
-        marginTop: 3
+        marginTop: 3,
+        fontSize: 12,
     }
 })
 

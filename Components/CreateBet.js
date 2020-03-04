@@ -48,7 +48,7 @@ class CreateBet extends React.Component {
             <View style={styles.main_container}>
                 <LinearGradient
                     colors={['#E577A2', '#ff978d']}
-                    style={{flex:1, paddingTop: 70, paddingBottom: 40, paddingLeft: 40, paddingRight: 40}}
+                    style={{flex:1, paddingTop: 70, paddingBottom: 40, paddingLeft: 30, paddingRight: 30}}
                     start={[1, 0]}
                     end={[0, 1]}>
                     <View style={styles.viewBtn}>

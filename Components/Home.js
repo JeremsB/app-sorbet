@@ -22,19 +22,9 @@ class Home extends React.Component {
             <View style={styles.main_container}>
                 <LinearGradient
                     colors={['#E577A2', '#ff978d']}
-                    style={{flex:1, paddingTop: 30, paddingBottom: 50, paddingLeft: 30, paddingRight: 30}}
+                    style={{flex:1, paddingTop: 70, paddingBottom: 50, paddingLeft: 30, paddingRight: 30}}
                     start={[1, 0]}
                     end={[0, 1]}>
-                    <View style={styles.viewLogo}>
-                        <Image
-                            style={{
-                                width: 80,
-                                height: 80,
-                                marginLeft: -25,
-                            }}
-                            source={require('../content/img/logo-white.png')}
-                        />
-                    </View>
                     <ScrollView
                         showsVerticalScrollIndicator={false} style={styles.scrollView}>
                             <ImageBackground

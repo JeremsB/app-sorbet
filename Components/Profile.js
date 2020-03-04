@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, TextInput, Text, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, Image, TouchableOpacity, ImageBackground, ScrollView } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { connect } from 'react-redux'
 
@@ -7,6 +7,10 @@ class Profile extends React.Component {
 
     constructor(props) {
         super(props)
+    }
+
+    _navEarnings() {
+        this.props.navigation.navigate("Earnings");
     }
 
     render() {
@@ -17,15 +21,268 @@ class Profile extends React.Component {
             <View style={styles.main_container}>
                 <LinearGradient
                     colors={['#E577A2', '#ff978d']}
-                    style={{flex:1, paddingTop: 70, paddingBottom: 50, paddingLeft: 50, paddingRight: 50}}
+                    style={{flex:1, paddingTop: 70, paddingBottom: 50, paddingLeft: 30, paddingRight: 30}}
                     start={[1, 0]}
                     end={[0, 1]}>
+                        <View style={styles.divInfosUser}>
+                            <Image
+                                style={{
+                                    width: 100,
+                                    height: 100,
+                                    borderRadius: 15,
+                                }}
+                                source={require('../content/img/bobby.jpg')}
+                            />
+                            <View style={styles.divRightInfosUser}>
+                                <View style={styles.divNameUser}>
+                                    <Text style={styles.firstName}>{userData.firstname}</Text>
+                                    <Text style={styles.lastName}>{userData.lastname}</Text>
+                                </View>
+                                <View>
+                                    <Text style={styles.txtDescription}>
+                                        Jeune cinéphile, prêt à parier sa jambe droite pour un pinte à -75% chez ta mère, ps : kiki recommence à boire
+                                    </Text>
+                                </View> 
+                            </View>
+                        </View>
+                        <View style={styles.divCountUser}>
+                            <View style={styles.divCount}>
+                                <Text style={styles.txtCount}>SORBET'</Text>
+                                <Text style={styles.txtCount2}>43</Text>
+                            </View>
+                            <View style={styles.divCount}>
+                                <Text style={styles.txtCount}>JE SUIS</Text>
+                                <Text style={styles.txtCount2}>179</Text>
+                            </View>
+                            <View style={styles.divCount}>
+                                <Text style={styles.txtCount}>SUIVI PAR</Text>
+                                <Text style={styles.txtCount2}>179</Text>
+                            </View>
+                        </View>
+                        <View style={styles.viewBtn}>
 
-                    <Text>Email: {userData.email}</Text>
-                    <Text>Last name: {userData.lastname}</Text>
-                    <Text>First name: {userData.firstname}</Text>
+                            
+
+                            <TouchableOpacity
+                                style={styles.divBtn}
+                                // onPress={() => this._createBet()}
+                                >
+                                <Image
+                                    style={{
+                                        width: 10,
+                                        height: 10,
+                                        marginRight: 5,
+                                    }}
+                                    source={require('../content/img/boules2.png')}
+                                />
+                                <Text style={styles.textBtn}>Mes paris</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.divBtn}
+                                // onPress={() => this._navEarnings()}
+                                >
+                                <Image
+                                    style={{
+                                        width: 10,
+                                        height: 10,
+                                        marginRight: 5,
+                                    }}
+                                    source={require('../content/img/boules2.png')}
+                                />
+                                <Text style={styles.textBtn}>Mes gains</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.divBtn}
+                                // onPress={() => this._createBet()}
+                                >
+                                <Text style={styles.textBtn}>. . .</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <ScrollView style= {styles.divCardUser}
+                        showsVerticalScrollIndicator={false}
+                        >
+                            <ImageBackground
+                                source={require('../content/img/burger.jpg')}
+                                style={styles.divCard}
+                                imageStyle={{ borderRadius: 15 }}
+                            >
+                                <View style={styles.overlay}>
+                                    <Image
+                                        style={{
+                                            width: 80,
+                                            height: 80,
+                                            borderRadius: 15,
+                                            zIndex: 50,
+                                            marginTop: -20,
+                                            marginLeft: -20,
+                                        }}
+                                        source={require('../content/img/macdo.jpg')}
+                                    />
+                                    <View style={styles.contentCard}>
+                                        <View style={styles.divInfosParis}>
+                                            <Text style={styles.nameBet}>McDonald's</Text>
+                                            <View style={styles.divInfosTop}>
+                                                <View style={styles.divLocation}>
+                                                    <Image
+                                                        style={{
+                                                            width: 20,
+                                                            height: 20,
+                                                        }}
+                                                        source={require('../content/img/boules-blanc.png')}
+                                                    />
+                                                    <Text style={styles.titleLocation}>Strasbourg</Text>
+                                                </View>
+                                                <View style={styles.divNbBet}>
+                                                    <Image
+                                                        style={{
+                                                            width: 20,
+                                                            height: 20,
+                                                        }}
+                                                        source={require('../content/img/boules-blanc.png')}
+                                                    />
+                                                    <Text style={styles.titleNbBet}>83 Sorbets</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={styles.divQuestionBet}>
+                                            <Text style={styles.questionBet}>Quel burger revient chez McDonald's la semaine prochaine ?</Text>
+                                        </View>
+                                        <View style={styles.divInfosBottom}>
+                                            <Text style={styles.titleCat}>Petits plaisirs</Text>
+                                            <Image
+                                                style={{
+                                                    width: 30,
+                                                    height: 30,
+                                                }}
+                                                source={require('../content/img/boules-blanc.png')}
+                                            />
+                                        </View>
+                                    </View>
+                                </View>
+                            </ImageBackground>
+                            <ImageBackground
+                                source={require('../content/img/burger.jpg')}
+                                style={styles.divCard}
+                                imageStyle={{ borderRadius: 15 }}
+                            >
+                                <View style={styles.overlay}>
+                                    <Image
+                                        style={{
+                                            width: 80,
+                                            height: 80,
+                                            borderRadius: 15,
+                                            zIndex: 50,
+                                            marginTop: -20,
+                                            marginLeft: -20,
+                                        }}
+                                        source={require('../content/img/macdo.jpg')}
+                                    />
+                                    <View style={styles.contentCard}>
+                                        <View style={styles.divInfosParis}>
+                                            <Text style={styles.nameBet}>McDonald's</Text>
+                                            <View style={styles.divInfosTop}>
+                                                <View style={styles.divLocation}>
+                                                    <Image
+                                                        style={{
+                                                            width: 20,
+                                                            height: 20,
+                                                        }}
+                                                        source={require('../content/img/boules-blanc.png')}
+                                                    />
+                                                    <Text style={styles.titleLocation}>Strasbourg</Text>
+                                                </View>
+                                                <View style={styles.divNbBet}>
+                                                    <Image
+                                                        style={{
+                                                            width: 20,
+                                                            height: 20,
+                                                        }}
+                                                        source={require('../content/img/boules-blanc.png')}
+                                                    />
+                                                    <Text style={styles.titleNbBet}>83 Sorbets</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={styles.divQuestionBet}>
+                                            <Text style={styles.questionBet}>Quel burger revient chez McDonald's la semaine prochaine ?</Text>
+                                        </View>
+                                        <View style={styles.divInfosBottom}>
+                                            <Text style={styles.titleCat}>Petits plaisirs</Text>
+                                            <Image
+                                                style={{
+                                                    width: 30,
+                                                    height: 30,
+                                                }}
+                                                source={require('../content/img/boules-blanc.png')}
+                                            />
+                                        </View>
+                                    </View>
+                                </View>
+                            </ImageBackground>
+                            <ImageBackground
+                                source={require('../content/img/burger.jpg')}
+                                style={styles.divCard}
+                                imageStyle={{ borderRadius: 15 }}
+                            >
+                                <View style={styles.overlay}>
+                                    <Image
+                                        style={{
+                                            width: 80,
+                                            height: 80,
+                                            borderRadius: 15,
+                                            zIndex: 50,
+                                            marginTop: -20,
+                                            marginLeft: -20,
+                                        }}
+                                        source={require('../content/img/macdo.jpg')}
+                                    />
+                                    <View style={styles.contentCard}>
+                                        <View style={styles.divInfosParis}>
+                                            <Text style={styles.nameBet}>McDonald's</Text>
+                                            <View style={styles.divInfosTop}>
+                                                <View style={styles.divLocation}>
+                                                    <Image
+                                                        style={{
+                                                            width: 20,
+                                                            height: 20,
+                                                        }}
+                                                        source={require('../content/img/boules-blanc.png')}
+                                                    />
+                                                    <Text style={styles.titleLocation}>Strasbourg</Text>
+                                                </View>
+                                                <View style={styles.divNbBet}>
+                                                    <Image
+                                                        style={{
+                                                            width: 20,
+                                                            height: 20,
+                                                        }}
+                                                        source={require('../content/img/boules-blanc.png')}
+                                                    />
+                                                    <Text style={styles.titleNbBet}>83 Sorbets</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={styles.divQuestionBet}>
+                                            <Text style={styles.questionBet}>Quel burger revient chez McDonald's la semaine prochaine ?</Text>
+                                        </View>
+                                        <View style={styles.divInfosBottom}>
+                                            <Text style={styles.titleCat}>Petits plaisirs</Text>
+                                            <Image
+                                                style={{
+                                                    width: 30,
+                                                    height: 30,
+                                                }}
+                                                source={require('../content/img/boules-blanc.png')}
+                                            />
+                                        </View>
+                                    </View>
+                                </View>
+                            </ImageBackground>
+                        </ScrollView>
+                        
+                    {/* <Text>Email: {userData.email}</Text>
                     <Text>Login: {userData.login}</Text>
-                    <Text>Profil: {userData.profile}</Text>
+                    <Text>Profil: {userData.profile}</Text> */}
 
                 </LinearGradient>
             </View>
@@ -39,63 +296,144 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         width: '100%',
     },
-    viewImg: {
-        flex: 2,
+    divInfosUser: {
+        flexDirection: 'row',
+    },
+    divRightInfosUser: {
+        marginLeft: 20,
         flexDirection: 'column',
+        justifyContent: 'space-around',
+    },
+    divNameUser: {
+        flexDirection: 'row',
+    },
+    firstName: {
+        marginRight: 5,
+        color: '#ffffff',
+        fontSize: 15,
+    },
+    lastName: {
+        color: '#ffffff',
+        textTransform: 'uppercase',
+        fontSize: 15,
+    },
+    txtDescription: {
+        fontSize: 9,
+        color: '#ffffff',
+        width: 150,
+    },
+    divCountUser: {
+        marginTop: 20,
+        flexDirection: 'row',
+        paddingVertical: 15,
+        paddingHorizontal: 30,
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        justifyContent: 'space-between',
+        borderRadius: 15,
+    },
+    divCount: {
         alignItems: 'center',
     },
-    viewForm: {
-        flex: 1,
+    txtCount: {
+        color: '#ffffff',
+        fontSize: 9,
+        marginBottom: 5,
+    },
+    txtCount2: {
+        color: '#ffffff',
+        fontWeight: 'bold',
+        fontSize: 17,
+    },
+    viewBtn: {
+        flexDirection: 'row',
+        marginTop: 10,
+        justifyContent: 'space-between',
+    },
+    divBtn: {
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        borderRadius: 15,
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        paddingHorizontal: 15,
+    },
+    textBtn: {
+        color: '#ffffff',
+        fontSize: 12,
+    },
+    divCardUser: {
+        marginTop: 20,
+        marginBottom: 75,
+    },
+    divCard: {
+        marginBottom: 20,
+        marginTop: 20,
+        marginLeft: 20,
+        height: 200,
+    },
+    overlay: {
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        width: '100%',
+        height: '100%',
+        borderRadius: 15,
+    },
+    contentCard: {
+        width: '100%',
+        height: 200,
+        borderRadius: 15,
+        marginTop: -60,
         flexDirection: 'column',
         justifyContent: 'space-between',
     },
-    viewInputEmail: {
-        backgroundColor: 'white',
+    divInfosParis: {
+        marginLeft: 60,
+    },
+    nameBet: {
+        color: '#ffffff',
+        fontWeight: 'bold',
+        marginLeft: 10,
+        marginTop: 10,
+    },
+    divInfosTop: {
         flexDirection: 'row',
-        borderRadius: 15,
-        height: 60,
-        marginBottom: 0,
-        alignItems: 'center',
+        marginLeft: 10,
     },
-    textInputEmail: {
-        height: 60,
-        width: '100%',
-    },
-    viewInputPwd: {
-        backgroundColor: 'white',
+    divLocation: {
         flexDirection: 'row',
-        height: 60,
-        borderRadius: 15,
-        marginBottom: 0,
         alignItems: 'center',
     },
-    textInputPwd: {
-        height: 60,
-        width: '100%',
+    titleLocation: {
+        color: '#ffffff',
+        fontSize: 10,
     },
-    viewBtn: {
-        flex: 2,
+    divNbBet: {
+        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
     },
-    divBtn: {
-        backgroundColor: 'white',
-        borderRadius: 15,
-        height: 60,
-        justifyContent: 'center',
-        paddingLeft: 10,
+    titleNbBet: {
+        color: '#ffffff',
+        fontSize: 10,
+    },
+    divQuestionBet: {
         alignItems: 'center',
-        width: '100%',
     },
-    textBtn: {
-        color: '#ff978d',
+    questionBet: {
+        color: '#ffffff',
+        textAlign: 'center',
+        width: '80%',
+    },
+    divInfosBottom: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginHorizontal: 20,
+        marginBottom: 5,
+    },
+    titleCat: {
+        color: '#ffffff',
         textTransform: 'uppercase',
-        fontSize: 20,
+        fontSize: 14,
     },
-    titleText: {
-        color: 'white',
-        marginTop: 3
-    }
 })
 
 const mapStateToProps = (state) => {

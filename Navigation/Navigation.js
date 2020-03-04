@@ -91,6 +91,31 @@ const HomeStackNavigator = createStackNavigator({
                     }
                 }
             }
+            // Profil: {
+            //     screen: createStackNavigator({
+            //         AccueilUser: {
+            //             screen: Profile,
+            //             navigationOptions: {
+            //                 title: 'Mes paris',
+            //             }
+            //         },
+
+            //         Earnings: {
+            //             screen: Profile,
+            //             navigationOptions: {
+            //                 title: 'Mes gains',
+            //             }
+            //         },
+
+            //         Settings: {
+            //             screen: Profile,
+            //             navigationOptions: {
+            //                 title: 'Paramètres',
+            //             }
+            //         },
+            //     })
+                
+            // }
         },
             {
                 tabBarPosition: 'bottom',

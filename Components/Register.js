@@ -107,28 +107,36 @@ class Register extends React.Component {
             <View style={styles.main_container}>
                 <LinearGradient
                     colors={['#E577A2', '#ff978d']}
-                    style={{ paddingTop: 30, paddingBottom: 50, paddingLeft: 50, paddingRight: 50 }}
+                    style={{ paddingTop: 30, paddingBottom: 50, paddingLeft: 30, paddingRight: 30 }}
                     start={[1, 0]}
                     end={[0, 1]}>
-                    <View>
+                    <View style={styles.viewImg}>
                         <Image
                             style={{
-                                width: 80,
-                                height: 80,
-                                marginLeft: -45,
+                                alignItems: 'center',
+                                width: 100,
+                                height: 107,
+                                marginBottom: 10,
+                                marginTop: 40,
                             }}
-                            source={require('../content/img/logo-white.png')}
+                            source={require('../content/img/logo.png')}
+                        />
+                        <Image
+                            style={{
+                                alignItems: 'center',
+                                width: 150,
+                                height: 28,
+                            }}
+                            source={require('../content/img/logo-textuel-blanc.png')}
                         />
                     </View>
-                    <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-                        <ScrollView
-                            showsVerticalScrollIndicator={false}>
-
+                    <KeyboardAvoidingView style={styles.container} behavior="height" enabled="false">
+                        <ScrollView showsVerticalScrollIndicator={false} style={styles.ScrollVue}>
                             <View>
                                 <Text style={styles.label}>Nom d'utilisateur</Text>
                                 <TextInput
                                     style={styles.viewInput}
-                                    autoFocus={true}
+                                    // autoFocus={true}
                                     //placeholder='Login'
                                     onChangeText={login => this.setState({ login })}
                                 />
@@ -255,6 +263,13 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         width: '100%',
     },
+    container: {
+        marginBottom: 50,
+        height: '67%',
+    },
+    ScrollVue : {
+        height: '100%',
+    },
     label: {
         color: '#ffffff',
         marginBottom: 10,
@@ -263,6 +278,7 @@ const styles = StyleSheet.create({
     viewImg: {
         flexDirection: 'column',
         alignItems: 'center',
+        marginBottom: 40,
     },
     viewForm: {
         flexDirection: 'column',
