@@ -77,7 +77,7 @@ class AddUser extends React.Component {
                                         height: 70,
                                         borderRadius: 15,
                                     }}
-                                    source={require('../content/img/bobby.jpg')}
+                                    source={require('../content/img/users/bobby.jpg')}
                                 />
                                 <View style={styles.infosRightUser}>
                                     <View style={styles.viewInfosUsers}>
@@ -101,7 +101,7 @@ class AddUser extends React.Component {
                                         height: 70,
                                         borderRadius: 15,
                                     }}
-                                    source={require('../content/img/bobby.jpg')}
+                                    source={require('../content/img/users/bobby.jpg')}
                                 />
                                 <View style={styles.infosRightUser}>
                                     <View style={styles.viewInfosUsers}>
@@ -125,7 +125,7 @@ class AddUser extends React.Component {
                                         height: 70,
                                         borderRadius: 15,
                                     }}
-                                    source={require('../content/img/bobby.jpg')}
+                                    source={require('../content/img/users/bobby.jpg')}
                                 />
                                 <View style={styles.infosRightUser}>
                                     <View style={styles.viewInfosUsers}>
@@ -149,7 +149,7 @@ class AddUser extends React.Component {
                                         height: 70,
                                         borderRadius: 15,
                                     }}
-                                    source={require('../content/img/bobby.jpg')}
+                                    source={require('../content/img/users/bobby.jpg')}
                                 />
                                 <View style={styles.infosRightUser}>
                                     <View style={styles.viewInfosUsers}>
@@ -173,7 +173,7 @@ class AddUser extends React.Component {
                                         height: 70,
                                         borderRadius: 15,
                                     }}
-                                    source={require('../content/img/bobby.jpg')}
+                                    source={require('../content/img/users/bobby.jpg')}
                                 />
                                 <View style={styles.infosRightUser}>
                                     <View style={styles.viewInfosUsers}>
@@ -197,7 +197,7 @@ class AddUser extends React.Component {
                                         height: 70,
                                         borderRadius: 15,
                                     }}
-                                    source={require('../content/img/bobby.jpg')}
+                                    source={require('../content/img/users/bobby.jpg')}
                                 />
                                 <View style={styles.infosRightUser}>
                                     <View style={styles.viewInfosUsers}>

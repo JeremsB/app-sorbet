@@ -2,6 +2,7 @@
 import React from 'react'
 import { StyleSheet, View, TextInput, Text, Image, TouchableOpacity, Alert } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
+import { connect } from 'react-redux'
 
 class Login extends React.Component {
 
@@ -39,14 +40,21 @@ class Login extends React.Component {
                 else if (responseJson == 'email_inconnu')
                     Alert.alert("Authentification incorrecte","Email / Mot de passe incorrect")
                 else
-                    this.props.navigation.navigate("Profil", {
-                        user: responseJson
-                    });
+                    this.props.navigation.navigate("Profil");
+                    this._globalUser(responseJson);
             })
             .catch((error) => {
                 console.error(error);
             });
     }
+
+    //Fonction qui stocke les infos de l'utilisateur dans un state global
+    //Appelé juste avant la connexion
+    _globalUser(responseJson) {
+        const action = { type: "USER_LOGIN", value: responseJson };
+        this.props.dispatch(action);
+    }
+
 
     render() {
         return (
@@ -221,5 +229,11 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Login
+const mapStateToProps = (state) => {
+    return {
+        userData: state.userData
+    }
+}
+
+export default connect(mapStateToProps)(Login)
 

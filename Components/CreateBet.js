@@ -42,8 +42,7 @@ class CreateBet extends React.Component {
     }
 
     render() {
-        //const userData = this.props.navigation.getParam("user");
-        console.log(this.props);
+        let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
         return (
             <View style={styles.main_container}>
                 <LinearGradient
@@ -57,6 +56,10 @@ class CreateBet extends React.Component {
                             onPress={() => this._createBet()}>
                             <Text style={styles.textBtn}>Créer pari</Text>
                         </TouchableOpacity>
+                        <Text>{userData.login}</Text>
+                        <Text>{userData.lastname}</Text>
+                        <Text>{userData.firstname}</Text>
+                        <Text>{userData.birth}</Text>
                     </View>
 
 

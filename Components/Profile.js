@@ -14,9 +14,7 @@ class Profile extends React.Component {
     }
 
     render() {
-        //const user = this.props.navigation.getParam("user");
-        //console.log(this.props.navigation.getParam("user"));
-        const userData = this.props.navigation.getParam("user");
+        let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
         return (
             <View style={styles.main_container}>
                 <LinearGradient
@@ -31,7 +29,10 @@ class Profile extends React.Component {
                                     height: 100,
                                     borderRadius: 15,
                                 }}
-                                source={require('../content/img/bobby.jpg')}
+                                source={require('../content/img/users/bobby.jpg')}
+                                //source='../content/img/users/'+userData.picture}+''
+                                //TODO Les images sont dans la bdd  pour les user bonjour et bonsoir et bobby donc
+                                //userData.picture = bobby.jpg / bonjour.jpg....
                             />
                             <View style={styles.divRightInfosUser}>
                                 <View style={styles.divNameUser}>
@@ -40,7 +41,7 @@ class Profile extends React.Component {
                                 </View>
                                 <View>
                                     <Text style={styles.txtDescription}>
-                                        Jeune cinéphile, prêt à parier sa jambe droite pour un pinte à -75% chez ta mère, ps : kiki recommence à boire
+                                        {userData.description}
                                     </Text>
                                 </View> 
                             </View>
@@ -279,10 +280,7 @@ class Profile extends React.Component {
                                 </View>
                             </ImageBackground>
                         </ScrollView>
-                        
-                    {/* <Text>Email: {userData.email}</Text>
-                    <Text>Login: {userData.login}</Text>
-                    <Text>Profil: {userData.profile}</Text> */}
+
 
                 </LinearGradient>
             </View>
@@ -436,7 +434,8 @@ const styles = StyleSheet.create({
     },
 })
 
-const mapStateToProps = (state) => {
+//Connecte le composant à redux (ici on récupère seulement le state global "userData"
+const mapStateToProps = state => {
     return {
         userData: state.userData
     }
