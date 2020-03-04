@@ -40,8 +40,8 @@ class Login extends React.Component {
                 else if (responseJson == 'email_inconnu')
                     Alert.alert("Authentification incorrecte","Email / Mot de passe incorrect")
                 else
-                    this.props.navigation.navigate("Profil");
                     this._globalUser(responseJson);
+                    this.props.navigation.navigate("Profil");
             })
             .catch((error) => {
                 console.error(error);
