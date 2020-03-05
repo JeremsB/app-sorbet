@@ -10,7 +10,7 @@ class Earnings extends React.Component {
     }
 
     _navReturn() {
-        this.props.navigation.navigate("AccueilUser");
+        this.props.navigation.navigate("UserHome");
     }
 
     render() {

@@ -1,3 +1,4 @@
+// Components/Profile.js
 import React from 'react'
 import { StyleSheet, View, Text, Image, TouchableOpacity, ImageBackground, ScrollView } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'

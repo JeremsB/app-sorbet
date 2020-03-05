@@ -6,7 +6,7 @@ import {LinearGradient} from "expo-linear-gradient";
 import { ScrollView } from 'react-native-gesture-handler';
 import moment from "moment";
 
-TextInput.defaultProps.selectionColor = 'white'; // Couleur du curseur IOS reste à trouver pour Android
+TextInput.defaultProps.selectionColor = '#ff948a'; // Couleur du curseur IOS reste à trouver pour Android
 
 
 class Register extends React.Component {

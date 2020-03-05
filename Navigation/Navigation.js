@@ -12,6 +12,8 @@ import AddUser from '../Components/AddUser'
 import Profile from '../Components/Profile'
 import Earnings from '../Components/Earnings'
 import SettingsUser from '../Components/SettingsUser'
+import PersonnalData from '../Components/PersonnalData'
+import AccountSettings from '../Components/AccountSettings'
 
 const HomeStackNavigator = createStackNavigator({
     Login: {
@@ -79,7 +81,7 @@ const HomeStackNavigator = createStackNavigator({
             },
             Profil: {
                 screen: createStackNavigator({
-                    AccueilUser: {
+                    UserHome: {
                         screen: Profile,
                     },
 
@@ -91,11 +93,21 @@ const HomeStackNavigator = createStackNavigator({
                     },
 
                     SettingsUser: {
-                        screen: SettingsUser,
-                        navigationOptions: {
-                            title: 'Paramètres',
-                        }
-                    },
+                        screen: createStackNavigator({
+                            SettingsUser: {
+                                screen: SettingsUser,
+                            },
+                            PersonnalData: {
+                                screen: PersonnalData,
+                            },
+                            AccountSettings: {
+                                screen: AccountSettings,
+                            }
+                        },
+                        {
+                            headerMode: 'none',
+                        },
+                    )},
                 },
                 {
                     headerMode: 'none',
