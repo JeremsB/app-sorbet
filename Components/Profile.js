@@ -9,12 +9,19 @@ class Profile extends React.Component {
         super(props)
     }
 
+    
+
     _navEarnings() {
         this.props.navigation.navigate("Earnings");
     }
 
+    _navigateSettingsUser() {
+        this.props.navigation.navigate("SettingsUser");
+    }
+
     render() {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
+        // const imgUser = (userData.picture);
         return (
             <View style={styles.main_container}>
                 <LinearGradient
@@ -30,7 +37,7 @@ class Profile extends React.Component {
                                     borderRadius: 15,
                                 }}
                                 source={require('../content/img/users/bobby.jpg')}
-                                //source='../content/img/users/'+userData.picture}+''
+                                // source={imgUser}
                                 //TODO Les images sont dans la bdd  pour les user bonjour et bonsoir et bobby donc
                                 //userData.picture = bobby.jpg / bonjour.jpg....
                             />
@@ -38,6 +45,7 @@ class Profile extends React.Component {
                                 <View style={styles.divNameUser}>
                                     <Text style={styles.firstName}>{userData.firstname}</Text>
                                     <Text style={styles.lastName}>{userData.lastname}</Text>
+                                    
                                 </View>
                                 <View>
                                     <Text style={styles.txtDescription}>
@@ -80,7 +88,7 @@ class Profile extends React.Component {
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={styles.divBtn}
-                                // onPress={() => this._navEarnings()}
+                                onPress={() => this._navEarnings()}
                                 >
                                 <Image
                                     style={{
@@ -94,7 +102,7 @@ class Profile extends React.Component {
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={styles.divBtn}
-                                // onPress={() => this._createBet()}
+                                onPress={() => this._navigateSettingsUser()}
                                 >
                                 <Text style={styles.textBtn}>. . .</Text>
                             </TouchableOpacity>

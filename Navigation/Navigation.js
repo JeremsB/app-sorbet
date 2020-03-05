@@ -10,6 +10,8 @@ import Home from '../Components/Home'
 import CreateBet from '../Components/CreateBet'
 import AddUser from '../Components/AddUser'
 import Profile from '../Components/Profile'
+import Earnings from '../Components/Earnings'
+import SettingsUser from '../Components/SettingsUser'
 
 const HomeStackNavigator = createStackNavigator({
     Login: {
@@ -76,12 +78,33 @@ const HomeStackNavigator = createStackNavigator({
                 }
             },
             Profil: {
-                screen: Profile,
+                screen: createStackNavigator({
+                    AccueilUser: {
+                        screen: Profile,
+                    },
+
+                    Earnings: {
+                        screen: Earnings,
+                        navigationOptions: {
+                            title: 'Mes gains',
+                        }
+                    },
+
+                    SettingsUser: {
+                        screen: SettingsUser,
+                        navigationOptions: {
+                            title: 'Paramètres',
+                        }
+                    },
+                },
+                {
+                    headerMode: 'none',
+                }),
                 navigationOptions: {
                     tabBarIcon: ({ focused }) => {
                         const image = focused
-                        ? require('../content/img/personne.png')
-                        : require('../content/img/personne-blanc.png')
+                            ? require('../content/img/personne.png')
+                            : require('../content/img/personne-blanc.png')
                         return (
                             <Image
                                 source={image}
@@ -89,33 +112,9 @@ const HomeStackNavigator = createStackNavigator({
                             />
                         )
                     }
-                }
-            }
-            // Profil: {
-            //     screen: createStackNavigator({
-            //         AccueilUser: {
-            //             screen: Profile,
-            //             navigationOptions: {
-            //                 title: 'Mes paris',
-            //             }
-            //         },
-
-            //         Earnings: {
-            //             screen: Profile,
-            //             navigationOptions: {
-            //                 title: 'Mes gains',
-            //             }
-            //         },
-
-            //         Settings: {
-            //             screen: Profile,
-            //             navigationOptions: {
-            //                 title: 'Paramètres',
-            //             }
-            //         },
-            //     })
+                },
                 
-            // }
+            }
         },
             {
                 tabBarPosition: 'bottom',

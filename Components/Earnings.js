@@ -1,12 +1,16 @@
 // Components/Earnings.js
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, Image, Text } from 'react-native'
 import { LinearGradient } from "expo-linear-gradient";
 
 class Earnings extends React.Component {
 
     constructor(props) {
         super(props)
+    }
+
+    _navReturn() {
+        this.props.navigation.navigate("AccueilUser");
     }
 
     render() {
@@ -17,7 +21,19 @@ class Earnings extends React.Component {
                     style={{ flex: 1, paddingTop: 70, paddingBottom: 50, paddingLeft: 30, paddingRight: 30 }}
                     start={[1, 0]}
                     end={[0, 1]}>
-
+                        <TouchableOpacity
+                                style={styles.divBtn}
+                                onPress={() => this._navReturn()}
+                                >
+                                <Image
+                                    style={{
+                                        width: 50,
+                                        height: 50,
+                                        marginRight: 5,
+                                    }}
+                                    source={require('../content/img/retour-blanc.png')}
+                                />
+                            </TouchableOpacity>
 
                 </LinearGradient>
             </View>
