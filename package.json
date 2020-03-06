@@ -10,6 +10,8 @@
   "dependencies": {
     "@react-native-community/masked-view": "0.1.5",
     "@react-navigation/bottom-tabs": "^5.1.0",
+    "@react-navigation/drawer": "^5.1.1",
+    "@react-navigation/material-bottom-tabs": "^5.1.1",
     "expo": "~36.0.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
@@ -17,6 +19,7 @@
     "react-native-datepicker": "^1.7.2",
     "react-native-gesture-handler": "~1.5.0",
     "react-native-image-picker": "^2.3.1",
+    "react-native-paper": "^3.6.0",
     "react-native-reanimated": "^1.7.0",
     "react-native-safe-area-context": "0.6.0",
     "react-native-screens": "2.0.0-alpha.12",
