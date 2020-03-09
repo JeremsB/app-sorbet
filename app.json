@@ -13,7 +13,7 @@
     "orientation": "portrait",
     "icon": "./content/img/app-icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "js": "./assets/Loader.js",
       "resizeMode": "contain"
     },
     "updates": {

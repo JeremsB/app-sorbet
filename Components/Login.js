@@ -96,6 +96,7 @@ class Login extends React.Component {
                                 source={require('../content/img/personne-blanc.png')}
                             />
                             <TextInput
+                                caretHidden
                                 style={styles.textInputEmail}
                                 placeholder='Adresse email'
                                 placeholderTextColor='#ffffff'

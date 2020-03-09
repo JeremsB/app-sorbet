@@ -1,16 +1,51 @@
 // Components/Search.js
 import React from 'react'
-import { StyleSheet, View, TextInput, Image, TouchableOpacity, Text} from 'react-native'
-import {LinearGradient} from "expo-linear-gradient";
+import {StyleSheet, View, TextInput, Image, TouchableOpacity, Text, Alert} from 'react-native'
+import { LinearGradient } from "expo-linear-gradient";
 import { ScrollView } from 'react-native-gesture-handler';
+import { connect } from 'react-redux'
 
 class AddUser extends React.Component {
 
     constructor(props) {
         super(props)
+        let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
+        let id_user = userData.id_user;
+        this.state = {
+            users: this._getUsers(id_user)
+        }
+    }
+
+    _getUsers(id_user) {
+        fetch('https://sorbet.bet/api/get-users.php',{
+            method: 'post',
+            header:{
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body:JSON.stringify({
+                id: id_user,
+            })
+        })
+        .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson == 'no_users_found')
+                    Alert.alert("Pas d'amis","Veuillez ajouter des amis");
+                else if (responseJson == 'no_id')
+                    Alert.alert("Pas d'id","Faut un id");
+                else
+                    this.setState({users : responseJson});
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     render() {
+        //TODO this.state.users contient tous les utilisateurs qui sont pas amis avec l'utilisateur connecté
+        //console.log(this.state.users) si tu veux checker
+        //Du coup faut boucler dessus et afficher une usercard pour chaque user
+
         return (
             <View style={styles.main_container}>
                 <LinearGradient
@@ -291,6 +326,11 @@ const styles = StyleSheet.create({
     },
 })
 
+//Connecte le composant à redux (ici on récupère seulement le state global "userData"
+const mapStateToProps = state => {
+    return {
+        userData: state.userData
+    }
+}
 
-export default AddUser
-
+export default connect(mapStateToProps)(AddUser)

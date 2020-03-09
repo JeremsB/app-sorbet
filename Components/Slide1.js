@@ -1,11 +1,14 @@
 // Components/Slide1.js
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, Image, ImageBackground } from 'react-native'
+import Loader from '../assets/Loader';
 
 class Slide1 extends React.Component {
 
     constructor(props) {
-        super(props)
+        super(props);
+
+        this.state = { isLoading: false }
     }
 
     _navSlide() {
@@ -13,6 +16,10 @@ class Slide1 extends React.Component {
     }
 
     render() {
+        if (this.state.isLoading) {
+            return <Loader />;
+        }
+
         return (
             <View style={styles.main_container}>
                 <ImageBackground

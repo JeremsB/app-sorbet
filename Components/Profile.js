@@ -22,7 +22,7 @@ class Profile extends React.Component {
 
     render() {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
-        // const imgUser = (userData.picture);
+        // const imgUser = (userData.picture);s
         return (
             <View style={styles.main_container}>
                 <LinearGradient
@@ -37,6 +37,7 @@ class Profile extends React.Component {
                                     height: 100,
                                     borderRadius: 15,
                                 }}
+                                // source={{'../content/img/users/'imgUser}}
                                 source={require('../content/img/users/bobby.jpg')}
                                 // source={imgUser}
                                 //TODO Les images sont dans la bdd  pour les user bonjour et bonsoir et bobby donc
