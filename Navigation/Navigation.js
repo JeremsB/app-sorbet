@@ -98,7 +98,11 @@ const RegisterStackNavigator = createStackNavigator({
     Register: {
         screen: Register,
     }
-})
+},
+    {
+        headerMode: 'none',
+    },
+)
 
 const HomeStackNavigator = createStackNavigator({
     Home: {
