@@ -182,6 +182,7 @@ class Register extends React.Component {
                                 />
                                 <Text style={styles.label}>Email</Text>
                                 <TextInput
+                                    caretHidden
                                     style={styles.viewInput}
                                     //placeholder='Email'
                                     onChangeText={email => this.setState({ email })}
@@ -243,7 +244,7 @@ class Register extends React.Component {
                                 <TouchableOpacity
                                     style={styles.divBtn}
                                     onPress={() => this._register()}>
-                                    <Text style={styles.textBtn}>Inscris toi !</Text>
+                                    <Text style={styles.textBtn}>Inscris-toi !</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={() => this._navLogin()}>
