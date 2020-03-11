@@ -13,7 +13,8 @@ class AddUser extends React.Component {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
         let id_user = userData.id_user;
         this.state = {
-            users: this._getUsers(id_user)
+            users: this._getUsers(id_user),
+            friends: this._getFriends(id_user)
         }
     }
 
@@ -31,7 +32,7 @@ class AddUser extends React.Component {
         .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson == 'no_users_found')
-                    Alert.alert("Pas d'amis","Veuillez ajouter des amis");
+                    Alert.alert("Pas d'users","Utilisateurs introuvables");
                 else if (responseJson == 'no_id')
                     Alert.alert("Pas d'id","Faut un id");
                 else
@@ -42,10 +43,38 @@ class AddUser extends React.Component {
             });
     }
 
+    _getFriends(id_user) {
+        fetch('https://sorbet.bet/api/get-friends.php',{
+            method: 'post',
+            header:{
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body:JSON.stringify({
+                id: id_user,
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson == 'no_friends')
+                    Alert.alert("Pas d'amis","Veuillez ajouter des amis");
+                else if (responseJson == 'no_id')
+                    Alert.alert("Pas d'id","Faut un id");
+                else
+                    this.setState({friends : responseJson});
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
     render() {
         //TODO this.state.users contient tous les utilisateurs qui sont pas amis avec l'utilisateur connecté
         //console.log(this.state.users) si tu veux checker
         //Du coup faut boucler dessus et afficher une usercard pour chaque user
+
+        //TODO amis dans this.state.friends
+
         return (
             <View style={styles.main_container}>
                 <LinearGradient
