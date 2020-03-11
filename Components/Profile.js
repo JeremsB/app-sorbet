@@ -32,7 +32,7 @@ class Profile extends React.Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson == 'no_bets')
-                    this.setState({ message: "Message d'erreur" });
+                    this.setState({ message: "N'attend pas et créés ton Sorbet'!" });
                     // Alert.alert("Pas de paris", "Créez votre propre paris !");
                 else if (responseJson == 'no_id')
                     Alert.alert("Pas d'id", "Faut un id");
@@ -148,7 +148,7 @@ class Profile extends React.Component {
                             keyExtractor={(item) => item.id_bet}
                             renderItem={({ item }) => <BetCard bet={item} />}
                         />
-                        <Text>{this.state.message}</Text>
+                        <Text style={styles.txtCount2}>{this.state.message}</Text>
                     </ScrollView>
                 </LinearGradient>
             </View>

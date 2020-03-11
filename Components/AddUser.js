@@ -51,7 +51,7 @@ class AddUser extends React.Component {
                 'Content-type': 'application/json'
             },
             body:JSON.stringify({
-                id: id_user,
+                id_user: id_user,
             })
         })
             .then((response) => response.json())

@@ -6,34 +6,9 @@ import { StyleSheet, Text, Image, View, ImageBackground } from 'react-native'
 
 class BetCard extends React.Component {
 
-    _getCreator(id_bet) {
-        fetch('https://sorbet.bet/api/get-bet-creator.php', {
-            method: 'post',
-            header: {
-                'Accept': 'application/json',
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                id: id_bet,
-            })
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                if (responseJson == 'no_users_found')
-                    Alert.alert("Pas d'amis", "Veuillez ajouter des amis");
-                else if (responseJson == 'no_id')
-                    Alert.alert("Pas d'id", "Faut un id");
-                else
-                    this.setState({ bets: responseJson });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }
-
     render() {
         const { bet } = this.props
-        // let creator = _getCreator(bet.id_creator)
+
         return (
             <ImageBackground
                 source={require('../content/img/burger.jpg')}
@@ -54,7 +29,7 @@ class BetCard extends React.Component {
                     />
                     <View style={styles.contentCard}>
                         <View style={styles.divInfosParis}>
-                        <Text style={styles.nameBet}>Nom de la société</Text>
+                        <Text style={styles.nameBet}>{bet.login}</Text>
                             <View style={styles.divInfosTop}>
                                 <View style={styles.divLocation}>
                                     <Image
