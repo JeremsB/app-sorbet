@@ -160,6 +160,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         color: '#ffffff',
         paddingLeft: 20,
+        textDecorationColor: 'transparent',
     },
     textArea: {
         paddingTop: 20,

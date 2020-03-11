@@ -6,99 +6,31 @@ import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createSwitchNavigator } from 'react-navigation'
 import { StyleSheet, Image } from 'react-native'
 import Login from '../Components/Login'
-import Register from '../Components/Register'
 import Home from '../Components/Home'
 import CreateBet from '../Components/CreateBet'
 import AddUser from '../Components/AddUser'
 import Profile from '../Components/Profile'
-import Earnings from '../Components/Earnings'
 import SettingsUser from '../Components/SettingsUser'
 import PersonnalData from '../Components/PersonnalData'
 import AccountSettings from '../Components/AccountSettings'
-import Slide1 from '../Components/Slide1'
-import Slide2 from '../Components/Slide2'
+import Earnings from '../Components/Earnings'
+import Register from '../Components/Register'
 import { connect } from 'react-redux'
 
 // let userData = this.props.userData; //Recupère le contenu du premier objet du tableau userData
 
-const SlideTabNavigator = createBottomTabNavigator({
-    Slide1: {
-        screen: Slide1,
-        navigationOptions: {
-            tabBarIcon: ({ focused }) => {
-                const image = focused
-                    ? require('../content/img/point-active.png')
-                    : require('../content/img/point-no-active.png')
-                return (
-                    <Image
-                        source={image}
-                        style={styles.point}
-                    />
-                )
-            }
-        },
-    },
-    Slide2: {
-        screen: Slide2,
-        navigationOptions: {
-            tabBarIcon: ({ focused }) => {
-                const image = focused
-                    ? require('../content/img/point-active.png')
-                    : require('../content/img/point-no-active.png')
-                return (
-                    <Image
-                        source={image}
-                        style={styles.point}
-                    />
-                )
-            }
-        }
-    },
+const RegisterStackNavigator = createStackNavigator({
     Login: {
         screen: Login,
-        navigationOptions: {
-            tabBarIcon: ({ focused }) => {
-                const image = focused
-                    ? require('../content/img/point-active.png')
-                    : require('../content/img/point-no-active.png')
-                return (
-                    <Image
-                        source={image}
-                        style={styles.point}
-                    />
-                )
-            }
-        }
+    },
+    Register: {
+        screen: Register,
     },
 },
-    {
-        // POUR CACHER LES 3 POINTS
-        // defaultNavigationOptions: {
-        //     tabBarVisible: false,
-        // },
-        tabBarOptions: {
-            style: { // Style de la nav complete
-                backgroundColor: 'rgba(0, 0, 0, 0)',
-                borderTopColor: 'transparent',
-                position: 'absolute',
-                marginLeft: '40%',
-                marginRight: '40%',
-            },
-            inactiveBackgroundColor: 'transparent', // Couleur d'arrière-plan des onglets non sélectionnés 
-            showLabel: false, // On masque les titres
-            showIcon: true,
-        }
-    },
     {
         headerMode: 'none',
     },
 )
-
-const RegisterStackNavigator = createStackNavigator({
-    Register: {
-        screen: Register,
-    }
-})
 
 const HomeStackNavigator = createStackNavigator({
     Home: {
@@ -236,12 +168,11 @@ const HomeStackNavigator = createStackNavigator({
  
 const RootSwitch = createSwitchNavigator(
     {
-        SlideTabNavigator,
         HomeStackNavigator,
         RegisterStackNavigator
     },
     {
-        initialRouteName: "SlideTabNavigator"
+        initialRouteName: "RegisterStackNavigator"
     }
 );
 
@@ -254,18 +185,6 @@ const styles = StyleSheet.create({
         width: 10,
         height: 10,
     }
-  })
-
-// const mapStateToProps = state => {
-//     return {
-//         userData: state.userData
-//     }
-// }
-
-// if (userData != null) {
-//     export default connect(mapStateToProps)(HomeStackNavigator)
-// } else {
-//     export default connect(mapStateToProps)(SlideTabNavigator)
-// }
+})
 
 export default createAppContainer(RootSwitch)
