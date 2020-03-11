@@ -1,16 +1,47 @@
 // Components/Home.js
 import React from 'react'
-import { StyleSheet, View, Image, Text, ImageBackground} from 'react-native'
+import { StyleSheet, View, Image, Text, ImageBackground, Alert } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, FlatList } from 'react-native-gesture-handler';
+import BetCard from './BetCard'
 import { connect } from 'react-redux'
 
 class Home extends React.Component {
     
     constructor(props) {
         super(props)
+        let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
+        let id_user = userData.id_user;
+        this.state = {
+            bets: this._getBets(id_user)
+        }
     }
     
+    _getBets(id_user) {
+        fetch('https://sorbet.bet/api/get-bets.php', {
+            method: 'post',
+            header: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: id_user,
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson == 'no_bets')
+                    Alert.alert("Pas d'amis", "Veuillez ajouter des amis");
+                else if (responseJson == 'no_id')
+                    Alert.alert("Pas d'id", "Faut un id");
+                else
+                    this.setState({ bets: responseJson });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
     _navAddUser(id_user) {
         //const userData = this.props.navigation.getParam("user");
         this.props.navigation.navigate("AddUser", id_user);
@@ -27,182 +58,11 @@ class Home extends React.Component {
                     end={[0, 1]}>
                     <ScrollView
                         showsVerticalScrollIndicator={false} style={styles.scrollView}>
-                            <ImageBackground
-                                source={require('../content/img/burger.jpg')}
-                                style={styles.divCard}
-                                imageStyle={{ borderRadius: 15 }}
-                            >
-                                <View style={styles.overlay}>
-                                    <Image
-                                        style={{
-                                            width: 80,
-                                            height: 80,
-                                            borderRadius: 15,
-                                            zIndex: 50,
-                                            marginTop: -20,
-                                            marginLeft: -20,
-                                        }}
-                                        source={require('../content/img/macdo.jpg')}
-                                    />
-                                    <View style={styles.contentCard}>
-                                        <View style={styles.divInfosParis}>
-                                            <Text style={styles.nameBet}>McDonald's</Text>
-                                            <View style={styles.divInfosTop}>
-                                                <View style={styles.divLocation}>
-                                                    <Image
-                                                        style={{
-                                                            width: 20,
-                                                            height: 20,
-                                                        }}
-                                                        source={require('../content/img/boules-blanc.png')}
-                                                    />
-                                                    <Text style={styles.titleLocation}>Strasbourg</Text>
-                                                </View>
-                                                <View style={styles.divNbBet}>
-                                                    <Image
-                                                        style={{
-                                                            width: 20,
-                                                            height: 20,
-                                                        }}
-                                                        source={require('../content/img/boules-blanc.png')}
-                                                    />
-                                                    <Text style={styles.titleNbBet}>83 Sorbets</Text>
-                                                </View>
-                                            </View>
-                                        </View>
-                                        <View style={styles.divQuestionBet}>
-                                            <Text style={styles.questionBet}>Quel burger revient chez McDonald's la semaine prochaine ?</Text>
-                                        </View>
-                                        <View style={styles.divInfosBottom}>
-                                            <Text style={styles.titleCat}>Petits plaisirs</Text>
-                                            <Image
-                                                style={{
-                                                    width: 30,
-                                                    height: 30,
-                                                }}
-                                                source={require('../content/img/boules-blanc.png')}
-                                            />
-                                        </View>
-                                    </View>
-                                </View>
-                            </ImageBackground>
-                            <ImageBackground
-                                source={require('../content/img/burger.jpg')}
-                                style={styles.divCard}
-                                imageStyle={{ borderRadius: 15 }}
-                            >
-                                <View style={styles.overlay}>
-                                    <Image
-                                        style={{
-                                            width: 80,
-                                            height: 80,
-                                            borderRadius: 15,
-                                            zIndex: 50,
-                                            marginTop: -20,
-                                            marginLeft: -20,
-                                        }}
-                                        source={require('../content/img/macdo.jpg')}
-                                    />
-                                    <View style={styles.contentCard}>
-                                        <View style={styles.divInfosParis}>
-                                            <Text style={styles.nameBet}>McDonald's</Text>
-                                            <View style={styles.divInfosTop}>
-                                                <View style={styles.divLocation}>
-                                                    <Image
-                                                        style={{
-                                                            width: 20,
-                                                            height: 20,
-                                                        }}
-                                                        source={require('../content/img/boules-blanc.png')}
-                                                    />
-                                                    <Text style={styles.titleLocation}>Strasbourg</Text>
-                                                </View>
-                                                <View style={styles.divNbBet}>
-                                                    <Image
-                                                        style={{
-                                                            width: 20,
-                                                            height: 20,
-                                                        }}
-                                                        source={require('../content/img/boules-blanc.png')}
-                                                    />
-                                                    <Text style={styles.titleNbBet}>83 Sorbets</Text>
-                                                </View>
-                                            </View>
-                                        </View>
-                                        <View style={styles.divQuestionBet}>
-                                            <Text style={styles.questionBet}>Quel burger revient chez McDonald's la semaine prochaine ?</Text>
-                                        </View>
-                                        <View style={styles.divInfosBottom}>
-                                            <Text style={styles.titleCat}>Petits plaisirs</Text>
-                                            <Image
-                                                style={{
-                                                    width: 30,
-                                                    height: 30,
-                                                }}
-                                                source={require('../content/img/boules-blanc.png')}
-                                            />
-                                        </View>
-                                    </View>
-                                </View>
-                            </ImageBackground>
-                            <ImageBackground
-                                source={require('../content/img/burger.jpg')}
-                                style={styles.divCard}
-                                imageStyle={{ borderRadius: 15 }}
-                            >
-                                <View style={styles.overlay}>
-                                    <Image
-                                        style={{
-                                            width: 80,
-                                            height: 80,
-                                            marginTop: -20,
-                                            marginLeft: -20,
-                                            borderRadius: 15,
-                                        }}
-                                        source={require('../content/img/macdo.jpg')}
-                                    />
-                                    <View style={styles.contentCard}>
-                                        <View style={styles.divInfosParis}>
-                                            <Text style={styles.nameBet}>McDonald's</Text>
-                                            <View style={styles.divInfosTop}>
-                                                <View style={styles.divLocation}>
-                                                    <Image
-                                                        style={{
-                                                            width: 20,
-                                                            height: 20,
-                                                        }}
-                                                        source={require('../content/img/boules-blanc.png')}
-                                                    />
-                                                    <Text style={styles.titleLocation}>Strasbourg</Text>
-                                                </View>
-                                                <View style={styles.divNbBet}>
-                                                    <Image
-                                                        style={{
-                                                            width: 20,
-                                                            height: 20,
-                                                        }}
-                                                        source={require('../content/img/boules-blanc.png')}
-                                                    />
-                                                    <Text style={styles.titleNbBet}>83 Sorbets</Text>
-                                                </View>
-                                            </View>
-                                        </View>
-                                        <View style={styles.divQuestionBet}>
-                                            <Text style={styles.questionBet}>Quel burger revient chez McDonald's la semaine prochaine ?</Text>
-                                        </View>
-                                        <View style={styles.divInfosBottom}>
-                                            <Text style={styles.titleCat}>Petits plaisirs</Text>
-                                            <Image
-                                                style={{
-                                                    width: 30,
-                                                    height: 30,
-                                                }}
-                                                source={require('../content/img/boules-blanc.png')}
-                                            />
-                                        </View>
-                                    </View>
-                                </View>
-                            </ImageBackground>
+                            <FlatList
+                                data={this.state.bets}
+                                keyExtractor={(item) => item.id_bet}
+                                renderItem={({ item }) => <BetCard bet={item} />}
+                            />
                     </ScrollView>
                 </LinearGradient>
             </View>
@@ -216,79 +76,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         width: '100%',
     },
-    viewLogo: {
-
-    },
     scrollView: {
         marginBottom: 75,
-    },
-    divCard: {
-        marginBottom: 20,
-        marginTop: 20,
-        marginLeft: 20,
-        height: 200,
-    },
-    overlay: {
-        backgroundColor: 'rgba(0, 0, 0, 0.6)',
-        width: '100%',
-        height: '100%',
-        borderRadius: 15,
-    },
-    contentCard: {
-        width: '100%',
-        height: 200,
-        borderRadius: 15,
-        marginTop: -60,
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-    },
-    divInfosParis: {
-        marginLeft: 60,
-    },
-    nameBet: {
-        color: '#ffffff',
-        fontWeight: 'bold',
-        marginLeft: 10,
-        marginTop: 10,
-    },
-    divInfosTop: {
-        flexDirection: 'row',
-        marginLeft: 10,
-    },
-    divLocation: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    titleLocation: {
-        color: '#ffffff',
-        fontSize: 10,
-    },
-    divNbBet: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    titleNbBet: {
-        color: '#ffffff',
-        fontSize: 10,
-    },
-    divQuestionBet: {
-        alignItems: 'center',
-    },
-    questionBet: {
-        color: '#ffffff',
-        textAlign: 'center',
-        width: '80%',
-    },
-    divInfosBottom: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginHorizontal: 20,
-        marginBottom: 5,
-    },
-    titleCat: {
-        color: '#ffffff',
-        textTransform: 'uppercase',
-        fontSize: 14,
     },
 })
 

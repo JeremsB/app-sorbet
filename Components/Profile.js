@@ -1,16 +1,48 @@
 // Components/Profile.js
 import React from 'react'
-import { StyleSheet, View, Text, Image, TouchableOpacity, ImageBackground, ScrollView } from 'react-native'
+import { StyleSheet, View, Text, Image, TouchableOpacity, ImageBackground, Alert } from 'react-native'
+import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient'
+import BetCard from './BetCard'
 import { connect } from 'react-redux'
 
 class Profile extends React.Component {
 
     constructor(props) {
         super(props)
+        let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
+        let id_user = userData.id_user;
+        this.state = {
+            bets: this._getBets(id_user),
+            message: ""
+        }
     }
 
-    
+    _getBets(id_user) {
+        fetch('https://sorbet.bet/api/get-user-bets.php', {
+            method: 'post',
+            header: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: id_user,
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson == 'no_bets')
+                    this.setState({ message: "Message d'erreur" });
+                    // Alert.alert("Pas de paris", "Créez votre propre paris !");
+                else if (responseJson == 'no_id')
+                    Alert.alert("Pas d'id", "Faut un id");
+                else
+                    this.setState({ bets: responseJson });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
 
     _navEarnings() {
         this.props.navigation.navigate("Earnings");
@@ -30,268 +62,94 @@ class Profile extends React.Component {
                     style={{flex:1, paddingTop: 70, paddingBottom: 50, paddingLeft: 30, paddingRight: 30}}
                     start={[1, 0]}
                     end={[0, 1]}>
-                        <View style={styles.divInfosUser}>
+                    <View style={styles.divInfosUser}>
+                        <Image
+                            style={{
+                                width: 100,
+                                height: 100,
+                                borderRadius: 15,
+                            }}
+                            // source={{'../content/img/users/'imgUser}}
+                            source={require('../content/img/users/bobby.jpg')}
+                            // source={imgUser}
+                            //TODO Les images sont dans la bdd  pour les user bonjour et bonsoir et bobby donc
+                            //userData.picture = bobby.jpg / bonjour.jpg....
+                        />
+                        <View style={styles.divRightInfosUser}>
+                            <View style={styles.divNameUser}>
+                                <Text style={styles.firstName}>{userData.firstname}</Text>
+                                <Text style={styles.lastName}>{userData.lastname}</Text>
+                                
+                            </View>
+                            <View>
+                                <Text style={styles.txtDescription}>
+                                    {userData.description}
+                                </Text>
+                            </View> 
+                        </View>
+                    </View>
+                    <View style={styles.divCountUser}>
+                        <View style={styles.divCount}>
+                            <Text style={styles.txtCount}>SORBET'</Text>
+                            <Text style={styles.txtCount2}>43</Text>
+                        </View>
+                        <View style={styles.divCount}>
+                            <Text style={styles.txtCount}>JE SUIS</Text>
+                            <Text style={styles.txtCount2}>179</Text>
+                        </View>
+                        <View style={styles.divCount}>
+                            <Text style={styles.txtCount}>SUIVI PAR</Text>
+                            <Text style={styles.txtCount2}>179</Text>
+                        </View>
+                    </View>
+                    <View style={styles.viewBtn}>
+
+                        
+
+                        <TouchableOpacity
+                            style={styles.divBtn}
+                            // onPress={() => this._createBet()}
+                            >
                             <Image
                                 style={{
-                                    width: 100,
-                                    height: 100,
-                                    borderRadius: 15,
+                                    width: 10,
+                                    height: 10,
+                                    marginRight: 5,
                                 }}
-                                // source={{'../content/img/users/'imgUser}}
-                                source={require('../content/img/users/bobby.jpg')}
-                                // source={imgUser}
-                                //TODO Les images sont dans la bdd  pour les user bonjour et bonsoir et bobby donc
-                                //userData.picture = bobby.jpg / bonjour.jpg....
+                                source={require('../content/img/boules2.png')}
                             />
-                            <View style={styles.divRightInfosUser}>
-                                <View style={styles.divNameUser}>
-                                    <Text style={styles.firstName}>{userData.firstname}</Text>
-                                    <Text style={styles.lastName}>{userData.lastname}</Text>
-                                    
-                                </View>
-                                <View>
-                                    <Text style={styles.txtDescription}>
-                                        {userData.description}
-                                    </Text>
-                                </View> 
-                            </View>
-                        </View>
-                        <View style={styles.divCountUser}>
-                            <View style={styles.divCount}>
-                                <Text style={styles.txtCount}>SORBET'</Text>
-                                <Text style={styles.txtCount2}>43</Text>
-                            </View>
-                            <View style={styles.divCount}>
-                                <Text style={styles.txtCount}>JE SUIS</Text>
-                                <Text style={styles.txtCount2}>179</Text>
-                            </View>
-                            <View style={styles.divCount}>
-                                <Text style={styles.txtCount}>SUIVI PAR</Text>
-                                <Text style={styles.txtCount2}>179</Text>
-                            </View>
-                        </View>
-                        <View style={styles.viewBtn}>
-
-                            
-
-                            <TouchableOpacity
-                                style={styles.divBtn}
-                                // onPress={() => this._createBet()}
-                                >
-                                <Image
-                                    style={{
-                                        width: 10,
-                                        height: 10,
-                                        marginRight: 5,
-                                    }}
-                                    source={require('../content/img/boules2.png')}
-                                />
-                                <Text style={styles.textBtn}>Mes paris</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.divBtn}
-                                onPress={() => this._navEarnings()}
-                                >
-                                <Image
-                                    style={{
-                                        width: 10,
-                                        height: 10,
-                                        marginRight: 5,
-                                    }}
-                                    source={require('../content/img/boules2.png')}
-                                />
-                                <Text style={styles.textBtn}>Mes gains</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.divBtn}
-                                onPress={() => this._navigateSettingsUser()}
-                                >
-                                <Text style={styles.textBtn}>. . .</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <ScrollView style= {styles.divCardUser}
-                        showsVerticalScrollIndicator={false}
-                        >
-                            <ImageBackground
-                                source={require('../content/img/burger.jpg')}
-                                style={styles.divCard}
-                                imageStyle={{ borderRadius: 15 }}
+                            <Text style={styles.textBtn}>Mes paris</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.divBtn}
+                            onPress={() => this._navEarnings()}
                             >
-                                <View style={styles.overlay}>
-                                    <Image
-                                        style={{
-                                            width: 80,
-                                            height: 80,
-                                            borderRadius: 15,
-                                            zIndex: 50,
-                                            marginTop: -20,
-                                            marginLeft: -20,
-                                        }}
-                                        source={require('../content/img/macdo.jpg')}
-                                    />
-                                    <View style={styles.contentCard}>
-                                        <View style={styles.divInfosParis}>
-                                            <Text style={styles.nameBet}>McDonald's</Text>
-                                            <View style={styles.divInfosTop}>
-                                                <View style={styles.divLocation}>
-                                                    <Image
-                                                        style={{
-                                                            width: 20,
-                                                            height: 20,
-                                                        }}
-                                                        source={require('../content/img/boules-blanc.png')}
-                                                    />
-                                                    <Text style={styles.titleLocation}>Strasbourg</Text>
-                                                </View>
-                                                <View style={styles.divNbBet}>
-                                                    <Image
-                                                        style={{
-                                                            width: 20,
-                                                            height: 20,
-                                                        }}
-                                                        source={require('../content/img/boules-blanc.png')}
-                                                    />
-                                                    <Text style={styles.titleNbBet}>83 Sorbets</Text>
-                                                </View>
-                                            </View>
-                                        </View>
-                                        <View style={styles.divQuestionBet}>
-                                            <Text style={styles.questionBet}>Quel burger revient chez McDonald's la semaine prochaine ?</Text>
-                                        </View>
-                                        <View style={styles.divInfosBottom}>
-                                            <Text style={styles.titleCat}>Petits plaisirs</Text>
-                                            <Image
-                                                style={{
-                                                    width: 30,
-                                                    height: 30,
-                                                }}
-                                                source={require('../content/img/boules-blanc.png')}
-                                            />
-                                        </View>
-                                    </View>
-                                </View>
-                            </ImageBackground>
-                            <ImageBackground
-                                source={require('../content/img/burger.jpg')}
-                                style={styles.divCard}
-                                imageStyle={{ borderRadius: 15 }}
+                            <Image
+                                style={{
+                                    width: 10,
+                                    height: 10,
+                                    marginRight: 5,
+                                }}
+                                source={require('../content/img/boules2.png')}
+                            />
+                            <Text style={styles.textBtn}>Mes gains</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.divBtn}
+                            onPress={() => this._navigateSettingsUser()}
                             >
-                                <View style={styles.overlay}>
-                                    <Image
-                                        style={{
-                                            width: 80,
-                                            height: 80,
-                                            borderRadius: 15,
-                                            zIndex: 50,
-                                            marginTop: -20,
-                                            marginLeft: -20,
-                                        }}
-                                        source={require('../content/img/macdo.jpg')}
-                                    />
-                                    <View style={styles.contentCard}>
-                                        <View style={styles.divInfosParis}>
-                                            <Text style={styles.nameBet}>McDonald's</Text>
-                                            <View style={styles.divInfosTop}>
-                                                <View style={styles.divLocation}>
-                                                    <Image
-                                                        style={{
-                                                            width: 20,
-                                                            height: 20,
-                                                        }}
-                                                        source={require('../content/img/boules-blanc.png')}
-                                                    />
-                                                    <Text style={styles.titleLocation}>Strasbourg</Text>
-                                                </View>
-                                                <View style={styles.divNbBet}>
-                                                    <Image
-                                                        style={{
-                                                            width: 20,
-                                                            height: 20,
-                                                        }}
-                                                        source={require('../content/img/boules-blanc.png')}
-                                                    />
-                                                    <Text style={styles.titleNbBet}>83 Sorbets</Text>
-                                                </View>
-                                            </View>
-                                        </View>
-                                        <View style={styles.divQuestionBet}>
-                                            <Text style={styles.questionBet}>Quel burger revient chez McDonald's la semaine prochaine ?</Text>
-                                        </View>
-                                        <View style={styles.divInfosBottom}>
-                                            <Text style={styles.titleCat}>Petits plaisirs</Text>
-                                            <Image
-                                                style={{
-                                                    width: 30,
-                                                    height: 30,
-                                                }}
-                                                source={require('../content/img/boules-blanc.png')}
-                                            />
-                                        </View>
-                                    </View>
-                                </View>
-                            </ImageBackground>
-                            <ImageBackground
-                                source={require('../content/img/burger.jpg')}
-                                style={styles.divCard}
-                                imageStyle={{ borderRadius: 15 }}
-                            >
-                                <View style={styles.overlay}>
-                                    <Image
-                                        style={{
-                                            width: 80,
-                                            height: 80,
-                                            borderRadius: 15,
-                                            zIndex: 50,
-                                            marginTop: -20,
-                                            marginLeft: -20,
-                                        }}
-                                        source={require('../content/img/macdo.jpg')}
-                                    />
-                                    <View style={styles.contentCard}>
-                                        <View style={styles.divInfosParis}>
-                                            <Text style={styles.nameBet}>McDonald's</Text>
-                                            <View style={styles.divInfosTop}>
-                                                <View style={styles.divLocation}>
-                                                    <Image
-                                                        style={{
-                                                            width: 20,
-                                                            height: 20,
-                                                        }}
-                                                        source={require('../content/img/boules-blanc.png')}
-                                                    />
-                                                    <Text style={styles.titleLocation}>Strasbourg</Text>
-                                                </View>
-                                                <View style={styles.divNbBet}>
-                                                    <Image
-                                                        style={{
-                                                            width: 20,
-                                                            height: 20,
-                                                        }}
-                                                        source={require('../content/img/boules-blanc.png')}
-                                                    />
-                                                    <Text style={styles.titleNbBet}>83 Sorbets</Text>
-                                                </View>
-                                            </View>
-                                        </View>
-                                        <View style={styles.divQuestionBet}>
-                                            <Text style={styles.questionBet}>Quel burger revient chez McDonald's la semaine prochaine ?</Text>
-                                        </View>
-                                        <View style={styles.divInfosBottom}>
-                                            <Text style={styles.titleCat}>Petits plaisirs</Text>
-                                            <Image
-                                                style={{
-                                                    width: 30,
-                                                    height: 30,
-                                                }}
-                                                source={require('../content/img/boules-blanc.png')}
-                                            />
-                                        </View>
-                                    </View>
-                                </View>
-                            </ImageBackground>
-                        </ScrollView>
-
-
+                            <Text style={styles.textBtn}>. . .</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <ScrollView
+                        showsVerticalScrollIndicator={false} style={styles.divCardUser}>
+                        <FlatList
+                            data={this.state.bets}
+                            keyExtractor={(item) => item.id_bet}
+                            renderItem={({ item }) => <BetCard bet={item} />}
+                        />
+                        <Text>{this.state.message}</Text>
+                    </ScrollView>
                 </LinearGradient>
             </View>
         )

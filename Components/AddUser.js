@@ -2,8 +2,9 @@
 import React from 'react'
 import {StyleSheet, View, TextInput, Image, TouchableOpacity, Text, Alert} from 'react-native'
 import { LinearGradient } from "expo-linear-gradient";
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import { connect } from 'react-redux'
+import UserCard from './UserCard';
 
 class AddUser extends React.Component {
 
@@ -25,7 +26,7 @@ class AddUser extends React.Component {
                 'Content-type': 'application/json'
             },
             body:JSON.stringify({
-                id: id_user,
+                id_user: id_user,
             })
         })
         .then((response) => response.json())
@@ -133,150 +134,13 @@ class AddUser extends React.Component {
                             showsVerticalScrollIndicator={false}
                             style={styles.scrollAllUsers}
                         >
-                            <View style={styles.cardUser}>
-                                <Image
-                                    style={{
-                                        width: 70,
-                                        height: 70,
-                                        borderRadius: 15,
-                                    }}
-                                    source={require('../content/img/users/bobby.jpg')}
-                                />
-                                <View style={styles.infosRightUser}>
-                                    <View style={styles.viewInfosUsers}>
-                                        <Text style={styles.titleInfosUser}>Kévin2202</Text>
-                                        <Text style={styles.txtInfosUser}>63 Sorbets</Text>
-                                        <Text style={styles.txtInfosUser}>3 amis en commun</Text>
-                                    </View>
-                                    <Image
-                                        style={{
-                                            width: 20,
-                                            height: 20,
-                                        }}
-                                        source={require('../content/img/amis-p.png')}
-                                    />
-                                </View>
-                            </View>
-                            <View style={styles.cardUser}>
-                                <Image
-                                    style={{
-                                        width: 70,
-                                        height: 70,
-                                        borderRadius: 15,
-                                    }}
-                                    source={require('../content/img/users/bobby.jpg')}
-                                />
-                                <View style={styles.infosRightUser}>
-                                    <View style={styles.viewInfosUsers}>
-                                        <Text style={styles.titleInfosUser}>Kévin2202</Text>
-                                        <Text style={styles.txtInfosUser}>63 Sorbets</Text>
-                                        <Text style={styles.txtInfosUser}>3 amis en commun</Text>
-                                    </View>
-                                    <Image
-                                        style={{
-                                            width: 20,
-                                            height: 20,
-                                        }}
-                                        source={require('../content/img/amis-p.png')}
-                                    />
-                                </View>
-                            </View>
-                            <View style={styles.cardUser}>
-                                <Image
-                                    style={{
-                                        width: 70,
-                                        height: 70,
-                                        borderRadius: 15,
-                                    }}
-                                    source={require('../content/img/users/bobby.jpg')}
-                                />
-                                <View style={styles.infosRightUser}>
-                                    <View style={styles.viewInfosUsers}>
-                                        <Text style={styles.titleInfosUser}>Kévin2202</Text>
-                                        <Text style={styles.txtInfosUser}>63 Sorbets</Text>
-                                        <Text style={styles.txtInfosUser}>3 amis en commun</Text>
-                                    </View>
-                                    <Image
-                                        style={{
-                                            width: 20,
-                                            height: 20,
-                                        }}
-                                        source={require('../content/img/amis-p.png')}
-                                    />
-                                </View>
-                            </View>
-                            <View style={styles.cardUser}>
-                                <Image
-                                    style={{
-                                        width: 70,
-                                        height: 70,
-                                        borderRadius: 15,
-                                    }}
-                                    source={require('../content/img/users/bobby.jpg')}
-                                />
-                                <View style={styles.infosRightUser}>
-                                    <View style={styles.viewInfosUsers}>
-                                        <Text style={styles.titleInfosUser}>Kévin2202</Text>
-                                        <Text style={styles.txtInfosUser}>63 Sorbets</Text>
-                                        <Text style={styles.txtInfosUser}>3 amis en commun</Text>
-                                    </View>
-                                    <Image
-                                        style={{
-                                            width: 20,
-                                            height: 20,
-                                        }}
-                                        source={require('../content/img/amis-p.png')}
-                                    />
-                                </View>
-                            </View>
-                            <View style={styles.cardUser}>
-                                <Image
-                                    style={{
-                                        width: 70,
-                                        height: 70,
-                                        borderRadius: 15,
-                                    }}
-                                    source={require('../content/img/users/bobby.jpg')}
-                                />
-                                <View style={styles.infosRightUser}>
-                                    <View style={styles.viewInfosUsers}>
-                                        <Text style={styles.titleInfosUser}>Kévin2202</Text>
-                                        <Text style={styles.txtInfosUser}>63 Sorbets</Text>
-                                        <Text style={styles.txtInfosUser}>3 amis en commun</Text>
-                                    </View>
-                                    <Image
-                                        style={{
-                                            width: 20,
-                                            height: 20,
-                                        }}
-                                        source={require('../content/img/amis-p.png')}
-                                    />
-                                </View>
-                            </View>
-                            <View style={styles.cardUser}>
-                                <Image
-                                    style={{
-                                        width: 70,
-                                        height: 70,
-                                        borderRadius: 15,
-                                    }}
-                                    source={require('../content/img/users/bobby.jpg')}
-                                />
-                                <View style={styles.infosRightUser}>
-                                    <View style={styles.viewInfosUsers}>
-                                        <Text style={styles.titleInfosUser}>Kévin2202</Text>
-                                        <Text style={styles.txtInfosUser}>63 Sorbets</Text>
-                                        <Text style={styles.txtInfosUser}>3 amis en commun</Text>
-                                    </View>
-                                    <Image
-                                        style={{
-                                            width: 20,
-                                            height: 20,
-                                        }}
-                                        source={require('../content/img/amis-p.png')}
-                                    />
-                                </View>
-                            </View>
+                            
+                            <FlatList 
+                                data={this.state.users}
+                                keyExtractor={(item) => item.id_user}
+                                renderItem={({item}) => <UserCard user={item} />}
+                            />
+                            
                         </ScrollView>
                     </View>
                     

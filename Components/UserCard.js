@@ -1,32 +1,37 @@
-// Components/FilmItem.js
+// Components/UserCard.js
 
 import React from 'react'
-import { StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native'
+import { StyleSheet, Text, Image, View } from 'react-native'
 //import { getImageFromApi } from '../API/TMDBApi'
 
 class UserCard extends React.Component {
     render() {
-        const { user, displayUserProfile } = this.props
+        const { user } = this.props
         return (
-            <TouchableOpacity style={styles.main_container}
-                              onPress={() => displayUserProfile(user.id)}>
-                {/*<Image
-                    style={styles.image}
-                    source={{uri: getImageFromApi(film.poster_path)}}
-                />*/}
-                <View style={styles.content_container}>
-                    <View style={styles.header_container}>
-                        <Text style={styles.title_text}>{user.lastname}</Text>
-                        <Text style={styles.vote_text}>{user.firstname}</Text>
+            <View style={styles.cardUser}>
+                <Image
+                    style={{
+                        width: 70,
+                        height: 70,
+                        borderRadius: 15,
+                    }}
+                    source={require('../content/img/users/bobby.jpg')}
+                />
+                <View style={styles.infosRightUser}>
+                    <View style={styles.viewInfosUsers}>
+                    <Text style={styles.titleInfosUser}>{user.login}</Text>
+                        <Text style={styles.txtInfosUser}>63 Sorbets</Text>
+                        <Text style={styles.txtInfosUser}>3 amis en commun</Text>
                     </View>
-                    <View style={styles.description_container}>
-                        <Text style={styles.description_text} numberOfLines={6}>{user.login}</Text>
-                    </View>
-                    <View style={styles.date_container}>
-                        <Text style={styles.date_text}>Sorti le {user.email}</Text>
-                    </View>
+                    <Image
+                        style={{
+                            width: 20,
+                            height: 20,
+                        }}
+                        source={require('../content/img/amis-p.png')}
+                    />
                 </View>
-            </TouchableOpacity>
+            </View>
         )
     }
 }
@@ -35,46 +40,29 @@ const styles = StyleSheet.create({
     main_container: {
         height: 190,
         flexDirection: 'row'
+    }, cardUser: {
+        marginVertical: 10,
+        flexDirection: 'row',
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        borderRadius: 15,
+        padding: 10,
     },
-    image: {
-        width: 120,
-        height: 180,
-        margin: 5,
+    infosRightUser: {
+        marginLeft: 10,
+        width: '70%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
-    content_container: {
-        flex: 1,
-        margin: 5
-    },
-    header_container: {
-        flex: 3,
-        flexDirection: 'row'
-    },
-    title_text: {
+    titleInfosUser: {
+        color: '#ffffff',
         fontWeight: 'bold',
-        fontSize: 20,
-        flex: 1,
-        flexWrap: 'wrap',
-        paddingRight: 5
+        fontSize: 19,
     },
-    vote_text: {
-        fontWeight: 'bold',
-        fontSize: 26,
-        color: '#666666'
+    txtInfosUser: {
+        color: '#ffffff',
+        fontSize: 12,
     },
-    description_container: {
-        flex: 7
-    },
-    description_text: {
-        fontStyle: 'italic',
-        color: '#666666'
-    },
-    date_container: {
-        flex: 1
-    },
-    date_text: {
-        textAlign: 'right',
-        fontSize: 14
-    }
 })
 
 export default UserCard
