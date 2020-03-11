@@ -53,7 +53,7 @@ class CreateBet extends React.Component {
                     <View style={styles.viewBtn}>
                         <TouchableOpacity
                             style={styles.divBtn}
-                            onPress={() => this._createBet()}>
+                            onPress={() => /*this._createBet()*/ Alert.alert("Clique pas","En vrai c'est pas prêt t'sais regarde le reste en attendant")}>
                             <Text style={styles.textBtn}>Créer pari</Text>
                         </TouchableOpacity>
                         <Text>{userData.login}</Text>
