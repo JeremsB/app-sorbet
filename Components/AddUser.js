@@ -14,7 +14,7 @@ class AddUser extends React.Component {
         let id_user = userData.id_user;
         this.state = {
             users: this._getUsers(id_user),
-            friends: this._getFriends(id_user)
+            //friends: this._getFriends(id_user)
         }
     }
 
@@ -42,7 +42,7 @@ class AddUser extends React.Component {
                 console.error(error);
             });
     }
-
+    /*
     _getFriends(id_user) {
         fetch('https://sorbet.bet/api/get-friends.php',{
             method: 'post',
@@ -66,7 +66,7 @@ class AddUser extends React.Component {
             .catch((error) => {
                 console.error(error);
             });
-    }
+    }*/
 
     render() {
         //TODO this.state.users contient tous les utilisateurs qui sont pas amis avec l'utilisateur connecté

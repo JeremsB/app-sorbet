@@ -6,7 +6,7 @@ import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import BetCard from './BetCard'
 import { connect } from 'react-redux'
 import { ActivityIndicator } from 'react-native-paper';
-import { getBetInfos} from './user'
+import { getBetInfos} from '../API/BetAPI'
 
 class Bet extends React.Component {
 
@@ -56,31 +56,6 @@ class Bet extends React.Component {
         })
     }
 
-    // _getBetInfos(id_bet) {
-    // fetch('https://sorbet.bet/api/get-bet-infos.php', {
-    //     method: 'post',
-    //         header: {
-    //             'Accept': 'application/json',
-    //             'Content-type': 'application/json'
-    //         },
-    //         body: JSON.stringify({
-    //             id_bet: id_bet,
-    //         })
-    //     })
-    //         .then((response) => response.json())
-    //         .then((responseJson) => {
-    //             if (responseJson == 'no_bet_infos')
-    //                 Alert.alert("Pas d'infos", "Veuillez ajouter des amis");
-    //             else if (responseJson == 'no_id')
-    //                 Alert.alert("Pas d'id", "Faut un id");
-    //             else
-    //                 this.setState({ bet: responseJson });
-    //         })
-    //         .catch((error) => {
-    //             console.error(error);
-    //         });
-    // }
-
     render() {
         return (
             <View style={styles.viewFlex}>
@@ -117,10 +92,4 @@ const styles = StyleSheet.create({
     },
 })
 
-const mapStateToProps = (state) => {
-    return {
-        userData: state.userData
-    }
-}
-
-export default connect(mapStateToProps)(Bet)
+export default Bet
