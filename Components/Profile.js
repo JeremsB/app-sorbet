@@ -5,6 +5,8 @@ import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient'
 import BetCard from './BetCard'
 import { connect } from 'react-redux'
+import {getBetInfos} from "../API/BetAPI";
+import {getCountFriends} from "../API/UserAPI";
 
 class Profile extends React.Component {
 
@@ -14,7 +16,8 @@ class Profile extends React.Component {
         let id_user = userData.id_user;
         this.state = {
             bets: this._getBets(id_user),
-            message: ""
+            message: "",
+            nb_friends: undefined
         }
     }
 
@@ -33,7 +36,6 @@ class Profile extends React.Component {
             .then((responseJson) => {
                 if (responseJson == 'no_bets')
                     this.setState({ message: "N'attend pas et créés ton Sorbet'!" });
-                    // Alert.alert("Pas de paris", "Créez votre propre paris !");
                 else if (responseJson == 'no_id')
                     Alert.alert("Pas d'id", "Faut un id");
                 else
@@ -52,10 +54,18 @@ class Profile extends React.Component {
         this.props.navigation.navigate("SettingsUser");
     }
 
+    componentDidMount() {
+        getCountFriends(this.props.userData[0].id_user).then(data => {
+            this.setState({
+                nb_friends: data
+                //isLoading: false,
+            })
+        })
+        console.log(this.state)
+    }
+
     render() {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
-        // const imgUser = (userData.picture);
-        // var image = userdData.picture ? require('../content/img/users/' + userData.picture):''
         return (
             <View style={styles.main_container}>
                 <LinearGradient
@@ -96,7 +106,7 @@ class Profile extends React.Component {
                         </View>
                         <View style={styles.divCount}>
                             <Text style={styles.txtCount}>SUIVI PAR</Text>
-                            <Text style={styles.txtCount2}>179</Text>
+                            <Text style={styles.txtCount2}>{/*this.state.nb_friends[0]*/}</Text>
                         </View>
                     </View>
                     <View style={styles.viewBtn}>
