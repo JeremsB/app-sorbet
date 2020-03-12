@@ -70,7 +70,8 @@ class Profile extends React.Component {
                                 borderRadius: 15,
                             }}
                             // source={{'../content/img/users/'imgUser}}
-                            source={require('../content/img/users/bobby.jpg')}
+                            //source={require('../content/img/users/bobby.jpg')}
+                            source={{uri: 'https://sorbet.bet/users/'+userData.picture}}
                             // source={imgUser}
                             //TODO Les images sont dans la bdd  pour les user bonjour et bonsoir et bobby donc
                             //userData.picture = bobby.jpg / bonjour.jpg....
