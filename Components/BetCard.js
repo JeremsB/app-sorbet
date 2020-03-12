@@ -8,7 +8,6 @@ class BetCard extends React.Component {
 
     render() {
         const { bet, displayBet } = this.props
-        console.log(this.props.bet)
         return (
             <ImageBackground
                 source={require('../content/img/burger.jpg')}

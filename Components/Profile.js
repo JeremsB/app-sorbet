@@ -5,6 +5,8 @@ import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient'
 import BetCard from './BetCard'
 import { connect } from 'react-redux'
+import {getBetInfos} from "../API/BetAPI";
+import {getCountFriends} from "../API/UserAPI";
 
 class Profile extends React.Component {
 
@@ -14,7 +16,9 @@ class Profile extends React.Component {
         let id_user = userData.id_user;
         this.state = {
             bets: this._getBets(id_user),
-            message: ""
+            message: "",
+            nb_friends: this._getCountFriends(id_user),
+            nb_bets: this._getCountBets(id_user)
         }
     }
 
@@ -33,11 +37,60 @@ class Profile extends React.Component {
             .then((responseJson) => {
                 if (responseJson == 'no_bets')
                     this.setState({ message: "N'attend pas et créés ton Sorbet'!" });
-                    // Alert.alert("Pas de paris", "Créez votre propre paris !");
                 else if (responseJson == 'no_id')
                     Alert.alert("Pas d'id", "Faut un id");
                 else
                     this.setState({ bets: responseJson });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    _getCountFriends(id_user) {
+        fetch('https://sorbet.bet/api/get-count-friends.php', {
+            method: 'post',
+            header: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                id_user: id_user
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson == 'no_friends')
+                    this.setState({ nb_friends: responseJson });
+                else if (responseJson == 'no_id')
+                    Alert.alert("Pas d'id","Faut un id");
+                else
+                    this.setState({ nb_friends: responseJson });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    _getCountBets(id_user) {
+        fetch('https://sorbet.bet/api/get-count-bets.php', {
+            method: 'post',
+            header: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                id_user: id_user
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson == 'no_bets')
+                    this.setState({ nb_bets: responseJson });
+                else if (responseJson == 'no_id')
+                    Alert.alert("Pas d'id","Faut un id");
+                else
+                    this.setState({ nb_bets: responseJson });
             })
             .catch((error) => {
                 console.error(error);
@@ -54,8 +107,8 @@ class Profile extends React.Component {
 
     render() {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
-        // const imgUser = (userData.picture);
-        // var image = userdData.picture ? require('../content/img/users/' + userData.picture):''
+        //this._getCountFriends(userData.id_user);
+        //this._getCountBets(userData.id_user);
         return (
             <View style={styles.main_container}>
                 <LinearGradient
@@ -88,15 +141,15 @@ class Profile extends React.Component {
                     <View style={styles.divCountUser}>
                         <View style={styles.divCount}>
                             <Text style={styles.txtCount}>SORBET'</Text>
-                            <Text style={styles.txtCount2}>43</Text>
+                            <Text style={styles.txtCount2}>{this.state.nb_bets}</Text>
                         </View>
                         <View style={styles.divCount}>
                             <Text style={styles.txtCount}>JE SUIS</Text>
-                            <Text style={styles.txtCount2}>179</Text>
+                            <Text style={styles.txtCount2}>plutot swag</Text>
                         </View>
                         <View style={styles.divCount}>
-                            <Text style={styles.txtCount}>SUIVI PAR</Text>
-                            <Text style={styles.txtCount2}>179</Text>
+                            <Text style={styles.txtCount}>AMIS</Text>
+                            <Text style={styles.txtCount2}>{this.state.nb_friends}</Text>
                         </View>
                     </View>
                     <View style={styles.viewBtn}>

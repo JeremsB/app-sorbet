@@ -2,9 +2,6 @@
 import React from 'react'
 import { StyleSheet, View, Image, Text, ImageBackground, TouchableOpacity } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
-import { ScrollView, FlatList } from 'react-native-gesture-handler';
-import BetCard from './BetCard'
-import { connect } from 'react-redux'
 import { ActivityIndicator } from 'react-native-paper';
 import { getBetInfos} from '../API/BetAPI'
 

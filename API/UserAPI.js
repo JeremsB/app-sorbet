@@ -1,16 +1,14 @@
-export function getUsers (id) {
-    fetch('https://sorbet.bet/api/get-users.php', {
+export function getCountFriends (id) {
+    return fetch('https://sorbet.bet/api/get-count-friends.php', {
         method: 'post',
-        header:{
+        header: {
             'Accept': 'application/json',
             'Content-type': 'application/json'
         },
-        body:JSON.stringify({
-            id: id
+        body: JSON.stringify({
+            id_user: id
         })
     })
-        .then((response) => response.json())
-        .catch((error) => {
-            console.error(error);
-        });
+    .then((response) => response.json())
+    //.catch((error) => {console.error(error);});
 }

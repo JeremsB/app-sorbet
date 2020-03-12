@@ -1,5 +1,3 @@
-import { StyleSheet, View, Image, Text, ImageBackground, Alert } from 'react-native'
-
 export function getBetInfos (id) {
     return fetch('https://sorbet.bet/api/get-bet-infos.php', {
         method: 'post',
