@@ -23,57 +23,54 @@ class BetCard extends React.Component {
                             borderRadius: 15,
                             zIndex: 50,
                             marginTop: -20,
-                            marginLeft: -20,
+                            marginBottom: -60
+,                            marginLeft: -20,
                         }}
                         source={{uri: 'https://sorbet.bet/users/'+bet.picture}}
                     />
-                    <TouchableOpacity
-                        onPress={() => displayBet(bet.id_bet)}
-                        style={styles.contentCard}
-                    >
-
-                    </TouchableOpacity>
-                    <View>
-                        <View style={styles.divInfosParis}>
-                            <Text style={styles.nameBet}>{bet.login}</Text>
-                            <View style={styles.divInfosTop}>
-                                <View style={styles.divLocation}>
-                                    <Image
-                                        style={{
-                                            width: 20,
-                                            height: 20,
-                                        }}
-                                        source={require('../content/img/boules-blanc.png')}
-                                    />
-                                    <Text style={styles.titleLocation}>{bet.localisation}</Text>
-                                </View>
-                                <View style={styles.divNbBet}>
-                                    <Image
-                                        style={{
-                                            width: 20,
-                                            height: 20,
-                                        }}
-                                        source={require('../content/img/boules-blanc.png')}
-                                    />
-                                    <Text style={styles.titleNbBet}>83 Sorbets</Text>
+                        <TouchableOpacity style={styles.contentCard}
+                            onPress={() => displayBet(bet.id_bet)}
+                        >
+                            <View style={styles.divInfosParis}>
+                                <Text style={styles.nameBet}>{bet.login}</Text>
+                                <View style={styles.divInfosTop}>
+                                    <View style={styles.divLocation}>
+                                        <Image
+                                            style={{
+                                                width: 20,
+                                                height: 20,
+                                            }}
+                                            source={require('../content/img/boules-blanc.png')}
+                                        />
+                                        <Text style={styles.titleLocation}>{bet.localisation}</Text>
+                                    </View>
+                                    <View style={styles.divNbBet}>
+                                        <Image
+                                            style={{
+                                                width: 20,
+                                                height: 20,
+                                            }}
+                                            source={require('../content/img/boules-blanc.png')}
+                                        />
+                                        <Text style={styles.titleNbBet}>83 Sorbets</Text>
+                                    </View>
                                 </View>
                             </View>
-                        </View>
-                        <View style={styles.divQuestionBet}>
-                            <Text style={styles.questionBet}>{bet.label}</Text>
-                        </View>
-                        <View style={styles.divInfosBottom}>
-                            <Text style={styles.titleCat}>{bet.category}</Text>
-                            <Image
-                                style={{
-                                    width: 30,
-                                    height: 30,
-                                }}
-                                source={require('../content/img/boules-blanc.png')}
-                            />
-                        </View>
+                            <View style={styles.divQuestionBet}>
+                                <Text style={styles.questionBet}>{bet.label}</Text>
+                            </View>
+                            <View style={styles.divInfosBottom}>
+                                <Text style={styles.titleCat}>{bet.category}</Text>
+                                <Image
+                                    style={{
+                                        width: 30,
+                                        height: 30,
+                                    }}
+                                    source={require('../content/img/boules-blanc.png')}
+                                />
+                            </View>
+                        </TouchableOpacity>
                     </View>
-                </View>
             </ImageBackground>
         )
     }
@@ -100,7 +97,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 200,
         borderRadius: 15,
-        marginTop: -60,
+        // marginTop: -60,
         flexDirection: 'column',
         justifyContent: 'space-between',
     },

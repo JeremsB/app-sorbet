@@ -77,12 +77,10 @@ class Profile extends React.Component {
                             <View style={styles.divNameUser}>
                                 <Text style={styles.firstName}>{userData.firstname}</Text>
                                 <Text style={styles.lastName}>{userData.lastname}</Text>
-                                
                             </View>
                             <View>
                                 <Text style={styles.txtDescription}>
                                     {userData.description}
-                                    {userData.picture}
                                 </Text>
                             </View> 
                         </View>

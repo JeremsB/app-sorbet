@@ -1,6 +1,6 @@
 // Components/Bet.js
 import React from 'react'
-import { StyleSheet, View, Image, Text, ImageBackground, Alert } from 'react-native'
+import { StyleSheet, View, Image, Text, ImageBackground, TouchableOpacity } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import BetCard from './BetCard'
@@ -30,18 +30,50 @@ class Bet extends React.Component {
 
     _displayBet() {
         const { bet } = this.state
-        console.log(bet)
         if (bet != undefined) {
             return (
                 <LinearGradient
                     colors={['#E577A2', '#ff978d']}
-                    style={{ flex: 1, paddingTop: 70, paddingBottom: 50, paddingLeft: 30, paddingRight: 30 }}
+                    style={{ flex: 1, paddingBottom: 50}}
                     start={[1, 0]}
                     end={[0, 1]}>
-                    <Text style={styles.textBlack}>bite</Text>
-                    <Text style={styles.textBlack}>{bet.label}</Text>
-                    <Text style={styles.textBlack}>{bet.description}</Text>
-                    <Text style={styles.textBlack}>{bet.label}</Text>
+                    <ImageBackground
+                        source={require('../content/img/burger.jpg')}
+                        style={styles.divCard}
+                        imageStyle={{ borderRadius: 30 }}
+                    >
+                        <View style={styles.contentCard}>
+                            <Image
+                                style={{
+                                    width: 80,
+                                    height: 80,
+                                    borderRadius: 15,
+                                    zIndex: 50,
+                                }}
+                                source={{ uri: 'https://sorbet.bet/users/' + bet.picture }}
+                            />
+                            <Text style={styles.titleNbBet}>83 Sorbets</Text>
+                            <Text style={styles.questionBet}>{bet.description}</Text>
+                            <Text style={styles.titleCat}>{bet.category}</Text>
+
+                            <Text style={styles.nameBet}>{bet.login}</Text>
+                            <Text style={styles.titleLocation}>{bet.localisation}</Text>
+                            {/* <Image
+                                style={{
+                                    width: 20,
+                                    height: 20,
+                                }}
+                                source={require('../content/img/boules-blanc.png')}
+                            />
+                            <Image
+                                style={{
+                                    width: 20,
+                                    height: 20,
+                                }}
+                                source={require('../content/img/boules-blanc.png')}
+                            /> */}
+                        </View>
+                    </ImageBackground>
                 </LinearGradient>
             )
         }
@@ -58,7 +90,7 @@ class Bet extends React.Component {
 
     render() {
         return (
-            <View style={styles.viewFlex}>
+            <View style={styles.main_container}>
                 {this._displayLoading()}
                 {this._displayBet()}
             </View>     
@@ -72,9 +104,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         width: '100%',
     },
-    scrollView: {
-        marginBottom: 75,
-    },
     loading: {
         position: 'absolute',
         left: 0,
@@ -84,11 +113,39 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    viewFlex: {
-        flex: 1,
+    divCard: {
+        height: 250,
     },
-    textBlack: {
-        color: '#000000',
+    contentCard: {
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        height: '100%',
+        width: '100%',
+        height: 250,
+        borderRadius: 30,
+        flexDirection: 'column',
+        alignItems: 'center',
+        paddingTop: 50,
+    },
+    nameBet: {
+        color: '#ffffff',
+        fontWeight: 'bold',
+    },
+    titleLocation: {
+        color: '#ffffff',
+        fontSize: 10,
+    },
+    titleNbBet: {
+        color: '#ffffff',
+        fontSize: 10,
+    },
+    questionBet: {
+        color: '#ffffff',
+        textAlign: 'center',
+    },
+    titleCat: {
+        color: '#ffffff',
+        textTransform: 'uppercase',
+        fontSize: 14,
     },
 })
 

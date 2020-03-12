@@ -47,7 +47,18 @@ const HomeStackNavigator = createStackNavigator({
     Home: {
         screen: createBottomTabNavigator({
             Accueil: {
-                screen: Home,
+                screen: createStackNavigator({
+                    Home: {
+                        screen: Home,
+                    },
+                    Bet: {
+                        screen: Bet,
+                    },
+                },
+                {
+                    headerMode: 'none',
+                }
+                ),
                 navigationOptions: {
                     tabBarIcon: ({ focused }) => {
                         const image = focused

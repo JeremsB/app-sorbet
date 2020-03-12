@@ -86,7 +86,6 @@ class AddUser extends React.Component {
                         <View style={styles.viewSearch}>
                             <TextInput
                                 style={styles.inputSearch}
-                                secureTextEntry={true}
                                 placeholder='Rechercher'
                                 placeholderTextColor='#ffffff'
                             />
