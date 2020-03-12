@@ -52,26 +52,40 @@ class Bet extends React.Component {
                                 }}
                                 source={{ uri: 'https://sorbet.bet/users/' + bet.picture }}
                             />
-                            <Text style={styles.titleNbBet}>83 Sorbets</Text>
-                            <Text style={styles.questionBet}>{bet.description}</Text>
-                            <Text style={styles.titleCat}>{bet.category}</Text>
-
                             <Text style={styles.nameBet}>{bet.login}</Text>
-                            <Text style={styles.titleLocation}>{bet.localisation}</Text>
-                            {/* <Image
-                                style={{
-                                    width: 20,
-                                    height: 20,
-                                }}
-                                source={require('../content/img/boules-blanc.png')}
-                            />
-                            <Image
-                                style={{
-                                    width: 20,
-                                    height: 20,
-                                }}
-                                source={require('../content/img/boules-blanc.png')}
-                            /> */}
+                            <View style={styles.viewInfosLoc}>
+                                <View style={styles.row}>
+                                    <Image
+                                        style={{
+                                            width: 40,
+                                            height: 40,
+                                        }}
+                                        source={require('../content/img/boules-blanc.png')}
+                                    />
+                                    <Text style={styles.titleLocation}>{bet.localisation}</Text>
+                                </View>
+                                <View style={styles.row}>
+                                    <Image
+                                        style={{
+                                            width: 40,
+                                            height: 40,
+                                        }}
+                                        source={require('../content/img/boules-blanc.png')}
+                                    />
+                                    <Text style={styles.titleNbBet}>83 Sorbets</Text>
+                                </View>
+                                
+                            </View>
+                            <Text style={styles.questionBet}>{bet.label}</Text>
+
+                        </View>
+                        <View style={styles.viewScroll}>
+                            <Text style={styles.description}>{bet.description}</Text>
+                            <View style={styles.viewBottomCard}>
+                                <Text style={styles.titleCat}>{bet.category}</Text>
+                                <View style={styles.viewBtn}></View>
+                                <Text style={styles.titlePromo}>-30%</Text>
+                            </View>
                         </View>
                     </ImageBackground>
                 </LinearGradient>
@@ -114,13 +128,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     divCard: {
-        height: 250,
+        height: 275,
     },
     contentCard: {
         backgroundColor: 'rgba(0, 0, 0, 0.6)',
         height: '100%',
         width: '100%',
-        height: 250,
+        height: 275,
         borderRadius: 30,
         flexDirection: 'column',
         alignItems: 'center',
@@ -129,6 +143,15 @@ const styles = StyleSheet.create({
     nameBet: {
         color: '#ffffff',
         fontWeight: 'bold',
+        paddingVertical: 10,
+    },
+    viewInfosLoc: {
+        flexDirection: 'row',
+        marginBottom: 10,
+    },
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     titleLocation: {
         color: '#ffffff',
@@ -142,10 +165,48 @@ const styles = StyleSheet.create({
         color: '#ffffff',
         textAlign: 'center',
     },
+    description: {
+        fontSize: 16,
+        color: '#F38696',
+        fontWeight: 'bold',
+        fontStyle: 'italic',
+    },
     titleCat: {
-        color: '#ffffff',
+        color: '#F38696',
         textTransform: 'uppercase',
         fontSize: 14,
+        width: '40%',
+    },
+    titlePromo: {
+        color: '#F38696',
+        textTransform: 'uppercase',
+        fontSize: 14,
+        textAlign: 'right',
+        width: '40%',
+    },
+    viewScroll: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        backgroundColor: '#ffffff',
+        zIndex: -10,
+        height: 400,
+        // marginTop: -350,
+        marginTop: -50,
+        borderRadius: 30,
+        paddingHorizontal: 30,
+        paddingTop: 75,
+        paddingBottom: 17,
+    },
+    viewBottomCard: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    viewBtn: {
+        width: 50,
+        height: 10,
+        backgroundColor: 'rgba(0, 0, 0, 0.15)',
+        borderRadius: 10,
     },
 })
 
