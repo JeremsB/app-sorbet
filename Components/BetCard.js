@@ -3,7 +3,6 @@
 import React from 'react'
 import { StyleSheet, Text, Image, View, ImageBackground } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-//import { getImageFromApi } from '../API/TMDBApi'
 
 class BetCard extends React.Component {
 

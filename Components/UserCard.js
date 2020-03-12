@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { StyleSheet, Text, Image, View } from 'react-native'
-//import { getImageFromApi } from '../API/TMDBApi'
 
 class UserCard extends React.Component {
     render() {
