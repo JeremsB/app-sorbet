@@ -25,7 +25,7 @@ class BetCard extends React.Component {
                             marginTop: -20,
                             marginLeft: -20,
                         }}
-                        source={require('../content/img/macdo.jpg')}
+                        source={{uri: 'https://sorbet.bet/users/'+bet.picture}}
                     />
                     <View style={styles.contentCard}>
                         <View style={styles.divInfosParis}>

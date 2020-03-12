@@ -15,7 +15,7 @@ class UserCard extends React.Component {
                         height: 70,
                         borderRadius: 15,
                     }}
-                    source={require('../content/img/users/bobby.jpg')}
+                    source={{uri: 'https://sorbet.bet/users/'+user.picture}}
                 />
                 <View style={styles.infosRightUser}>
                     <View style={styles.viewInfosUsers}>
