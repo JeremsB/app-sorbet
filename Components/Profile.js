@@ -54,7 +54,8 @@ class Profile extends React.Component {
 
     render() {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
-        // const imgUser = (userData.picture);s
+        // const imgUser = (userData.picture);
+        // var image = userdData.picture ? require('../content/img/users/' + userData.picture):''
         return (
             <View style={styles.main_container}>
                 <LinearGradient
@@ -63,6 +64,7 @@ class Profile extends React.Component {
                     start={[1, 0]}
                     end={[0, 1]}>
                     <View style={styles.divInfosUser}>
+
                         <Image
                             style={{
                                 width: 100,
@@ -85,6 +87,7 @@ class Profile extends React.Component {
                             <View>
                                 <Text style={styles.txtDescription}>
                                     {userData.description}
+                                    {userData.picture}
                                 </Text>
                             </View> 
                         </View>

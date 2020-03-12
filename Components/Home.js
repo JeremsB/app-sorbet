@@ -17,6 +17,13 @@ class Home extends React.Component {
         }
     }
     
+    _displayBet = (idBet) => {
+        // console.log('FJVOJ?DFV?PD' + idBet)
+        this.props.navigation.navigate("Bet", {
+            idBet: idBet
+        })
+    }
+
     _getBets(id_user) {
         fetch('https://sorbet.bet/api/get-bets.php', {
             method: 'post',
@@ -61,7 +68,7 @@ class Home extends React.Component {
                             <FlatList
                                 data={this.state.bets}
                                 keyExtractor={(item) => item.id_bet}
-                                renderItem={({ item }) => <BetCard bet={item} />}
+                                renderItem={({ item }) => <BetCard bet={item} displayBet={this._displayBet} />}
                             />
                     </ScrollView>
                 </LinearGradient>

@@ -8,6 +8,7 @@ import { StyleSheet, Image } from 'react-native'
 import Login from '../Components/Login'
 import Home from '../Components/Home'
 import CreateBet from '../Components/CreateBet'
+import Bet from '../Components/Bet'
 import AddUser from '../Components/AddUser'
 import Profile from '../Components/Profile'
 import SettingsUser from '../Components/SettingsUser'
@@ -25,6 +26,16 @@ const RegisterStackNavigator = createStackNavigator({
     },
     Register: {
         screen: Register,
+    },
+},
+    {
+        headerMode: 'none',
+    },
+)
+
+const BetStackNavigation = createStackNavigator({
+    Bet: {
+        screen: Bet,
     },
 },
     {
@@ -169,7 +180,8 @@ const HomeStackNavigator = createStackNavigator({
 const RootSwitch = createSwitchNavigator(
     {
         HomeStackNavigator,
-        RegisterStackNavigator
+        RegisterStackNavigator,
+        BetStackNavigation
     },
     {
         initialRouteName: "RegisterStackNavigator"

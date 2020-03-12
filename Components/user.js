@@ -1,16 +1,26 @@
-export default data = [
-    {
-        id_user: 147,
-        login: "Bobby",
-        lastname: "Nomdebob",
-        firstname: "Bob",
-        birth: "1996-08-23",
-        email: "bobby@test.com",
-        status: 0,
-        picture:"default.png",
-        profile: "user",
-        newsletter: 1,
-        notifications: 1
-    }
-]
+import { StyleSheet, View, Image, Text, ImageBackground, Alert } from 'react-native'
 
+export function getBetInfos (id) {
+    return fetch('https://sorbet.bet/api/get-bet-infos.php', {
+        method: 'post',
+        header: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: id,
+        })
+    })
+        .then((response) => response.json())
+        // .then((responseJson) => {
+        //     if (responseJson == 'no_bet_infos')
+        //         Alert.alert("Pas d'infos", "Veuillez ajouter des amis");
+        //     else if (responseJson == 'no_id')
+        //         Alert.alert("Pas d'id", "Faut un id");
+        //     else
+        //         this.setState({ bet: responseJson });
+        // })
+        // .catch((error) => {
+        //     console.error(error);
+        // });
+}

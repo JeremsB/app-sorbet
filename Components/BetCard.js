@@ -2,13 +2,14 @@
 
 import React from 'react'
 import { StyleSheet, Text, Image, View, ImageBackground } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 //import { getImageFromApi } from '../API/TMDBApi'
 
 class BetCard extends React.Component {
 
     render() {
-        const { bet } = this.props
-
+        const { bet, displayBet } = this.props
+        console.log(this.props.bet)
         return (
             <ImageBackground
                 source={require('../content/img/burger.jpg')}
@@ -27,9 +28,15 @@ class BetCard extends React.Component {
                         }}
                         source={{uri: 'https://sorbet.bet/users/'+bet.picture}}
                     />
-                    <View style={styles.contentCard}>
+                    <TouchableOpacity
+                        onPress={() => displayBet(bet.id_bet)}
+                        style={styles.contentCard}
+                    >
+
+                    </TouchableOpacity>
+                    <View>
                         <View style={styles.divInfosParis}>
-                        <Text style={styles.nameBet}>{bet.login}</Text>
+                            <Text style={styles.nameBet}>{bet.login}</Text>
                             <View style={styles.divInfosTop}>
                                 <View style={styles.divLocation}>
                                     <Image
@@ -39,7 +46,7 @@ class BetCard extends React.Component {
                                         }}
                                         source={require('../content/img/boules-blanc.png')}
                                     />
-                                    <Text style={styles.titleLocation}>LOL</Text>
+                                    <Text style={styles.titleLocation}>{bet.localisation}</Text>
                                 </View>
                                 <View style={styles.divNbBet}>
                                     <Image
@@ -100,6 +107,7 @@ const styles = StyleSheet.create({
     },
     divInfosParis: {
         marginLeft: 60,
+        zIndex: 10,
     },
     nameBet: {
         color: '#ffffff',
