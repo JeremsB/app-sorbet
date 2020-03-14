@@ -261,17 +261,6 @@ class Login extends React.Component {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        {/* <View style={styles.viewBtn}>
-                        <TouchableOpacity
-                            style={styles.divBtn}
-                            onPress={() => this.props.navigation.navigate("Profil")}>
-                                <Text style={styles.textBtn}>Connecte toi !</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => this._navRegister()}>
-                            <Text style={styles.titleText}>Pas encore membre ?</Text>
-                        </TouchableOpacity>
-                    </View> */}
                     </LinearGradient>
                 </View>
             </Swiper>

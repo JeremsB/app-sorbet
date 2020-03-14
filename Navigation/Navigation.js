@@ -176,7 +176,7 @@ const HomeStackNavigator = createStackNavigator({
                         position: 'absolute',
                         left: 30,
                         right: 30,
-                        bottom: 10,
+                        bottom: 20,
                     },
                     tabStyle: { // Style des items dans la nav
                         marginEnd: 10,
