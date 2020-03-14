@@ -34,13 +34,14 @@ class BetCard extends React.Component {
                                 <Text style={styles.nameBet}>{bet.login}</Text>
                                 <View style={styles.divInfosTop}>
                                     <View style={styles.divLocation}>
+                                        {bet.localisation != null ?
                                         <Image
                                             style={{
                                                 width: 7,
                                                 height: 10,
                                             }}
                                             source={require('../content/img/pictos/localisation_blanc.png')}
-                                        />
+                                        />: null }
                                         <Text style={styles.titleLocation}>{bet.localisation}</Text>
                                     </View>
                                     <View style={styles.divNbBet}>

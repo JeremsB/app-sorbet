@@ -21,6 +21,12 @@ function userLogin(state = initialState, action) {
                 }
             }
             return nextState || state
+        case 'USER_DISCONNECT':
+            const datauserco = state.userData
+            if (datauserco != null){
+                state.userData = [];
+            }
+            return state
         default:
             return state
     }

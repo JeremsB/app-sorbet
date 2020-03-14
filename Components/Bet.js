@@ -204,7 +204,6 @@ const styles = StyleSheet.create({
     },
     contentCard: {
         backgroundColor: 'rgba(0, 0, 0, 0.6)',
-        height: '100%',
         width: '100%',
         height: 275,
         borderRadius: 30,

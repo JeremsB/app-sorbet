@@ -23,6 +23,12 @@ class SettingsUser extends React.Component {
         this.props.navigation.navigate("AccountSettings");
     }
 
+    _deconnectUser() {
+        const action = { type: "USER_DISCONNECT" };
+        this.props.dispatch(action);
+        this.props.navigation.navigate("Login");
+    }
+
     render() {
         let userData = this.props.userData[0];
         return (
@@ -47,7 +53,7 @@ class SettingsUser extends React.Component {
                             />
                         </TouchableOpacity>
                         <View style={styles.viewTitle}>
-                            <Text style={styles.titleSettings}>Parametres</Text>
+                            <Text style={styles.titleSettings}>Paramètres</Text>
                         </View>
                     </View>
                     <ScrollView
@@ -172,7 +178,7 @@ class SettingsUser extends React.Component {
                             <View style={styles.viewThinLine}></View>
                             <TouchableOpacity
                                 style={styles.viewCatSettings}
-                                onPress={() => alert("On a pas le droit de se deconnecter de la meilleure appli du monde")}
+                                onPress={() => this._deconnectUser()}
                             >
                                 <View style={styles.viewIcon}>
                                     <Image
