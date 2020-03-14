@@ -31,11 +31,11 @@ class PersonnalData extends React.Component {
                         >
                             <Image
                                 style={{
-                                    width: 25,
+                                    width: 15,
                                     height: 25,
                                     zIndex: 10,
                                 }}
-                                source={require('../content/img/left.png')}
+                                source={require('../content/img/pictos/retour_blanc.png')}
                             />
                         </TouchableOpacity>
                         <View style={styles.viewTitle}>

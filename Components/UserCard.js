@@ -24,10 +24,10 @@ class UserCard extends React.Component {
                     </View>
                     <Image
                         style={{
-                            width: 20,
-                            height: 20,
+                            width: 24,
+                            height: 22,
                         }}
-                        source={require('../content/img/amis-p.png')}
+                        source={require('../content/img/pictos/utilisateur_ajout.png')}
                     />
                 </View>
             </View>

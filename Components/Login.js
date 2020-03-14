@@ -1,6 +1,6 @@
 // Components/Login.js
 import React from 'react'
-import { StyleSheet, View, TextInput, Text, Image, TouchableOpacity, Alert, ImageBackground } from 'react-native'
+import { StyleSheet, View, TextInput, Text, Image, TouchableOpacity, Alert, ImageBackground, Animated, Easing } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import Swiper from 'react-native-swiper'
 import { connect } from 'react-redux'
@@ -10,9 +10,11 @@ class Login extends React.Component {
     constructor(props) {
         super(props)
         this.state={
+            timePassed: false,
             userEmail:'',
             userPassword:'',
         }
+        this.RotateValueHolder = new Animated.Value(0);
     }
 
     _navRegister() {
@@ -56,10 +58,49 @@ class Login extends React.Component {
         this.props.dispatch(action);
     }
 
+    componentDidMount() {
+        this.StartImageRotateFunction();
+    }
+    StartImageRotateFunction() {
+        this.RotateValueHolder.setValue(0);
+        Animated.timing(this.RotateValueHolder, {
+            toValue: 1,
+            duration: 1500,
+            easing: Easing.bounce,
+        }).start(() => this.StartImageRotateFunction());
+    }
 
-    render() {
+    _displayLoading() {
+            const RotateData = this.RotateValueHolder.interpolate({
+                inputRange: [0, 1],
+                outputRange: ['0deg', '360deg'],
+            });
+
+            return (
+                <LinearGradient
+                    colors={['#E577A2', '#ff978d']}
+                    style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingBottom: 50 }}
+                    start={[1, 0]}
+                    end={[0, 1]}>
+                    <View style={styles.viewMiddleLoading}>
+                        <Animated.Image
+                            source={require('../content/img/pictos/accueil.png')}
+                            style={
+                                styles.imgLoad,
+                                {
+                                    transform: [{ rotate: RotateData }],
+                                    width: 50,
+                                    height: 48,
+                                }
+                            }
+                        />
+                    </View>
+                </LinearGradient>
+            )
+        }
+
+    _page() {
         return (
-
             <Swiper
                 loop= {false}
                 dotColor= 'rgba(0, 0, 0, 0.2)'
@@ -79,7 +120,7 @@ class Login extends React.Component {
                                         height: 107,
                                         marginBottom: 10,
                                     }}
-                                    source={require('../content/img/logo.png')}
+                                    source={require('../content/img/sorbet_blanc.png')}
                                 />
                                 <Image
                                     style={{
@@ -115,7 +156,7 @@ class Login extends React.Component {
                                         height: 107,
                                         marginBottom: 10,
                                     }}
-                                    source={require('../content/img/logo.png')}
+                                    source={require('../content/img/sorbet_blanc.png')}
                                 />
                                 <Image
                                     style={{
@@ -151,7 +192,7 @@ class Login extends React.Component {
                                     marginBottom: 10,
                                     marginTop: 40,
                                 }}
-                                source={require('../content/img/logo.png')}
+                                source={require('../content/img/sorbet_blanc.png')}
                             />
                             <Image
                                 style={{
@@ -164,15 +205,17 @@ class Login extends React.Component {
                         </View>
                         <View style={styles.viewForm}>
                             <View style={styles.viewInputEmail}>
-                                <Image
-                                    style={{
-                                        marginLeft: 5,
-                                        marginRight: 5,
-                                        width: 40,
-                                        height: 40,
-                                    }}
-                                    source={require('../content/img/personne-blanc.png')}
-                                />
+                                <View style={styles.viewIcon}>
+                                    <Image
+                                        style={{
+                                            marginLeft: 5,
+                                            marginRight: 5,
+                                            width: 25,
+                                            height: 21,
+                                        }}
+                                        source={require('../content/img/pictos/utilisateur_blanc.png')}
+                                    />
+                                </View>
                                 <TextInput
                                     caretHidden
                                     style={styles.textInputEmail}
@@ -182,13 +225,15 @@ class Login extends React.Component {
                                 />
                             </View>
                             <View style={styles.viewInputPwd}>
-                                <Image
-                                    style={{
-                                        width: 50,
-                                        height: 50,
-                                    }}
-                                    source={require('../content/img/cadenas-blanc.png')}
-                                />
+                                <View style={styles.viewIcon}>
+                                    <Image
+                                        style={{
+                                            width: 20,
+                                            height: 30,
+                                        }}
+                                        source={require('../content/img/pictos/cadenas_blanc.png')}
+                                    />
+                                </View>
                                 <TextInput
                                     style={styles.textInputPwd}
                                     secureTextEntry={true}
@@ -227,14 +272,38 @@ class Login extends React.Component {
                             <Text style={styles.titleText}>Pas encore membre ?</Text>
                         </TouchableOpacity>
                     </View> */}
-
-
                     </LinearGradient>
                 </View>
             </Swiper>
         )
     }
+
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({ timePassed: true })
+        }, 3000); 
+    }
+
+    setTimePassed() {
+        this.setState({ timePassed: true });
+    }
+
+    render() {
+        if (!this.state.timePassed) {
+            return this._displayLoading();
+        } else {
+            return this._page();
+        }
+        // return (
+        //     <View style={styles.main_container}>
+        //         {this._displayLoading()}
+        //         {this._page()}
+        //     </View>
+        // )
+    }
 }
+
+
 
 const styles = StyleSheet.create({
     main_container: {
@@ -246,6 +315,26 @@ const styles = StyleSheet.create({
         flex: 2,
         flexDirection: 'column',
         alignItems: 'center',
+    },
+    loading: {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    viewMiddleLoading: {
+        height: 100,
+        backgroundColor: '#fff',
+        borderRadius: 100,
+        width: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    imgLoad: {
+        width: 100,
+        height: 100,
     },
     viewForm: {
         flex: 2,
@@ -271,6 +360,11 @@ const styles = StyleSheet.create({
         height: 60,
         borderRadius: 15,
         marginBottom: 0,
+        alignItems: 'center',
+    },
+    viewIcon: {
+        width: '15%',
+        justifyContent: 'center',
         alignItems: 'center',
     },
     textInputPwd: {

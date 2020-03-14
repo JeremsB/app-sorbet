@@ -15,14 +15,21 @@ class Profile extends React.Component {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
         let id_user = userData.id_user;
         this.state = {
-            bets: this._getBets(id_user),
+            bets: this._getUserBets(id_user),
             message: "",
             nb_friends: this._getCountFriends(id_user),
             nb_bets: this._getCountBets(id_user)
         }
     }
 
-    _getBets(id_user) {
+    _displayBet = (idBet) => {
+        // console.log('FJVOJ?DFV?PD' + idBet)
+        this.props.navigation.navigate("BetUser", {
+            idBet: idBet
+        })
+    }
+
+    _getUserBets(id_user) {
         fetch('https://sorbet.bet/api/get-user-bets.php', {
             method: 'post',
             header: {
@@ -166,7 +173,7 @@ class Profile extends React.Component {
                                     height: 10,
                                     marginRight: 5,
                                 }}
-                                source={require('../content/img/boules2.png')}
+                                source={require('../content/img/pictos/accueil_blanc.png')}
                             />
                             <Text style={styles.textBtn}>Mes paris</Text>
                         </TouchableOpacity>
@@ -180,7 +187,7 @@ class Profile extends React.Component {
                                     height: 10,
                                     marginRight: 5,
                                 }}
-                                source={require('../content/img/boules2.png')}
+                                source={require('../content/img/pictos/cadeau_blanc.png')}
                             />
                             <Text style={styles.textBtn}>Mes gains</Text>
                         </TouchableOpacity>
@@ -196,7 +203,7 @@ class Profile extends React.Component {
                         <FlatList
                             data={this.state.bets}
                             keyExtractor={(item) => item.id_bet}
-                            renderItem={({ item }) => <BetCard bet={item} />}
+                            renderItem={({ item }) => <BetCard bet={item} displayBet={this._displayBet} />}
                         />
                         <Text style={styles.txtCount2}>{this.state.message}</Text>
                     </ScrollView>

@@ -1,11 +1,11 @@
-// Components/Bet.js
+// Components/BetUser.js
 import React from 'react'
 import { StyleSheet, View, Image, Text, ImageBackground, TouchableOpacity, Animated, Easing } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { ActivityIndicator } from 'react-native-paper';
-import { getBetInfos} from '../API/BetAPI'
+import { getBetInfos } from '../API/BetAPI'
 
-class Bet extends React.Component {
+class BetUser extends React.Component {
 
     constructor(props) {
         super(props)
@@ -27,9 +27,9 @@ class Bet extends React.Component {
                     duration: 300,
                 }
             )
-            .start();
+                .start();
             this.state.varAnim = 1
-        } else if (this.state.varAnim == 1){
+        } else if (this.state.varAnim == 1) {
             Animated.spring(
                 this.state.topValue,
                 {
@@ -37,7 +37,7 @@ class Bet extends React.Component {
                     duration: 300,
                 }
             )
-            .start();
+                .start();
             this.state.varAnim = 0
         }
     };
@@ -57,31 +57,31 @@ class Bet extends React.Component {
     _displayLoading() {
         if (this.state.isLoading) {
 
-
+            
             const RotateData = this.RotateValueHolder.interpolate({
                 inputRange: [0, 1],
                 outputRange: ['0deg', '360deg'],
-            });
-
+            });           
+            
             return (
                 <LinearGradient
                     colors={['#E577A2', '#ff978d']}
-                    style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingBottom: 50 }}
+                    style={{ flex: 1, justifyContent:'center', alignItems: 'center', paddingBottom: 50 }}
                     start={[1, 0]}
                     end={[0, 1]}>
-                    <View style={styles.viewMiddleLoading}>
-                        <Animated.Image
-                            source={require('../content/img/pictos/accueil.png')}
-                            style={
-                                styles.imgLoad,
-                                {
-                                    transform: [{ rotate: RotateData }],
-                                    width: 50,
-                                    height: 48,
+                        <View style={styles.viewMiddleLoading}>
+                            <Animated.Image 
+                                source={require('../content/img/pictos/accueil.png')}
+                                style={
+                                    styles.imgLoad,
+                                    {
+                                        transform: [{ rotate: RotateData }],
+                                        width: 50,
+                                        height: 48,
+                                    }
                                 }
-                            }
-                        />
-                    </View>
+                            />
+                        </View>
                 </LinearGradient>
             )
         }
@@ -93,7 +93,7 @@ class Bet extends React.Component {
             return (
                 <LinearGradient
                     colors={['#E577A2', '#ff978d']}
-                    style={{ flex: 1, paddingBottom: 50}}
+                    style={{ flex: 1, paddingBottom: 50 }}
                     start={[1, 0]}
                     end={[0, 1]}>
                     <ImageBackground
@@ -116,29 +116,29 @@ class Bet extends React.Component {
                                 <View style={styles.row}>
                                     <Image
                                         style={{
-                                            width: 15,
+                                            width: 11,
                                             height: 15,
                                         }}
-                                        source={require('../content/img/pictos/accueil_blanc.png')}
+                                        source={require('../content/img/pictos/localisation_blanc.png')}
                                     />
-                                    <Text style={styles.titleLocation}>{bet.localisation}</Text>
+                                    <Text style={styles.titleLocation}>Bruz</Text>
+                                    {/* <Text style={styles.titleLocation}>{bet.localisation}</Text> */}
                                 </View>
                                 <View style={styles.viewNbBet}>
                                     <Image
                                         style={{
-                                            width: 15,
+                                            width: 16,
                                             height: 15,
                                         }}
                                         source={require('../content/img/pictos/accueil_blanc.png')}
                                     />
                                     <Text style={styles.titleNbBet}>83 Sorbets</Text>
                                 </View>
-                                
+
                             </View>
                             <Text style={styles.questionBet}>{bet.label}</Text>
-
                         </View>
-                        <Animated.View style={[styles.viewScroll, {top: this.state.topValue}]}>
+                        <Animated.View style={[styles.viewScroll, { top: this.state.topValue }]}>
                             <Text style={styles.description}>{bet.description}</Text>
                             <TouchableOpacity style={styles.viewBottomCard}
                                 onPress={() => this._start()}
@@ -168,7 +168,7 @@ class Bet extends React.Component {
             <View style={styles.main_container}>
                 {this._displayLoading()}
                 {this._displayBet()}
-            </View>     
+            </View>
         )
     }
 }
@@ -281,15 +281,15 @@ const styles = StyleSheet.create({
         zIndex: -10,
         height: 400,
         marginTop: -350,
+        borderRadius: 30,
+        paddingHorizontal: 30,
+        paddingTop: 75,
+        paddingBottom: 17,
         shadowColor: '#000000',
         shadowOffset: { width: 0, height: 3 },
         shadowOpacity: 0.05,
         shadowRadius: 10,
         elevation: 10,
-        borderRadius: 30,
-        paddingHorizontal: 30,
-        paddingTop: 75,
-        paddingBottom: 17,
     },
     viewBottomCard: {
         flexDirection: 'row',
@@ -302,9 +302,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.15)',
         borderRadius: 10,
     },
-    red: {
-        backgroundColor: 'red',
-    }
 })
 
-export default Bet
+export default BetUser

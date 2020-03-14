@@ -8,6 +8,7 @@ import { StyleSheet, Image } from 'react-native'
 import Login from '../Components/Login'
 import Home from '../Components/Home'
 import CreateBet from '../Components/CreateBet'
+import BetUser from '../Components/BetUser'
 import Bet from '../Components/Bet'
 import AddUser from '../Components/AddUser'
 import Profile from '../Components/Profile'
@@ -62,12 +63,15 @@ const HomeStackNavigator = createStackNavigator({
                 navigationOptions: {
                     tabBarIcon: ({ focused }) => {
                         const image = focused
-                            ? require('../content/img/boules.png')
-                            : require('../content/img/boules-blanc.png')
+                            ? require('../content/img/pictos/accueil.png')
+                            : require('../content/img/pictos/accueil_blanc.png')
                         return (
                             <Image
                                 source={image}
-                                style={styles.icon}
+                                style={{
+                                    height: 24,
+                                    width: 25,
+                                }}
                             />
                         )
                     }
@@ -79,8 +83,8 @@ const HomeStackNavigator = createStackNavigator({
                 navigationOptions: {
                     tabBarIcon: ({ focused }) => {
                         const image = focused
-                            ? require('../content/img/ajouter.png')
-                            : require('../content/img/ajouter-blanc.png')
+                            ? require('../content/img/pictos/ajouter.png')
+                            : require('../content/img/pictos/ajouter_blanc.png')
                         return (
                             <Image
                                 source={image}
@@ -95,8 +99,8 @@ const HomeStackNavigator = createStackNavigator({
                 navigationOptions: {
                     tabBarIcon: ({ focused }) => {
                         const image = focused
-                            ? require('../content/img/rechercher.png')
-                            : require('../content/img/rechercher-blanc.png')
+                            ? require('../content/img/pictos/recherche.png')
+                            : require('../content/img/pictos/recherche_blanc.png')
                         return (
                             <Image
                                 source={image}
@@ -110,6 +114,10 @@ const HomeStackNavigator = createStackNavigator({
                 screen: createStackNavigator({
                     UserHome: {
                         screen: Profile,
+                    },
+
+                    BetUser: {
+                        screen: BetUser,
                     },
 
                     Earnings: {
@@ -144,12 +152,15 @@ const HomeStackNavigator = createStackNavigator({
                 navigationOptions: {
                     tabBarIcon: ({ focused }) => {
                         const image = focused
-                            ? require('../content/img/personne.png')
-                            : require('../content/img/personne-blanc.png')
+                            ? require('../content/img/pictos/utilisateur.png')
+                            : require('../content/img/pictos/utilisateur_blanc.png')
                         return (
                             <Image
                                 source={image}
-                                style={styles.icon}
+                                style={{
+                                    height: 24,
+                                    width: 28,
+                                }}
                             />
                         )
                     }
@@ -165,7 +176,7 @@ const HomeStackNavigator = createStackNavigator({
                         position: 'absolute',
                         left: 30,
                         right: 30,
-                        bottom: 30,
+                        bottom: 10,
                     },
                     tabStyle: { // Style des items dans la nav
                         marginEnd: 10,
@@ -201,13 +212,9 @@ const RootSwitch = createSwitchNavigator(
 
 const styles = StyleSheet.create({
     icon: { // Style de l'img iconHomeStackNavigator
-        width: 60,
-        height: 60,
+        width: 24,
+        height: 24,
     },
-    point: {
-        width: 10,
-        height: 10,
-    }
 })
 
 export default createAppContainer(RootSwitch)

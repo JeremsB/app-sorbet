@@ -27,11 +27,11 @@ class Earnings extends React.Component {
                                 >
                                 <Image
                                     style={{
-                                        width: 50,
-                                        height: 50,
+                                        width: 15,
+                                        height: 25,
                                         marginRight: 5,
                                     }}
-                                    source={require('../content/img/retour-blanc.png')}
+                                    source={require('../content/img/pictos/retour_blanc.png')}
                                 />
                             </TouchableOpacity>
 

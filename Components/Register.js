@@ -119,7 +119,7 @@ class Register extends React.Component {
                                 marginBottom: 10,
                                 marginTop: 40,
                             }}
-                            source={require('../content/img/logo.png')}
+                            source={require('../content/img/sorbet_blanc.png')}
                         />
                         <Image
                             style={{

@@ -3,6 +3,7 @@ import React from 'react'
 import { StyleSheet, View, TouchableOpacity, Image, Text } from 'react-native'
 import { LinearGradient } from "expo-linear-gradient"
 import { connect } from 'react-redux'
+import { ScrollView } from 'react-native-gesture-handler'
 
 class SettingsUser extends React.Component {
 
@@ -39,137 +40,153 @@ class SettingsUser extends React.Component {
                         >
                             <Image
                                 style={{
-                                    width: 25,
+                                    width: 15,
                                     height: 25,
-                                    zIndex: 10,
                                 }}
-                                source={require('../content/img/left.png')}
+                                source={require('../content/img/pictos/retour_blanc.png')}
                             />
                         </TouchableOpacity>
                         <View style={styles.viewTitle}>
                             <Text style={styles.titleSettings}>Parametres</Text>
                         </View>
                     </View>
-                    <View>
-                        <TouchableOpacity
-                            style={styles.viewCatSettings}
-                            onPress={() => this._navPersonnalData()}
+                    <ScrollView
+                        style={styles.viewScroll}
                     >
-                            <Image
-                                style={{
-                                    width: 50,
-                                    height: 50,
-                                }}
-                                source={require('../content/img/personne-blanc.png')}
-                            />
-                            <Text style={styles.textCatSettings}>Données personnelles</Text>
-                        </TouchableOpacity>
-                        <View style={styles.viewThinLine}></View>
-                        <TouchableOpacity
-                            style={styles.viewCatSettings}
-                            onPress={() => this._navAccountSettings()}
-                        >
-                            <Image
-                                style={{
-                                    width: 50,
-                                    height: 50,
-                                }}
-                                source={require('../content/img/personne-blanc.png')}
-                            />
-                            <Text style={styles.textCatSettings}>Paramètres de compte</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.viewFatLine}></View>
-                    <View>
-                        <TouchableOpacity
-                            style={styles.viewCatSettings}
-                            onPress={() => alert("Actives les notifs ou je t'enc***")}
-                        >
-                            <Image
-                                style={{
-                                    width: 50,
-                                    height: 50,
-                                }}
-                                source={require('../content/img/personne-blanc.png')}
-                            />
-                            <Text style={styles.textCatSettings}>Notifications</Text>
-                        </TouchableOpacity>
-                        <View style={styles.viewThinLine}></View>
-                        <TouchableOpacity
-                            style={styles.viewCatSettings}
-                            onPress={() => alert("Confidentialité et ... je sais pas kiki a mis que ça sur la maquette")}
-                        >
-                            <Image
-                                style={{
-                                    width: 50,
-                                    height: 50,
-                                }}
-                                source={require('../content/img/cadenas-blanc.png')}
-                            />
-                            <Text style={styles.textCatSettings}>Confidentialité et</Text>
-                        </TouchableOpacity>
-                        <View style={styles.viewThinLine}></View>
-                        <TouchableOpacity
-                            style={styles.viewCatSettings}
-                            onPress={() => alert("PAS DE PUB OK ?")}
-                        >
-                            <Image
-                                style={{
-                                    width: 50,
-                                    height: 50,
-                                }}
-                                source={require('../content/img/personne-blanc.png')}
-                            />
-                            <Text style={styles.textCatSettings}>Publicités</Text>
-                        </TouchableOpacity>
-                        <View style={styles.viewThinLine}></View>
-                        <TouchableOpacity
-                            style={styles.viewCatSettings}
-                            onPress={() => alert("A propos")}
-                        >
-                            <Image
-                                style={{
-                                    width: 50,
-                                    height: 50,
-                                }}
-                                source={require('../content/img/personne-blanc.png')}
-                            />
-                            <Text style={styles.textCatSettings}>A propos</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.viewFatLine}></View>
-                    <View>
-                        <TouchableOpacity
-                            style={styles.viewCatSettings}
-                            onPress={() => alert("Besoin d'aide ? Et bah va te faire")}
-                        >
-                            <Image
-                                style={{
-                                    width: 50,
-                                    height: 50,
-                                }}
-                                source={require('../content/img/personne-blanc.png')}
-                            />
-                            <Text style={styles.textCatSettings}>Besoin d'aide ?</Text>
-                        </TouchableOpacity>
-                        <View style={styles.viewThinLine}></View>
-                        <TouchableOpacity
-                            style={styles.viewCatSettings}
-                            onPress={() => alert("On a pas le droit de se deconnecter de la meilleure appli du monde")}
-                        >
-                            <Image
-                                style={{
-                                    width: 50,
-                                    height: 50,
-                                }}
-                                source={require('../content/img/personne-blanc.png')}
-                            />
-                            <Text style={styles.textCatSettings}>Se déconnecter</Text>
-                        </TouchableOpacity>
-                    </View>
-                    {/* <View>
-                        <Text>{userData.lastname}</Text>
-                    </View> */}
+                        <View>
+                            <TouchableOpacity
+                                style={styles.viewCatSettings}
+                                onPress={() => this._navPersonnalData()}
+                            >
+                                <View style={styles.viewIcon}>
+                                    <Image
+                                        style={{
+                                            width: 20,
+                                            height: 17,
+                                        }}
+                                        source={require('../content/img/pictos/utilisateur_blanc.png')}
+                                    />
+                                </View>
+                                <Text style={styles.textCatSettings}>Données personnelles</Text>
+                            </TouchableOpacity>
+                            <View style={styles.viewThinLine}></View>
+                            <TouchableOpacity
+                                style={styles.viewCatSettings}
+                                onPress={() => this._navAccountSettings()}
+                            >
+                                <View style={styles.viewIcon}>
+                                    <Image
+                                        style={{
+                                            width: 20,
+                                            height: 17,
+                                        }}
+                                        source={require('../content/img/pictos/utilisateur_blanc.png')}
+                                    />
+                                </View>
+                                <Text style={styles.textCatSettings}>Paramètres de compte</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.viewFatLine}></View>
+                        <View>
+                            <TouchableOpacity
+                                style={styles.viewCatSettings}
+                                onPress={() => alert("Actives les notifs ou je t'enc***")}
+                            >
+                                <View style={styles.viewIcon}>
+                                    <Image
+                                        style={{
+                                            width: 16,
+                                            height: 20,
+                                        }}
+                                        source={require('../content/img/pictos/notifications.png')}
+                                    />
+                                </View>
+                                <Text style={styles.textCatSettings}>Notifications</Text>
+                            </TouchableOpacity>
+                            <View style={styles.viewThinLine}></View>
+                            <TouchableOpacity
+                                style={styles.viewCatSettings}
+                                onPress={() => alert("Confidentialité et ... je sais pas kiki a mis que ça sur la maquette")}
+                            >
+                                <View style={styles.viewIcon}>
+                                    <Image
+                                        style={{
+                                            width: 13,
+                                            height: 20,
+                                        }}
+                                        source={require('../content/img/pictos/cadenas_blanc.png')}
+                                    />
+                                </View>
+                                <Text style={styles.textCatSettings}>Confidentialité et</Text>
+                            </TouchableOpacity>
+                            <View style={styles.viewThinLine}></View>
+                            <TouchableOpacity
+                                style={styles.viewCatSettings}
+                                onPress={() => alert("PAS DE PUB OK ?")}
+                            >
+                                <View style={styles.viewIcon}>
+                                    <Image
+                                        style={{
+                                            width: 21,
+                                            height: 20,
+                                        }}
+                                        source={require('../content/img/pictos/publicite.png')}
+                                    />
+                                </View>
+                                <Text style={styles.textCatSettings}>Publicités</Text>
+                            </TouchableOpacity>
+                            <View style={styles.viewThinLine}></View>
+                            <TouchableOpacity
+                                style={styles.viewCatSettings}
+                                onPress={() => alert("A propos")}
+                            >
+                                <View style={styles.viewIcon}>
+                                    <Image
+                                        style={{
+                                            width: 20,
+                                            height: 20,
+                                        }}
+                                        source={require('../content/img/pictos/information.png')}
+                                    />
+                                </View>
+                                <Text style={styles.textCatSettings}>A propos</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.viewFatLine}></View>
+                        <View>
+                            <TouchableOpacity
+                                style={styles.viewCatSettings}
+                                onPress={() => alert("Besoin d'aide ? Et bah va te faire")}
+                            >
+                                <View style={styles.viewIcon}>
+                                    <Image
+                                        style={{
+                                            width: 20,
+                                            height: 20,
+                                        }}
+                                        source={require('../content/img/pictos/aide.png')}
+                                    />
+                                </View>
+                                <Text style={styles.textCatSettings}>Besoin d'aide ?</Text>
+                            </TouchableOpacity>
+                            <View style={styles.viewThinLine}></View>
+                            <TouchableOpacity
+                                style={styles.viewCatSettings}
+                                onPress={() => alert("On a pas le droit de se deconnecter de la meilleure appli du monde")}
+                            >
+                                <View style={styles.viewIcon}>
+                                    <Image
+                                        style={{
+                                            width: 24,
+                                            height: 20,
+                                        }}
+                                        source={require('../content/img/pictos/deconnexion.png')}
+                                    />
+                                </View>
+                                <Text style={styles.textCatSettings}>Se déconnecter</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView>
                     
                 </LinearGradient>
             </View>
@@ -204,10 +221,18 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 18,
     },
+    viewScroll: {
+        marginBottom: 56,
+    },
     viewCatSettings: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginVertical: 10,
+        marginVertical: 22,
+    },
+    viewIcon: {
+        width: '15%',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     textCatSettings: {
         color: '#ffffff',

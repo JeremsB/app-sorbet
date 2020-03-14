@@ -36,20 +36,20 @@ class BetCard extends React.Component {
                                     <View style={styles.divLocation}>
                                         <Image
                                             style={{
-                                                width: 20,
-                                                height: 20,
+                                                width: 7,
+                                                height: 10,
                                             }}
-                                            source={require('../content/img/boules-blanc.png')}
+                                            source={require('../content/img/pictos/localisation_blanc.png')}
                                         />
                                         <Text style={styles.titleLocation}>{bet.localisation}</Text>
                                     </View>
                                     <View style={styles.divNbBet}>
                                         <Image
                                             style={{
-                                                width: 20,
-                                                height: 20,
+                                                width: 10,
+                                                height: 10,
                                             }}
-                                            source={require('../content/img/boules-blanc.png')}
+                                            source={require('../content/img/pictos/accueil_blanc.png')}
                                         />
                                         <Text style={styles.titleNbBet}>83 Sorbets</Text>
                                     </View>
@@ -62,10 +62,10 @@ class BetCard extends React.Component {
                                 <Text style={styles.titleCat}>{bet.category}</Text>
                                 <Image
                                     style={{
-                                        width: 30,
-                                        height: 30,
+                                        width: 15,
+                                        height: 15,
                                     }}
-                                    source={require('../content/img/boules-blanc.png')}
+                                    source={require('../content/img/pictos/accueil_blanc.png')}
                                 />
                             </View>
                         </TouchableOpacity>
@@ -141,8 +141,8 @@ const styles = StyleSheet.create({
     divInfosBottom: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginHorizontal: 20,
-        marginBottom: 5,
+        marginHorizontal: 15,
+        marginBottom: 10,
     },
     titleCat: {
         color: '#ffffff',

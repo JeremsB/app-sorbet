@@ -79,7 +79,7 @@ class AddUser extends React.Component {
             <View style={styles.main_container}>
                 <LinearGradient
                     colors={['#E577A2', '#ff978d']}
-                    style={{flex:1, paddingTop: 70, paddingBottom: 50, paddingLeft: 30, paddingRight: 30}}
+                    style={{flex:1, paddingTop: 70, paddingBottom: 0, paddingLeft: 30, paddingRight: 30}}
                     start={[1, 0]}
                     end={[0, 1]}>
                     <View style={styles.viewTopSearch}>
@@ -94,7 +94,7 @@ class AddUser extends React.Component {
                                     width: 20,
                                     height: 20,
                                 }}
-                                source={require('../content/img/search-blanc.png')}
+                                source={require('../content/img/pictos/recherche_blanc.png')}
                             />
                         </View>
                         <ScrollView
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
     },
     scrollAllUsers: {
-        height: '72.5%',
+        height: '70%',
         marginTop: 20,
     },
     cardUser: {
