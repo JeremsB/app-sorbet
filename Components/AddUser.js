@@ -69,12 +69,6 @@ class AddUser extends React.Component {
     }*/
 
     render() {
-        //TODO this.state.users contient tous les utilisateurs qui sont pas amis avec l'utilisateur connecté
-        //console.log(this.state.users) si tu veux checker
-        //Du coup faut boucler dessus et afficher une usercard pour chaque user
-
-        //TODO amis dans this.state.friends
-
         return (
             <View style={styles.main_container}>
                 <LinearGradient

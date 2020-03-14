@@ -1,12 +1,10 @@
 // Components/Profile.js
 import React from 'react'
-import { StyleSheet, View, Text, Image, TouchableOpacity, ImageBackground, Alert } from 'react-native'
+import { StyleSheet, View, Text, Image, TouchableOpacity, Alert } from 'react-native'
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient'
 import BetCard from './BetCard'
 import { connect } from 'react-redux'
-import {getBetInfos} from "../API/BetAPI";
-import {getCountFriends} from "../API/UserAPI";
 
 class Profile extends React.Component {
 
@@ -17,7 +15,8 @@ class Profile extends React.Component {
         this.state = {
             bets: this._getUserBets(id_user),
             message: "",
-            nb_friends: this._getCountFriends(id_user),
+            nb_follows: this._getCountFollows(id_user),
+            nb_followers: this._getCountFollowers(id_user),
             nb_bets: this._getCountBets(id_user)
         }
     }
@@ -43,7 +42,7 @@ class Profile extends React.Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson == 'no_bets')
-                    this.setState({ message: "N'attend pas et créés ton Sorbet'!" });
+                    this.setState({ message: "N'attend pas et crée ton Sorbet'!" });
                 else if (responseJson == 'no_id')
                     Alert.alert("Pas d'id", "Faut un id");
                 else
@@ -54,8 +53,8 @@ class Profile extends React.Component {
             });
     }
 
-    _getCountFriends(id_user) {
-        fetch('https://sorbet.bet/api/get-count-friends.php', {
+    _getCountFollows(id_user) {
+        fetch('https://sorbet.bet/api/user/get-count-follows.php', {
             method: 'post',
             header: {
                 'Accept': 'application/json',
@@ -67,12 +66,33 @@ class Profile extends React.Component {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                if (responseJson == 'no_friends')
-                    this.setState({ nb_friends: responseJson });
-                else if (responseJson == 'no_id')
-                    Alert.alert("Pas d'id","Faut un id");
+                if (responseJson == 'no_id')
+                    Alert.alert("Pas d'id","Faut un id pour le nombre de follows");
                 else
-                    this.setState({ nb_friends: responseJson });
+                    this.setState({ nb_follows: responseJson });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    _getCountFollowers(id_user) {
+        fetch('https://sorbet.bet/api/user/get-count-followers.php', {
+            method: 'post',
+            header: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                id_user: id_user
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson == 'no_id')
+                    Alert.alert("Pas d'id","Faut un id pour le nombre de followers");
+                else
+                    this.setState({ nb_followers: responseJson });
             })
             .catch((error) => {
                 console.error(error);
@@ -114,8 +134,6 @@ class Profile extends React.Component {
 
     render() {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
-        //this._getCountFriends(userData.id_user);
-        //this._getCountBets(userData.id_user);
         return (
             <View style={styles.main_container}>
                 <LinearGradient
@@ -151,17 +169,15 @@ class Profile extends React.Component {
                             <Text style={styles.txtCount2}>{this.state.nb_bets}</Text>
                         </View>
                         <View style={styles.divCount}>
-                            <Text style={styles.txtCount}>JE SUIS</Text>
-                            <Text style={styles.txtCount2}>plutot swag</Text>
+                            <Text style={styles.txtCount}>SUIS</Text>
+                            <Text style={styles.txtCount2}>{this.state.nb_follows}</Text>
                         </View>
                         <View style={styles.divCount}>
-                            <Text style={styles.txtCount}>AMIS</Text>
-                            <Text style={styles.txtCount2}>{this.state.nb_friends}</Text>
+                            <Text style={styles.txtCount}>SUIVI PAR</Text>
+                            <Text style={styles.txtCount2}>{this.state.nb_followers}</Text>
                         </View>
                     </View>
                     <View style={styles.viewBtn}>
-
-                        
 
                         <TouchableOpacity
                             style={styles.divBtn}

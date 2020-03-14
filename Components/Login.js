@@ -132,10 +132,10 @@ class Login extends React.Component {
                                 />
                             </View>
                             <View style={styles.viewMiddle}>
-                                <Text style={styles.textMiddle}>Parie seul ou avec tes amis et tente de remporter une multitude de gains proposé par nos partenaires</Text>
+                                <Text style={styles.textMiddle}>Parie seul ou avec tes amis et tente de remporter une multitude de gains proposée par nos partenaires</Text>
                             </View>
                             <View style={styles.viewBottom}>
-                                <Text style={styles.textBottom1}>N'attends plus,</Text>
+                                <Text style={styles.textBottom1}>N'attend plus,</Text>
                                 <Text style={styles.textBottom2}>Swipe et connecte-toi</Text>
                             </View>
                         </View>
@@ -171,7 +171,7 @@ class Login extends React.Component {
 
                             </View>
                             <View style={styles.viewBottom}>
-                                <Text style={styles.textBottom1}>Goûter au plaisir</Text>
+                                <Text style={styles.textBottom1}>Goûtez au plaisir</Text>
                                 <Text style={styles.textBottom2}>Des paris entre amis</Text>
                             </View>
                         </View>
