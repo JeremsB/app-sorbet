@@ -19,7 +19,7 @@ class AddUser extends React.Component {
     }
 
     _getUsers(id_user) {
-        fetch('https://sorbet.bet/api/get-users.php',{
+        fetch('https://sorbet.bet/api/user/get-others.php',{
             method: 'post',
             header:{
                 'Accept': 'application/json',
@@ -69,6 +69,7 @@ class AddUser extends React.Component {
     }*/
 
     render() {
+        let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
         return (
             <View style={styles.main_container}>
                 <LinearGradient
@@ -131,7 +132,7 @@ class AddUser extends React.Component {
                             <FlatList 
                                 data={this.state.users}
                                 keyExtractor={(item) => item.id_user}
-                                renderItem={({item}) => <UserCard user={item} />}
+                                renderItem={({item}) => (<UserCard user={item} userco={userData.id_user}/>)}
                             />
                             
                         </ScrollView>
