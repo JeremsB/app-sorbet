@@ -3,7 +3,9 @@ import React from 'react'
 import { StyleSheet, View, Image, Text, ImageBackground, TouchableOpacity, Animated, Easing } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { ActivityIndicator } from 'react-native-paper';
-import { getBetInfos} from '../API/BetAPI'
+import {getBetAnswers, getBetInfos} from '../API/BetAPI'
+import UserCard from "./UserCard";
+import {FlatList} from "react-native-gesture-handler";
 
 class Bet extends React.Component {
 
@@ -12,6 +14,7 @@ class Bet extends React.Component {
         this.state = {
             isLoading: true,
             bet: undefined,
+            answers: undefined,
             topValue: new Animated.Value(0),
             varAnim: 0,
         }
@@ -136,7 +139,7 @@ class Bet extends React.Component {
                                 
                             </View>
                             <Text style={styles.questionBet}>{bet.label}</Text>
-
+                            {this._displayAnswers()}
                         </View>
                         <Animated.View style={[styles.viewScroll, {top: this.state.topValue}]}>
                             <Text style={styles.description}>{bet.description}</Text>
@@ -154,11 +157,27 @@ class Bet extends React.Component {
         }
     }
 
+    _displayAnswers(){
+        const { answers } = this.state;
+            return(
+            <FlatList
+            data={answers}
+            keyExtractor={(item) => item.id_answer}
+            renderItem={({ item }) => <Text style={styles.viewBtn}>{item.answer}</Text>}
+            />
+            )
+    }
+
     componentDidMount() {
         getBetInfos(this.props.navigation.state.params.idBet).then(data => {
             this.setState({
                 bet: data,
                 isLoading: false,
+            })
+        })
+        getBetAnswers(this.props.navigation.state.params.idBet).then(data => {
+            this.setState({
+                answers: data
             })
         })
     }
@@ -168,7 +187,7 @@ class Bet extends React.Component {
             <View style={styles.main_container}>
                 {this._displayLoading()}
                 {this._displayBet()}
-            </View>     
+            </View>
         )
     }
 }

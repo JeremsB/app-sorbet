@@ -22,3 +22,28 @@ export function getBetInfos (id) {
         //     console.error(error);
         // });
 }
+
+export function getBetAnswers (id) {
+    return fetch('https://sorbet.bet/api/bet/get-bet-answers.php', {
+        method: 'post',
+        header: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: id,
+        })
+    })
+        .then((response) => response.json())
+    // .then((responseJson) => {
+    //     if (responseJson == 'no_bet_infos')
+    //         Alert.alert("Pas d'infos", "Veuillez ajouter des amis");
+    //     else if (responseJson == 'no_id')
+    //         Alert.alert("Pas d'id", "Faut un id");
+    //     else
+    //         this.setState({ bet: responseJson });
+    // })
+    // .catch((error) => {
+    //     console.error(error);
+    // });
+}
