@@ -61,12 +61,14 @@ class Login extends React.Component {
     componentDidMount() {
         this.StartImageRotateFunction();
     }
+
     StartImageRotateFunction() {
         this.RotateValueHolder.setValue(0);
         Animated.timing(this.RotateValueHolder, {
             toValue: 1,
             duration: 1500,
             easing: Easing.bounce,
+            useNativeDriver: true
         }).start(() => this.StartImageRotateFunction());
     }
 
@@ -89,8 +91,8 @@ class Login extends React.Component {
                                 styles.imgLoad,
                                 {
                                     transform: [{ rotate: RotateData }],
-                                    width: 50,
-                                    height: 48,
+                                    width: 52,
+                                    height: 50.5,
                                 }
                             }
                         />
@@ -270,7 +272,7 @@ class Login extends React.Component {
     componentDidMount() {
         setTimeout(() => {
             this.setState({ timePassed: true })
-        }, 3000); 
+        }, 2500);
     }
 
     setTimePassed() {
