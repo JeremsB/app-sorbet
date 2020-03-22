@@ -1,6 +1,6 @@
 // Components/Home.js
 import React from 'react'
-import { StyleSheet, View, Image, Text, ImageBackground, Alert } from 'react-native'
+import { StyleSheet, View, Image, Text, ImageBackground, Alert, RefreshControl } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import BetCard from './BetCard'
@@ -13,12 +13,20 @@ class Home extends React.Component {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
         let id_user = userData.id_user;
         this.state = {
+            refreshing: false,
             bets: this._getBets(id_user)
         }
     }
+
+    _onRefresh = () => {
+        let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
+        let id_user = userData.id_user;
+        this.setState({ refreshing: true });
+        this.state.bets = this._getBets(id_user)
+        this.setState({refreshing: false});
+    }
     
     _displayBet = (idBet) => {
-        // console.log('FJVOJ?DFV?PD' + idBet)
         this.props.navigation.navigate("Bet", {
             idBet: idBet
         })
@@ -64,7 +72,13 @@ class Home extends React.Component {
                     start={[1, 0]}
                     end={[0, 1]}>
                     <ScrollView
-                        showsVerticalScrollIndicator={false} style={styles.scrollView}>
+                        showsVerticalScrollIndicator={false} style={styles.scrollView}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={this.state.refreshing}
+                                onRefresh={this._onRefresh}
+                            />}
+                    >
                             <FlatList
                                 data={this.state.bets}
                                 keyExtractor={(item) => item.id_bet}

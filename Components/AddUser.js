@@ -22,7 +22,6 @@ class AddUser extends React.Component {
     _onRefresh = () => {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
         let id_user = userData.id_user;
-        //this.setState({refreshing: true});
         this.setState({ refreshing: true });
         this.state.users = this._getUsers(id_user);
         this.setState({refreshing: false});
