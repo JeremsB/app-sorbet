@@ -38,13 +38,14 @@ class Login extends React.Component {
         })
         .then((response) => response.json())
             .then((responseJson) => {
-                if (responseJson == 'champs')
-                    Alert.alert("Erreur formulaire","Veuillez remplir tous les champs")
-                else if (responseJson == 'email_inconnu')
-                    Alert.alert("Authentification incorrecte","Email / Mot de passe incorrect")
-                else
+                if (responseJson == 'champs') {
+                    Alert.alert("Erreur formulaire", "Veuillez remplir tous les champs")
+                } else if (responseJson == 'email_inconnu') {
+                    Alert.alert("Authentification incorrecte", "Email / Mot de passe incorrect")
+                } else {
                     this._globalUser(responseJson);
                     this.props.navigation.navigate("Profil");
+                }
             })
             .catch((error) => {
                 console.error(error);

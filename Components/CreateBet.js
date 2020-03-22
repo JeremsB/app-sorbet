@@ -3,15 +3,70 @@ import React from 'react'
 import { StyleSheet, View, TextInput, Text, Image, TouchableOpacity, Alert } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { connect } from 'react-redux'
+import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 
 class CreateBet extends React.Component {
 
     constructor(props) {
         super(props)
+        this.state={
+            //Pour l'instant j'ai fait avec le contenu de la bdd on ajustera plus tard
+            label:'', //Le titre (Genre Koh-lanta du vendredi)
+            description:'', //Description, c'est la question du pari
+            category:'', //Catégorie -> Liste déroulante tu mets TV Nourriture Sport Politique... Autre
+            price:'', //Le truc a gagner
+            selectedItems: [],
+        }
     }
 
+    onSelectedItemsChange = (selectedItems) => {
+        this.setState({ selectedItems });
+        //console.log(this.state.selectedItems);
+    };
+
+    componentDidMount() {
+        this._getFollows();
+    }
+
+    laConfirm = (selectedItems) => {
+        console.log(this.state.selectedItems);
+    }
+
+    /*laConfirm(){
+        console.log(this.state);
+    }*/
+
+    _getFollows() {
+        let userData = this.props.userData[0];
+        let id_user = userData.id_user;
+        fetch('https://sorbet.bet/api/user/get-follows-create-bet.php', {
+            method: 'post',
+            header: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                id_user: id_user,
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson == 'no_users_found')
+                    Alert.alert("Pas d'users", "Utilisateurs introuvables");
+                else if (responseJson == 'no_id')
+                    Alert.alert("Pas d'id", "Faut un id");
+                else
+                    this.setState({follows: responseJson});
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+    /*
     _createBet() {
-        const {userEmail} = this.state;
+        let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
+
+        const {id_creator} = userData.id_user;
         const {userPassword} = this.state;
 
         fetch('https://sorbet.bet/api/create-bet.php',{
@@ -39,10 +94,27 @@ class CreateBet extends React.Component {
             .catch((error) => {
                 console.error(error);
             });
-    }
+    }*/
+
+    //TODO Le formulaire avec les champs qui sont dans le state (en one page pour l'instant)
+    //TODO La mise en forme du truc des participants
+    //Pour le truc des participants voir:
+    //https://github.com/renrizzolo/react-native-sectioned-multi-select
+
 
     render() {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
+
+        const items = [
+            // this is the parent or 'item'
+            {
+                label: 'Personnes suivies',
+                id: 0,
+                children:
+                    this.state.follows
+            }
+        ];
+
         return (
             <View style={styles.main_container}>
                 <LinearGradient
@@ -50,16 +122,28 @@ class CreateBet extends React.Component {
                     style={{flex:1, paddingTop: 70, paddingBottom: 40, paddingLeft: 30, paddingRight: 30}}
                     start={[1, 0]}
                     end={[0, 1]}>
+
+                    <SectionedMultiSelect
+                        items={items}
+                        uniqueKey="value"
+                        subKey="children"
+                        selectText="Participants"
+                        displayKey="label"
+                        searchPlaceholderText="Rechercher"
+                        showDropDowns={false}
+                        readOnlyHeadings={true}
+                        onSelectedItemsChange={this.onSelectedItemsChange}
+                        onConfirm={this.laConfirm}
+                        selectedItems={this.state.selectedItems}
+                    />
+
+
                     <View style={styles.viewBtn}>
                         <TouchableOpacity
                             style={styles.divBtn}
                             onPress={() => /*this._createBet()*/ Alert.alert("Clique pas","En vrai c'est pas prêt t'sais regarde le reste en attendant")}>
                             <Text style={styles.textBtn}>Créer pari</Text>
                         </TouchableOpacity>
-                        <Text>{userData.login}</Text>
-                        <Text>{userData.lastname}</Text>
-                        <Text>{userData.firstname}</Text>
-                        <Text>{userData.birth}</Text>
                     </View>
 
 
@@ -67,6 +151,8 @@ class CreateBet extends React.Component {
             </View>
         )
     }
+
+
 }
 
 const styles = StyleSheet.create({

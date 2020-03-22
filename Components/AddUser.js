@@ -28,7 +28,7 @@ class AddUser extends React.Component {
     }
 
     _getUsers(id_user) {
-        fetch('https://sorbet.bet/api/user/get-others.php', {
+        fetch('https://sorbet.bet/api/user/get-others-users.php', {
             method: 'post',
             header: {
                 'Accept': 'application/json',
