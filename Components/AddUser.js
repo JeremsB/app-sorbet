@@ -1,6 +1,6 @@
 // Components/Search.js
 import React from 'react'
-import {StyleSheet, View, TextInput, Image, TouchableOpacity, Text, Alert} from 'react-native'
+import {StyleSheet, View, TextInput, Image, TouchableOpacity, Text, Alert, RefreshControl} from 'react-native'
 import { LinearGradient } from "expo-linear-gradient";
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import { connect } from 'react-redux'
@@ -13,35 +13,46 @@ class AddUser extends React.Component {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
         let id_user = userData.id_user;
         this.state = {
+            refreshing: false,
             users: this._getUsers(id_user),
             //friends: this._getFriends(id_user)
         }
     }
 
+    _onRefresh = () => {
+        let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
+        let id_user = userData.id_user;
+        //this.setState({refreshing: true});
+        this.setState({ refreshing: true });
+        this.state.users = this._getUsers(id_user);
+        this.setState({refreshing: false});
+    }
+
     _getUsers(id_user) {
-        fetch('https://sorbet.bet/api/user/get-others.php',{
+        fetch('https://sorbet.bet/api/user/get-others.php', {
             method: 'post',
-            header:{
+            header: {
                 'Accept': 'application/json',
                 'Content-type': 'application/json'
             },
-            body:JSON.stringify({
+            body: JSON.stringify({
                 id_user: id_user,
             })
         })
-        .then((response) => response.json())
+            .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson == 'no_users_found')
-                    Alert.alert("Pas d'users","Utilisateurs introuvables");
+                    Alert.alert("Pas d'users", "Utilisateurs introuvables");
                 else if (responseJson == 'no_id')
-                    Alert.alert("Pas d'id","Faut un id");
+                    Alert.alert("Pas d'id", "Faut un id");
                 else
-                    this.setState({users : responseJson});
+                    this.setState({users: responseJson});
             })
             .catch((error) => {
                 console.error(error);
             });
     }
+
     /*
     _getFriends(id_user) {
         fetch('https://sorbet.bet/api/get-friends.php',{
@@ -127,6 +138,11 @@ class AddUser extends React.Component {
                         <ScrollView
                             showsVerticalScrollIndicator={false}
                             style={styles.scrollAllUsers}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={this.state.refreshing}
+                                    onRefresh={this._onRefresh}
+                                />}
                         >
                             
                             <FlatList 
