@@ -62,22 +62,30 @@ class CreateBet extends React.Component {
                 console.error(error);
             });
     }
-    /*
+
     _createBet() {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
 
         const {id_creator} = userData.id_user;
-        const {userPassword} = this.state;
+        const {label} = this.state;
+        const {description} = this.state;
+        const {category} = this.state;
+        const {price} = this.state;
+        const {particpants} = this.state;
 
-        fetch('https://sorbet.bet/api/create-bet.php',{
+        fetch('https://sorbet.bet/api/bet/create-bet.php',{
             method: 'post',
             header:{
                 'Accept': 'application/json',
                 'Content-type': 'application/json'
             },
             body:JSON.stringify({
-                email: userEmail,
-                password: userPassword,
+                id_creator: id_creator,
+                label: label,
+                description: description,
+                category: category,
+                price: price,
+                participants: participants
             })
         })
             .then((response) => response.json())
@@ -94,7 +102,7 @@ class CreateBet extends React.Component {
             .catch((error) => {
                 console.error(error);
             });
-    }*/
+    }
 
     //TODO Le formulaire avec les champs qui sont dans le state (en one page pour l'instant)
     //TODO La mise en forme du truc des participants
@@ -124,17 +132,19 @@ class CreateBet extends React.Component {
                     end={[0, 1]}>
 
                     <SectionedMultiSelect
-                        items={items}
-                        uniqueKey="value"
-                        subKey="children"
+                        items={items} // ça on touche pas
+                        uniqueKey="value" // ça on touche pas
+                        subKey="children" // ça on touche pas
+                        displayKey="label" // ça on touche pas
                         selectText="Participants"
-                        displayKey="label"
                         searchPlaceholderText="Rechercher"
-                        showDropDowns={false}
+                        showDropDowns={false} // ça c'est pour que ce soit déroulé par défaut
+                        //parce que à la base c'est un selection multiple avec des catégories
+                        //en entête et du coup des dropdowns avec les éléments enfant
                         readOnlyHeadings={true}
-                        onSelectedItemsChange={this.onSelectedItemsChange}
-                        onConfirm={this.laConfirm}
-                        selectedItems={this.state.selectedItems}
+                        onSelectedItemsChange={this.onSelectedItemsChange} // ça on touche pas
+                        onConfirm={this.laConfirm} // ça on touche pas
+                        selectedItems={this.state.selectedItems} // ça on touche pas
                     />
 
 

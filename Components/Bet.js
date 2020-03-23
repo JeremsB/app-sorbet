@@ -22,7 +22,7 @@ class Bet extends React.Component {
     }
 
     _start = () => {
-        if (this.state.varAnim == 0) {
+        if (this.state.varAnim === 0) {
             Animated.spring(
                 this.state.topValue,
                 {
@@ -32,7 +32,7 @@ class Bet extends React.Component {
             )
             .start();
             this.state.varAnim = 1
-        } else if (this.state.varAnim == 1){
+        } else if (this.state.varAnim === 1){
             Animated.spring(
                 this.state.topValue,
                 {
@@ -59,7 +59,6 @@ class Bet extends React.Component {
 
     _displayLoading() {
         if (this.state.isLoading) {
-
 
             const RotateData = this.RotateValueHolder.interpolate({
                 inputRange: [0, 1],
