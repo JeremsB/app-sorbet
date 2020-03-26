@@ -1,6 +1,17 @@
 // Components/Bet.js
 import React from 'react'
-import { StyleSheet, View, Image, Text, ImageBackground, TouchableOpacity, Animated, Easing } from 'react-native'
+import {
+    StyleSheet,
+    View,
+    Image,
+    Text,
+    ImageBackground,
+    TouchableOpacity,
+    Animated,
+    Easing,
+    Button,
+    TextInput
+} from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { ActivityIndicator } from 'react-native-paper';
 import {getBetAnswers, getBetInfos} from '../API/BetAPI'
@@ -15,6 +26,7 @@ class Bet extends React.Component {
             isLoading: true,
             bet: undefined,
             answers: undefined,
+            userAnswer: undefined,
             topValue: new Animated.Value(0),
             varAnim: 0,
         }
@@ -138,7 +150,7 @@ class Bet extends React.Component {
                                 
                             </View>
                             <Text style={styles.questionBet}>{bet.label}</Text>
-                            {this._displayAnswers()}
+
                         </View>
                         <Animated.View style={[styles.viewScroll, {top: this.state.topValue}]}>
                             <Text style={styles.description}>{bet.description}</Text>
@@ -151,6 +163,8 @@ class Bet extends React.Component {
                             </TouchableOpacity>
                         </Animated.View>
                     </ImageBackground>
+                    {this._displayAnswers()}
+
                 </LinearGradient>
             )
         }
@@ -158,13 +172,51 @@ class Bet extends React.Component {
 
     _displayAnswers(){
         const { answers } = this.state;
-            return(
-            <FlatList
-            data={answers}
-            keyExtractor={(item) => item.id_answer}
-            renderItem={({ item }) => <Text style={styles.viewBtn}>{item.answer}</Text>}
-            />
+        if (answers != null) {
+            return (
+
+                <FlatList
+                    data={answers}
+                    keyExtractor={(item) => item.id_answer}
+                    renderItem={({item}) =>
+                        <TouchableOpacity style={styles.viewAnswers}
+                                          onPress={() => this.answerProBet(item.id)}
+                        >
+                            <Text>{item.answer}</Text>
+                            <Text>{item.id}</Text>
+                        </TouchableOpacity>}
+                />
             )
+        } else {
+            return (
+
+            <View>
+                <TextInput
+                    style={styles.textInputPwd}
+                    placeholder='Ton choix'
+                    placeholderTextColor='#ffffff'
+                    onChangeText={userAnswer => this.setState({ userAnswer })}
+                />
+
+                <TouchableOpacity style={styles.viewAnswers}
+                                  onPress={() => this.answerUserBet()}
+                >
+                    <Text>Répondre</Text>
+
+                </TouchableOpacity>
+            </View>
+            )
+        }
+    }
+
+    answerUserBet(){
+        alert(this.state.userAnswer)
+        //TODO la fonction qui ajoute la réponse en base
+    }
+
+    answerProBet(id){
+        alert(id)
+        //TODO la fonction qui ajoute la réponse en base
     }
 
     componentDidMount() {
@@ -321,7 +373,15 @@ const styles = StyleSheet.create({
     },
     red: {
         backgroundColor: 'red',
-    }
+    },
+    viewAnswers: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 30,
+        backgroundColor: 'rgba(0, 0, 0, 0.15)',
+        borderRadius: 10,
+    },
 })
 
 export default Bet

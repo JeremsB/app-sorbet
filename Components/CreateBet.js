@@ -4,6 +4,7 @@ import { StyleSheet, View, TextInput, Text, Image, TouchableOpacity, Alert } fro
 import { LinearGradient } from 'expo-linear-gradient'
 import { connect } from 'react-redux'
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
+import { Dropdown } from 'react-native-material-dropdown';
 
 class CreateBet extends React.Component {
 
@@ -13,7 +14,7 @@ class CreateBet extends React.Component {
             //Pour l'instant j'ai fait avec le contenu de la bdd on ajustera plus tard
             label:'', //Le titre (Genre Koh-lanta du vendredi)
             description:'', //Description, c'est la question du pari
-            category:'', //Catégorie -> Liste déroulante tu mets TV Nourriture Sport Politique... Autre
+            category:undefined, //Catégorie -> Liste déroulante tu mets TV Nourriture Sport Politique... Autre
             price:'', //Le truc a gagner
             selectedItems: [],
         }
@@ -63,15 +64,13 @@ class CreateBet extends React.Component {
             });
     }
 
-    _createBet() {
+    _createBet(selectedItems) {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
 
-        const {id_creator} = userData.id_user;
         const {label} = this.state;
         const {description} = this.state;
         const {category} = this.state;
         const {price} = this.state;
-        const {particpants} = this.state;
 
         fetch('https://sorbet.bet/api/bet/create-bet.php',{
             method: 'post',
@@ -80,12 +79,12 @@ class CreateBet extends React.Component {
                 'Content-type': 'application/json'
             },
             body:JSON.stringify({
-                id_creator: id_creator,
+                id_creator: userData.id_user,
                 label: label,
                 description: description,
                 category: category,
                 price: price,
-                participants: participants
+                participants: this.state.selectedItems
             })
         })
             .then((response) => response.json())
@@ -104,11 +103,12 @@ class CreateBet extends React.Component {
             });
     }
 
-    //TODO Le formulaire avec les champs qui sont dans le state (en one page pour l'instant)
+    //TODO La mise en forme du formulaire
     //TODO La mise en forme du truc des participants
     //Pour le truc des participants voir:
     //https://github.com/renrizzolo/react-native-sectioned-multi-select
-
+    //Pour le dropdown des catégories:
+    //https://github.com/n4kz/react-native-material-dropdown
 
     render() {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
@@ -123,6 +123,20 @@ class CreateBet extends React.Component {
             }
         ];
 
+        let data = [{
+            value: 'Nourriture',
+        }, {
+            value: 'People',
+        }, {
+            value: 'Politique',
+        }, {
+            value: 'Sport',
+        }, {
+            value: 'TV',
+        }, {
+            value: 'Autres',
+        }];
+
         return (
             <View style={styles.main_container}>
                 <LinearGradient
@@ -130,6 +144,33 @@ class CreateBet extends React.Component {
                     style={{flex:1, paddingTop: 70, paddingBottom: 40, paddingLeft: 30, paddingRight: 30}}
                     start={[1, 0]}
                     end={[0, 1]}>
+
+                    <TextInput
+                        //style={styles.textInputEmail}
+                        placeholder='Titre'
+                        placeholderTextColor='#ffffff'
+                        onChangeText={label => this.setState({ label })}
+                    />
+
+                    <TextInput
+                        //style={styles.textInputEmail}
+                        placeholder='Question'
+                        placeholderTextColor='#ffffff'
+                        onChangeText={description => this.setState({ description })}
+                    />
+
+                    <Dropdown
+                        label='Catégorie'
+                        data={data}
+                        onChangeText={category => this.setState({ category })}
+                    />
+
+                    <TextInput
+                        //style={styles.textInputEmail}
+                        placeholder='Prix'
+                        placeholderTextColor='#ffffff'
+                        onChangeText={price => this.setState({ price })}
+                    />
 
                     <SectionedMultiSelect
                         items={items} // ça on touche pas
