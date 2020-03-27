@@ -17,6 +17,7 @@ import { ActivityIndicator } from 'react-native-paper';
 import {getBetAnswers, getBetInfos} from '../API/BetAPI'
 import UserCard from "./UserCard";
 import {FlatList} from "react-native-gesture-handler";
+import {color} from "react-native-reanimated";
 
 class Bet extends React.Component {
 
@@ -172,7 +173,7 @@ class Bet extends React.Component {
 
     _displayAnswers(){
         const { answers } = this.state;
-        if (answers != null) {
+        if (answers != "no_bet_answers") {
             return (
 
                 <FlatList
@@ -190,9 +191,8 @@ class Bet extends React.Component {
         } else {
             return (
 
-            <View>
+            <View style={styles.red}>
                 <TextInput
-                    style={styles.textInputPwd}
                     placeholder='Ton choix'
                     placeholderTextColor='#ffffff'
                     onChangeText={userAnswer => this.setState({ userAnswer })}
@@ -201,6 +201,7 @@ class Bet extends React.Component {
                 <TouchableOpacity style={styles.viewAnswers}
                                   onPress={() => this.answerUserBet()}
                 >
+
                     <Text>Répondre</Text>
 
                 </TouchableOpacity>
@@ -210,12 +211,12 @@ class Bet extends React.Component {
     }
 
     answerUserBet(){
-        alert(this.state.userAnswer)
+        alert(this.state.userAnswer);
         //TODO la fonction qui ajoute la réponse en base
     }
 
     answerProBet(id){
-        alert(id)
+        alert(id);
         //TODO la fonction qui ajoute la réponse en base
     }
 

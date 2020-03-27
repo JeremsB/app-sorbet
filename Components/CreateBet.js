@@ -84,24 +84,27 @@ class CreateBet extends React.Component {
                 description: description,
                 category: category,
                 price: price,
-                participants: this.state.selectedItems
+                participants: this.state.selectedItems,
             })
         })
             .then((response) => response.json())
-            .then((responseJson) => {
-                if (responseJson == 'champs')
+            /*.then((responseJson) => {
+                Alert.alert("Ptet ça marche","Inch'allah")
+                /*if (responseJson == 'champs')
                     Alert.alert("Erreur formulaire","Veuillez remplir tous les champs")
                 else if (responseJson == 'email_inconnu')
                     Alert.alert("Authentification incorrecte","Email / Mot de passe incorrect")
                 else
                     this.props.navigation.navigate("Home", {
                         user: responseJson
-                    });
+                    });*//*
             })
             .catch((error) => {
                 console.error(error);
-            });
+            });*/
+        Alert.alert("Pari crée!","GG");
     }
+
 
     //TODO La mise en forme du formulaire
     //TODO La mise en forme du truc des participants
@@ -192,7 +195,7 @@ class CreateBet extends React.Component {
                     <View style={styles.viewBtn}>
                         <TouchableOpacity
                             style={styles.divBtn}
-                            onPress={() => /*this._createBet()*/ Alert.alert("Clique pas","En vrai c'est pas prêt t'sais regarde le reste en attendant")}>
+                            onPress={() => this._createBet() /*Alert.alert("Clique pas","En vrai c'est pas prêt t'sais regarde le reste en attendant")*/}>
                             <Text style={styles.textBtn}>Créer pari</Text>
                         </TouchableOpacity>
                     </View>
