@@ -41,7 +41,7 @@ class AddUser extends React.Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson == 'no_users_found')
-                    Alert.alert("Pas d'users", "Utilisateurs introuvables");
+                    Alert.alert("Pas d'users", "Utilisateurs introuvables (T'es ami avec tout le monde aussi la putain d'ta race");
                 else if (responseJson == 'no_id')
                     Alert.alert("Pas d'id", "Faut un id");
                 else

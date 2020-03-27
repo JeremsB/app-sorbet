@@ -213,11 +213,15 @@ class Bet extends React.Component {
     answerUserBet(){
         alert(this.state.userAnswer);
         //TODO la fonction qui ajoute la réponse en base
+        //Créer ligne dans t_bet_user_answer
+        //Update ligne dans t_bet_participant avec answered à 1 where id_bet et id_user matchent
     }
 
     answerProBet(id){
         alert(id);
         //TODO la fonction qui ajoute la réponse en base
+        //Créer ligne dans t_bet_user_answer
+        //Créer ligne dans t_bet_participant avec answered à 1
     }
 
     componentDidMount() {

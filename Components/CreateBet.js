@@ -16,26 +16,17 @@ class CreateBet extends React.Component {
             description:'', //Description, c'est la question du pari
             category:undefined, //Catégorie -> Liste déroulante tu mets TV Nourriture Sport Politique... Autre
             price:'', //Le truc a gagner
-            selectedItems: [],
+            selectedItems: [], //Les participants
         }
     }
 
     onSelectedItemsChange = (selectedItems) => {
         this.setState({ selectedItems });
-        //console.log(this.state.selectedItems);
     };
 
     componentDidMount() {
         this._getFollows();
     }
-
-    laConfirm = (selectedItems) => {
-        console.log(this.state.selectedItems);
-    }
-
-    /*laConfirm(){
-        console.log(this.state);
-    }*/
 
     _getFollows() {
         let userData = this.props.userData[0];
@@ -87,6 +78,7 @@ class CreateBet extends React.Component {
                 participants: this.state.selectedItems,
             })
         })
+            //TODO Récupérer les erreurs
             .then((response) => response.json())
             /*.then((responseJson) => {
                 Alert.alert("Ptet ça marche","Inch'allah")
@@ -103,6 +95,8 @@ class CreateBet extends React.Component {
                 console.error(error);
             });*/
         Alert.alert("Pari crée!","GG");
+        //TODO Envoyer directement le créteur vers la page de réponse au paris qu'il vient de créer
+        //Et faire en sorte qu'il puisse pas se barrer sinon ça annule son pari bref faudra trouver une combine
     }
 
 
@@ -116,6 +110,8 @@ class CreateBet extends React.Component {
     render() {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
 
+        //C'est le contenu de la liste des participant
+        //Personnes suivies c'est le parent
         const items = [
             // this is the parent or 'item'
             {
@@ -126,6 +122,7 @@ class CreateBet extends React.Component {
             }
         ];
 
+        //C'est la liste des catégories
         let data = [{
             value: 'Nourriture',
         }, {

@@ -1,6 +1,6 @@
 // Components/Profile.js
 import React from 'react'
-import { StyleSheet, View, Text, Image, TouchableOpacity, Alert } from 'react-native'
+import {StyleSheet, View, Text, Image, TouchableOpacity, Alert, RefreshControl} from 'react-native'
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient'
 import BetCard from './BetCard'
@@ -17,7 +17,8 @@ class Profile extends React.Component {
             message: "",
             nb_follows: this._getCountFollows(id_user),
             nb_followers: this._getCountFollowers(id_user),
-            nb_bets: this._getCountBets(id_user)
+            nb_bets: this._getCountBets(id_user),
+            refreshing: false
         }
     }
 
@@ -124,6 +125,19 @@ class Profile extends React.Component {
             });
     }
 
+    _onRefresh = () => {
+        let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
+        let id_user = userData.id_user;
+        this.setState({ refreshing: true });
+        this.state.bets = this._getUserBets(id_user);
+        this.state.message = "";
+        this.state.nb_follows = this._getCountFollows(id_user);
+        this.state.nb_followers = this._getCountFollowers(id_user);
+        this.state.nb_bets = this._getCountBets(id_user);
+        this.setState({refreshing: false});
+    }
+
+
     _navEarnings() {
         this.props.navigation.navigate("Earnings");
     }
@@ -215,7 +229,13 @@ class Profile extends React.Component {
                         </TouchableOpacity>
                     </View>
                     <ScrollView
-                        showsVerticalScrollIndicator={false} style={styles.divCardUser}>
+                        showsVerticalScrollIndicator={false} style={styles.divCardUser}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={this.state.refreshing}
+                                onRefresh={this._onRefresh}
+                            />}
+                    >
                         <FlatList
                             data={this.state.bets}
                             keyExtractor={(item) => item.id_bet}

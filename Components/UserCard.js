@@ -57,10 +57,7 @@ class UserCard extends React.Component {
                         <Text style={styles.txtInfosUser}>18 Sorbets</Text>
                         <Text style={styles.txtInfosUser}>3 amis en commun</Text>
                     </View>
-                    {/*<Button
-                        title="Press me"
-                        onPress={this._follow(this.userco, user.id_user)}
-                    />*/}
+                    {/*TODO rendre ça swag*/}
                     <TouchableOpacity
                         onPress={() => this._follow(userco, user.id_user)}>
                         <Text>Follow</Text>
