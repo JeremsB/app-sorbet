@@ -160,7 +160,7 @@ class Bet extends React.Component {
                             >
                                 <Text style={styles.titleCat}>{bet.category}</Text>
                                 <View style={styles.viewBtn}></View>
-                                <Text style={styles.titlePromo}>-30%</Text>
+                                <Text style={styles.titlePromo}>{bet.price}</Text>
                             </TouchableOpacity>
                         </Animated.View>
                     </ImageBackground>
