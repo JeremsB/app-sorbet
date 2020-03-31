@@ -97,6 +97,7 @@ class CreateBet extends React.Component {
         Alert.alert("Pari crée!","GG");
         //TODO Envoyer directement le créteur vers la page de réponse au paris qu'il vient de créer
         //Et faire en sorte qu'il puisse pas se barrer sinon ça annule son pari bref faudra trouver une combine
+        //Non au fait il rentre sa réponse dans la créa du pari
     }
 
 
@@ -187,6 +188,9 @@ class CreateBet extends React.Component {
                         onConfirm={this.laConfirm} // ça on touche pas
                         selectedItems={this.state.selectedItems} // ça on touche pas
                     />
+
+                    {/* //TODO Rajouter le champs de la réponse du créateur
+                        // Un textInput */}
 
 
                     <View style={styles.viewBtn}>

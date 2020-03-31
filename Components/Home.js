@@ -7,7 +7,9 @@ import BetCard from './BetCard'
 import { connect } from 'react-redux'
 
 class Home extends React.Component {
-    
+
+    //TODO Mettre le refresh au changement de page plutot que de devoir pull to refresh
+
     constructor(props) {
         super(props)
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData

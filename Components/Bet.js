@@ -14,10 +14,11 @@ import {
 } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { ActivityIndicator } from 'react-native-paper';
-import {getBetAnswers, getBetInfos} from '../API/BetAPI'
+import {answerUserBet, getBetAnswers, getBetInfos} from '../API/BetAPI'
 import UserCard from "./UserCard";
 import {FlatList} from "react-native-gesture-handler";
 import {color} from "react-native-reanimated";
+import {connect} from "react-redux";
 
 class Bet extends React.Component {
 
@@ -30,6 +31,7 @@ class Bet extends React.Component {
             userAnswer: undefined,
             topValue: new Animated.Value(0),
             varAnim: 0,
+            message: undefined,
         }
         this.RotateValueHolder = new Animated.Value(0);
     }
@@ -211,10 +213,17 @@ class Bet extends React.Component {
     }
 
     answerUserBet(){
-        alert(this.state.userAnswer);
-        //TODO la fonction qui ajoute la réponse en base
-        //Créer ligne dans t_bet_user_answer
-        //Update ligne dans t_bet_participant avec answered à 1 where id_bet et id_user matchent
+        //alert(this.state.userAnswer);
+        let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
+        let id_user = userData.id_user;
+        answerUserBet(this.props.navigation.state.params.idBet,id_user,this.state.userAnswer).then(data => {
+            this.setState({
+                message: data
+            })
+        })
+        alert(this.state.message);
+        //TODO ça marche faut juste faire un redirect qqupart genre vers home
+        //Ou alors sur la page du paris avec genre "vous avez déjà répondu"
     }
 
     answerProBet(id){
@@ -389,4 +398,12 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Bet
+//Connecte le composant à redux (ici on récupère seulement le state global "userData"
+const mapStateToProps = state => {
+    return {
+        userData: state.userData
+    }
+}
+
+export default connect(mapStateToProps)(Bet)
+
