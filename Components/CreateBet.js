@@ -83,21 +83,30 @@ class CreateBet extends React.Component {
         })
             //TODO Récupérer les erreurs
             .then((response) => response.json())
-            /*.then((responseJson) => {
-                Alert.alert("Ptet ça marche","Inch'allah")
-                /*if (responseJson == 'champs')
-                    Alert.alert("Erreur formulaire","Veuillez remplir tous les champs")
-                else if (responseJson == 'email_inconnu')
-                    Alert.alert("Authentification incorrecte","Email / Mot de passe incorrect")
-                else
-                    this.props.navigation.navigate("Home", {
-                        user: responseJson
-                    });*//*
+            .then((responseJson) => {
+                if (responseJson == 'gg') {
+                    Alert.alert("Pari crée!", "GG")
+                    //TODO redirect vers profile
+                } else if (responseJson == 'label_missing') {
+                    Alert.alert("Titre manquant", "label_missing")
+                } else if (responseJson == 'description_missing') {
+                    Alert.alert("Description manquante", "description_missing")
+                } else if (responseJson == 'category_missing') {
+                    Alert.alert("Catégorie manquante", "category_missing")
+                } else if (responseJson == 'price_missing') {
+                    Alert.alert("Prix manquant","price_missing")
+                } else if (responseJson == 'participants_missing') {
+                    Alert.alert("Participants manquants","participants_missing")
+                } else if (responseJson == 'answer_missing') {
+                    Alert.alert("Réponse manquante","answer_missing")
+                } else {
+                    Alert.alert("Ça marche pas", "Cheh")
+                }
             })
             .catch((error) => {
                 console.error(error);
-            });*/
-        Alert.alert("Pari crée!","GG");
+            });
+
         //TODO Envoyer directement le créteur vers la page de réponse au paris qu'il vient de créer
         //Et faire en sorte qu'il puisse pas se barrer sinon ça annule son pari bref faudra trouver une combine
         //Non au fait il rentre sa réponse dans la créa du pari
@@ -212,7 +221,7 @@ class CreateBet extends React.Component {
                     <View style={styles.viewBtn}>
                         <TouchableOpacity
                             style={styles.divBtn}
-                            onPress={() => this._createBet() /*Alert.alert("Clique pas","En vrai c'est pas prêt t'sais regarde le reste en attendant")*/}>
+                            onPress={() => this._createBet() }>
                             <Text style={styles.textBtn}>Créer pari</Text>
                         </TouchableOpacity>
                     </View>
