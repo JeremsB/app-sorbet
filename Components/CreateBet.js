@@ -16,6 +16,7 @@ class CreateBet extends React.Component {
             description:'', //Description, c'est la question du pari
             category:undefined, //Catégorie -> Liste déroulante tu mets TV Nourriture Sport Politique... Autre
             price:'', //Le truc a gagner
+            userAnswer:'', //La réponse du créateur
             selectedItems: [], //Les participants
         }
     }
@@ -62,6 +63,7 @@ class CreateBet extends React.Component {
         const {description} = this.state;
         const {category} = this.state;
         const {price} = this.state;
+        const {userAnswer} = this.state;
 
         fetch('https://sorbet.bet/api/bet/create-bet.php',{
             method: 'post',
@@ -75,6 +77,7 @@ class CreateBet extends React.Component {
                 description: description,
                 category: category,
                 price: price,
+                userAnswer: userAnswer,
                 participants: this.state.selectedItems,
             })
         })
@@ -107,6 +110,14 @@ class CreateBet extends React.Component {
     //https://github.com/renrizzolo/react-native-sectioned-multi-select
     //Pour le dropdown des catégories:
     //https://github.com/n4kz/react-native-material-dropdown
+
+    //TODO Le KeyboardAvoidingView comme dans register pour que le clavier fasse pas n'imp
+    //Update Le 04/04/2020 J'ai eu je sais pas si c'est une maj ou quoi d'un truc mais j'ai ma barre de
+    //d'outils? je sais pas comment ça s'appelle la barre en haut avec heure batterie et tout qui est devenue
+    //noire sur l'appliavant elle était transparente et l'appli passait derrière mais là ça fait des comportements chelous
+    //A voir si y'a la même sur iOS
+    //Update2 J'ai rajouté une propriété StatusBar dans app.js (Au passage on peut changer pas mal d'options c'est ouf
+    //Du coup c'est résolu j'espère que ça a rien changé sur iOS normalement c'est que pour Android StatusBar
 
     render() {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
@@ -167,7 +178,6 @@ class CreateBet extends React.Component {
                     />
 
                     <TextInput
-                        //style={styles.textInputEmail}
                         placeholder='Prix'
                         placeholderTextColor='#ffffff'
                         onChangeText={price => this.setState({ price })}
@@ -187,6 +197,12 @@ class CreateBet extends React.Component {
                         onSelectedItemsChange={this.onSelectedItemsChange} // ça on touche pas
                         onConfirm={this.laConfirm} // ça on touche pas
                         selectedItems={this.state.selectedItems} // ça on touche pas
+                    />
+
+                    <TextInput
+                        placeholder='Votre réponse'
+                        placeholderTextColor='#ffffff'
+                        onChangeText={userAnswer => this.setState({ userAnswer })}
                     />
 
                     {/* //TODO Rajouter le champs de la réponse du créateur
