@@ -18,12 +18,12 @@ class Profile extends React.Component {
             nb_follows: this._getCountFollows(id_user),
             nb_followers: this._getCountFollowers(id_user),
             nb_bets: this._getCountBets(id_user),
-            refreshing: false
+            refreshing: false,
+            content: 1
         }
     }
 
     _displayBet = (idBet) => {
-        // console.log('FJVOJ?DFV?PD' + idBet)
         this.props.navigation.navigate("BetUser", {
             idBet: idBet
         })
@@ -146,6 +146,41 @@ class Profile extends React.Component {
         this.props.navigation.navigate("SettingsUser");
     }
 
+    _displayContent(){
+        if (this.state.content == 1) {
+            return(
+                <ScrollView
+                    showsVerticalScrollIndicator={false} style={styles.divCardUser}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.refreshing}
+                            onRefresh={this._onRefresh}
+                        />}
+                >
+                    <FlatList
+                        data={this.state.bets}
+                        keyExtractor={(item) => item.id_bet}
+                        renderItem={({ item }) => <BetCard bet={item} displayBet={this._displayBet} />}
+                    />
+                    <Text style={styles.txtCount2}>{this.state.message}</Text>
+                </ScrollView>
+            )
+        } else if (this.state.content == 2) {
+            return(
+            <ScrollView
+                showsVerticalScrollIndicator={false} style={styles.divCardUser}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={this.state.refreshing}
+                        onRefresh={this._onRefresh}
+                    />}
+            >
+                <Text style={styles.txtCount2}>Ça affiche les gains c'est lourd</Text>
+            </ScrollView>
+            )
+        }
+    }
+
     render() {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
         return (
@@ -195,7 +230,7 @@ class Profile extends React.Component {
 
                         <TouchableOpacity
                             style={styles.divBtn}
-                            // onPress={() => this._createBet()}
+                            onPress={() => this.setState({ content: 1 })}
                             >
                             <Image
                                 style={{
@@ -207,10 +242,11 @@ class Profile extends React.Component {
                             />
                             <Text style={styles.textBtn}>Mes paris</Text>
                         </TouchableOpacity>
+
                         <TouchableOpacity
                             style={styles.divBtn}
-                            onPress={() => this._navEarnings()}
-                            >
+                            //onPress={() => this._navEarnings()}
+                            onPress={() => this.setState({ content: 2 })}                            >
                             <Image
                                 style={{
                                     width: 10,
@@ -221,6 +257,7 @@ class Profile extends React.Component {
                             />
                             <Text style={styles.textBtn}>Mes gains</Text>
                         </TouchableOpacity>
+
                         <TouchableOpacity
                             style={styles.divBtn}
                             onPress={() => this._navigateSettingsUser()}
@@ -228,7 +265,9 @@ class Profile extends React.Component {
                             <Text style={styles.textBtn}>. . .</Text>
                         </TouchableOpacity>
                     </View>
-                    <ScrollView
+
+                    {this._displayContent()}
+                    {/*<ScrollView
                         showsVerticalScrollIndicator={false} style={styles.divCardUser}
                         refreshControl={
                             <RefreshControl
@@ -242,7 +281,7 @@ class Profile extends React.Component {
                             renderItem={({ item }) => <BetCard bet={item} displayBet={this._displayBet} />}
                         />
                         <Text style={styles.txtCount2}>{this.state.message}</Text>
-                    </ScrollView>
+                    </ScrollView>*/}
                 </LinearGradient>
             </View>
         )
