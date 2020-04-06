@@ -37,6 +37,7 @@ class Bet extends React.Component {
     }
 
     _start = () => {
+        console.log(this.state.varAnim);
         if (this.state.varAnim === 0) {
             Animated.spring(
                 this.state.topValue,
@@ -60,9 +61,9 @@ class Bet extends React.Component {
         }
     };
 
-    componentDidMount() {
+    /*componentDidMount() {
         this.StartImageRotateFunction();
-    }
+    }*/
     StartImageRotateFunction() {
         this.RotateValueHolder.setValue(0);
         Animated.timing(this.RotateValueHolder, {
@@ -89,13 +90,13 @@ class Bet extends React.Component {
                     <View style={styles.viewMiddleLoading}>
                         <Animated.Image
                             source={require('../content/img/pictos/accueil.png')}
-                            style={
+                            style={[
                                 styles.imgLoad,
                                 {
                                     transform: [{ rotate: RotateData }],
                                     width: 50,
                                     height: 48,
-                                }
+                                }]
                             }
                         />
                     </View>
@@ -105,7 +106,7 @@ class Bet extends React.Component {
     }
 
     _displayBet() {
-        const { bet } = this.state
+        const { bet } = this.state;
         if (bet != undefined) {
             return (
                 <LinearGradient
@@ -175,7 +176,9 @@ class Bet extends React.Component {
 
     _displayAnswers(){
         const { answers } = this.state;
+        const { bet } = this.state;
         if (answers != "no_bet_answers") {
+
             return (
 
                 <FlatList
@@ -190,38 +193,50 @@ class Bet extends React.Component {
                         </TouchableOpacity>}
                 />
             )
+
         } else {
-            return (
+            if (bet.answered == 0) {
+                return (
 
-            <View style={styles.red}>
-                <TextInput
-                    placeholder='Ton choix'
-                    placeholderTextColor='#ffffff'
-                    onChangeText={userAnswer => this.setState({ userAnswer })}
-                />
+                    <View style={styles.red}>
+                        <TextInput
+                            placeholder='Ton choix'
+                            placeholderTextColor='#ffffff'
+                            onChangeText={userAnswer => this.setState({ userAnswer })}
+                        />
 
-                <TouchableOpacity style={styles.viewAnswers}
-                                  onPress={() => this.answerUserBet()}
-                >
+                        <TouchableOpacity style={styles.viewAnswers}
+                                          onPress={() => this.answerUserBet()}
+                        >
 
-                    <Text>Répondre</Text>
+                            <Text>Répondre</Text>
 
-                </TouchableOpacity>
-            </View>
-            )
+                        </TouchableOpacity>
+                    </View>
+                )
+            } else if (bet.answered == 1) {
+                return (
+
+                    <Text>Vous avez déjà répondu à ce pari</Text>
+
+                )
+            }
         }
     }
 
     answerUserBet(){
-        //alert(this.state.userAnswer);
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
         let id_user = userData.id_user;
-        answerUserBet(this.props.navigation.state.params.idBet,id_user,this.state.userAnswer).then(data => {
-            this.setState({
-                message: data
+        answerUserBet(this.props.navigation.state.params.idBet,id_user,this.state.userAnswer).then(data => response.json())
+            .then((responseJson) => {
+                if (responseJson == 'no_bet_infos') {
+                    Alert.alert("Pas d'infos", "Veuillez ajouter des amis");
+                } else if (responseJson == 'no_id') {
+                    Alert.alert("Pas d'id", "Faut un id");
+                } else {
+                    alert(responseJson);
+                }
             })
-        })
-        alert(this.state.message);
         //TODO ça marche faut juste faire un redirect qqupart genre vers home
         //Ou alors sur la page du paris avec genre "vous avez déjà répondu"
     }
@@ -234,7 +249,10 @@ class Bet extends React.Component {
     }
 
     componentDidMount() {
-        getBetInfos(this.props.navigation.state.params.idBet).then(data => {
+        this.StartImageRotateFunction();
+        let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
+        let id_user = userData.id_user;
+        getBetInfos(this.props.navigation.state.params.idBet, id_user).then(data => {
             this.setState({
                 bet: data,
                 isLoading: false,

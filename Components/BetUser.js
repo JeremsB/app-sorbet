@@ -1,9 +1,21 @@
 // Components/BetUser.js
 import React from 'react'
-import { StyleSheet, View, Image, Text, ImageBackground, TouchableOpacity, Animated, Easing } from 'react-native'
+import {
+    StyleSheet,
+    View,
+    Image,
+    Text,
+    ImageBackground,
+    TouchableOpacity,
+    Animated,
+    Easing,
+    TextInput
+} from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { ActivityIndicator } from 'react-native-paper';
 import { getBetInfos } from '../API/BetAPI'
+import {connect} from "react-redux";
+import {FlatList} from "react-native-gesture-handler";
 
 class BetUser extends React.Component {
 
@@ -42,9 +54,6 @@ class BetUser extends React.Component {
         }
     };
 
-    componentDidMount() {
-        this.StartImageRotateFunction();
-    }
     StartImageRotateFunction() {
         this.RotateValueHolder.setValue(0);
         Animated.timing(this.RotateValueHolder, {
@@ -72,13 +81,13 @@ class BetUser extends React.Component {
                         <View style={styles.viewMiddleLoading}>
                             <Animated.Image 
                                 source={require('../content/img/pictos/accueil.png')}
-                                style={
+                                style={[
                                     styles.imgLoad,
                                     {
                                         transform: [{ rotate: RotateData }],
                                         width: 50,
                                         height: 48,
-                                    }
+                                    }]
                                 }
                             />
                         </View>
@@ -149,13 +158,49 @@ class BetUser extends React.Component {
                             </TouchableOpacity>
                         </Animated.View>
                     </ImageBackground>
+                    {this._displayAnswers()}
                 </LinearGradient>
             )
         }
     }
 
+    _displayAnswers(){
+        const { bet } = this.state;
+
+        if (bet.waiting == 0) {
+            return (
+
+                <View style={styles.red}>
+                    <TextInput
+                        placeholder='Ton choix'
+                        placeholderTextColor='#ffffff'
+                        onChangeText={userAnswer => this.setState({ userAnswer })}
+                    />
+
+                    <TouchableOpacity style={styles.viewAnswers}
+                                      onPress={() => this.answerUserBet()}
+                    >
+
+                        <Text>Répondre</Text>
+
+                    </TouchableOpacity>
+                </View>
+            )
+        } else if (bet.waiting == 1) {
+            return (
+
+                <Text style={styles.testBite}>Vous avez déjà répondu à ce pari</Text>
+
+            )
+        }
+
+    }
+
     componentDidMount() {
-        getBetInfos(this.props.navigation.state.params.idBet).then(data => {
+        this.StartImageRotateFunction();
+        let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
+        let id_user = userData.id_user;
+        getBetInfos(this.props.navigation.state.params.idBet, id_user).then(data => {
             this.setState({
                 bet: data,
                 isLoading: false,
@@ -174,6 +219,9 @@ class BetUser extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    testBite: {
+      marginTop: 50
+    },
     main_container: {
         flex: 1,
         flexDirection: 'column',
@@ -206,7 +254,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.6)',
         height: '100%',
         width: '100%',
-        height: 275,
+        //height: 275,
         borderRadius: 30,
         flexDirection: 'column',
         alignItems: 'center',
@@ -304,4 +352,11 @@ const styles = StyleSheet.create({
     },
 })
 
-export default BetUser
+//Connecte le composant à redux (ici on récupère seulement le state global "userData"
+const mapStateToProps = state => {
+    return {
+        userData: state.userData
+    }
+}
+
+export default connect(mapStateToProps)(BetUser)

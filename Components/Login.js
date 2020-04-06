@@ -61,6 +61,10 @@ class Login extends React.Component {
 
     componentDidMount() {
         this.StartImageRotateFunction();
+
+        setTimeout(() => {
+            this.setState({ timePassed: true })
+        }, 2500);
     }
 
     StartImageRotateFunction() {
@@ -88,13 +92,13 @@ class Login extends React.Component {
                     <View style={styles.viewMiddleLoading}>
                         <Animated.Image
                             source={require('../content/img/pictos/accueil.png')}
-                            style={
+                            style={[
                                 styles.imgLoad,
                                 {
                                     transform: [{ rotate: RotateData }],
                                     width: 52,
                                     height: 50.5,
-                                }
+                                }]
                             }
                         />
                     </View>
@@ -268,12 +272,6 @@ class Login extends React.Component {
                 </View>
             </Swiper>
         )
-    }
-
-    componentDidMount() {
-        setTimeout(() => {
-            this.setState({ timePassed: true })
-        }, 2500);
     }
 
     setTimePassed() {

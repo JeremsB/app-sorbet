@@ -3,6 +3,7 @@
 import React from 'react'
 import {StyleSheet, Text, Image, View, TouchableOpacity, Alert} from 'react-native'
 import {Button} from "react-native-web";
+import AddUser from "./AddUser";
 
 
 class UserCard extends React.Component {
@@ -21,10 +22,10 @@ class UserCard extends React.Component {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                if (responseJson == 'follow')
+                if (responseJson == 'follow') {
                     console.log("follow");
                     //Alert.alert("follow","Veuillez ajouter les amis")
-                else if (responseJson == 'deja_follow')
+                }else if (responseJson == 'deja_follow')
                     console.log("deja_follow");
                     //Alert.alert("deja_follow","Faut un id")
                 else if (responseJson == 'follow_back')

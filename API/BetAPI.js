@@ -1,4 +1,4 @@
-export function getBetInfos (id) {
+export function getBetInfos (id_bet, id_user) {
     return fetch('https://sorbet.bet/api/get-bet-infos.php', {
         method: 'post',
         header: {
@@ -6,7 +6,8 @@ export function getBetInfos (id) {
             'Content-type': 'application/json'
         },
         body: JSON.stringify({
-            id: id,
+            id_bet: id_bet,
+            id_user: id_user,
         })
     })
         .then((response) => response.json())
@@ -61,16 +62,18 @@ export function answerUserBet (id_bet, id_user, answer) {
             answer: answer,
         })
     })
-        .then((response) => response.json())
-    // .then((responseJson) => {
-    //     if (responseJson == 'no_bet_infos')
-    //         Alert.alert("Pas d'infos", "Veuillez ajouter des amis");
-    //     else if (responseJson == 'no_id')
-    //         Alert.alert("Pas d'id", "Faut un id");
-    //     else
-    //         this.setState({ bet: responseJson });
-    // })
-    // .catch((error) => {
-    //     console.error(error);
-    // });
+    .then((response) => response.json())
+     .then((responseJson) => {
+         /*if (responseJson == 'no_bet_infos') {
+             Alert.alert("Pas d'infos", "Veuillez ajouter des amis");
+         } else if (responseJson == 'no_id') {
+             Alert.alert("Pas d'id", "Faut un id");
+         } else {
+             this.setState({bet: responseJson});
+         }*/
+         alert(responseJson);
+     })
+     .catch((error) => {
+         console.error(error);
+     });
 }

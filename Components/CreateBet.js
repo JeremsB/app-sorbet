@@ -142,6 +142,8 @@ class CreateBet extends React.Component {
 
         //C'est la liste des catégories
         let data = [{
+            value: 'Jeux vidéo',
+        }, {
             value: 'Nourriture',
         }, {
             value: 'People',
