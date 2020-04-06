@@ -10,7 +10,7 @@ class BetCard extends React.Component {
         const { bet, displayBet } = this.props
         return (
             <ImageBackground
-                source={require('../content/img/burger.jpg')}
+                source={{uri: 'https://sorbet.bet/categories/'+bet.category+'.jpg'}}
                 style={styles.divCard}
                 imageStyle={{ borderRadius: 15 }}
             >

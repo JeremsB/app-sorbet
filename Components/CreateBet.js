@@ -107,9 +107,6 @@ class CreateBet extends React.Component {
                 console.error(error);
             });
 
-        //TODO Envoyer directement le créteur vers la page de réponse au paris qu'il vient de créer
-        //Et faire en sorte qu'il puisse pas se barrer sinon ça annule son pari bref faudra trouver une combine
-        //Non au fait il rentre sa réponse dans la créa du pari
     }
 
 

@@ -97,7 +97,7 @@ class BetUser extends React.Component {
                     start={[1, 0]}
                     end={[0, 1]}>
                     <ImageBackground
-                        source={require('../content/img/burger.jpg')}
+                        source={{uri: 'https://sorbet.bet/categories/'+bet.category+'.jpg'}}
                         style={styles.divCard}
                         imageStyle={{ borderRadius: 30 }}
                     >
