@@ -1,19 +1,79 @@
 // Components/AccountSettings.js
 import React from 'react'
-import { StyleSheet, View, TouchableOpacity, Image, Text, TextInput } from 'react-native'
-import DatePicker from 'react-native-datepicker'
+import {StyleSheet, View, TouchableOpacity, Image, Text, TextInput, Alert} from 'react-native'
 import { LinearGradient } from "expo-linear-gradient"
 import { connect } from 'react-redux'
 import { ScrollView } from 'react-native-gesture-handler'
+import { updateUser } from "../API/UserAPI";
 
 class AccountSettings extends React.Component {
 
     constructor(props) {
         super(props)
+        this.state={
+            login:null,
+            lastname:null,
+            firstname:null,
+            description:null,
+        }
     }
 
     _navReturn() {
         this.props.navigation.navigate("SettingsUser");
+    }
+
+    _updateUser() {
+        let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
+        let id_user = userData.id_user;
+
+        let {login} = this.state;
+        if (login == null) {login = userData.login;}
+        let {firstname} = this.state;
+        if (firstname == null) {firstname = userData.firstname;}
+        let {lastname} = this.state;
+        if (lastname == null) {lastname = userData.lastname;}
+        let {description} = this.state;
+        if (description == null) {description = userData.description;}
+
+        fetch('https://sorbet.bet/api/user/update-user.php', {
+            method: 'post',
+            header: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                id_user: id_user,
+                login: login,
+                firstname: firstname,
+                lastname: lastname,
+                description: description,
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson === 'login_missing') {
+                    Alert.alert("Pas de pseudo", "Faut un pseudo");
+                } else if (responseJson === 'firstname_missing') {
+                    Alert.alert("Pas de prénom", "Faut un prénom");
+                } else if (responseJson === 'lastname_missing') {
+                    Alert.alert("Pas de nom", "Faut un nom");
+                } else if (responseJson === 'description_missing') {
+                    Alert.alert("Pas de description", "Faut une description");
+                } else if (responseJson === 'login_already') {
+                    Alert.alert("Pseudo déjà utilisé", "Veuillez entrer un autre pseudo");
+                } else if (responseJson === 'error') {
+                    Alert.alert("error", "cheh");
+                } else {
+                    Alert.alert("Succès", "Mise à jour réussie !");
+                    const action = { type: "USER_LOGIN", value: responseJson };
+                    this.props.dispatch(action);
+                    this._navReturn()
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
     }
 
     render() {
@@ -46,23 +106,23 @@ class AccountSettings extends React.Component {
                     </View>
 
                     <ScrollView>
-                        <Text style={styles.label}>Nom d'utilisateur</Text>
+                        <Text style={styles.label}>Pseudo</Text>
                         <TextInput
                             style={styles.viewInput}
                             defaultValue={userData.login}
                             onChangeText={login => this.setState({ login })}
-                        />
-                        <Text style={styles.label}>Nom</Text>
-                        <TextInput
-                            style={styles.viewInput}
-                            defaultValue={userData.lastname}
-                            onChangeText={lastname => this.setState({ lastname })}
                         />
                         <Text style={styles.label}>Prénom</Text>
                         <TextInput
                             style={styles.viewInput}
                             defaultValue={userData.firstname}
                             onChangeText={firstname => this.setState({ firstname })}
+                        />
+                        <Text style={styles.label}>Nom</Text>
+                        <TextInput
+                            style={styles.viewInput}
+                            defaultValue={userData.lastname}
+                            onChangeText={lastname => this.setState({ lastname })}
                         />
                         <Text style={styles.label}>Description</Text>
                         <TextInput
@@ -72,37 +132,11 @@ class AccountSettings extends React.Component {
                             defaultValue={userData.description}
                             onChangeText={description => this.setState({ description })}
                         />
-                        {/* <Text style={styles.label}>Date de naissance</Text>
-                        <DatePicker
-                            style={styles.viewInputDate}
-                            date={this.state.birth}
-                            mode="date"
-                            showIcon={false}
-                            format="YYYY-MM-DD"
-                            placeholder={"YYYY-MM-DD"}
-                            minDate={moment().subtract(500, "years")}
-                            maxDate={moment().subtract(18, "years")}
-                            confirmBtnText="Confirm"
-                            cancelBtnText="Cancel"
-                            customStyles={{
-                                dateInput: {
-                                    marginTop: 10,
-                                    borderColor: 'rgba(0, 0, 0, 0)'
-                                },
-                                dateText: {
-                                    fontSize: 16,
-                                    color: '#ffffff',
-                                },
-                                PlaceholderText: {
-                                    fontSize: 16,
-                                    color: 'rgba(0, 0, 0, 0)',
-                                }
-                            }}
-                            onDateChange={(birth) => { this.setState({ birth: birth }) }}
-                        /> */}
-                        <View>
-                            <Text>{userData.lastname}</Text>
-                        </View>
+                        <TouchableOpacity
+                            style={styles.divBtnSubmit}
+                            onPress={() => this._updateUser()}>
+                            <Text style={styles.textBtn}>Mettre à jour</Text>
+                        </TouchableOpacity>
                     </ScrollView>
                 </LinearGradient>
             </View>
@@ -169,12 +203,29 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         height: 100,
         justifyContent: "flex-start",
+        color: '#ffffff',
+        textDecorationColor: 'transparent',
     },
     viewInputDate: {
         backgroundColor: 'rgba(0, 0, 0, 0.2)',
         borderRadius: 10,
         height: 50,
         alignItems: 'center',
+    },
+    divBtnSubmit: {
+        backgroundColor: 'white',
+        borderRadius: 15,
+        height: 60,
+        justifyContent: 'center',
+        paddingLeft: 10,
+        alignItems: 'center',
+        width: '100%',
+        marginTop: '5%',
+    },
+    textBtn: {
+        color: '#ff978d',
+        textTransform: 'uppercase',
+        fontSize: 20,
     },
 })
 

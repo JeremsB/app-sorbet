@@ -20,6 +20,8 @@ function userLogin(state = initialState, action) {
                     userData: [...state.userData, action.value]
                 }
             }
+            //console.log(state);
+            //console.log(nextState);
             return nextState || state
         case 'USER_DISCONNECT':
             const datauserco = state.userData

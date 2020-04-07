@@ -61,9 +61,6 @@ class Bet extends React.Component {
         }
     };
 
-    /*componentDidMount() {
-        this.StartImageRotateFunction();
-    }*/
     StartImageRotateFunction() {
         this.RotateValueHolder.setValue(0);
         Animated.timing(this.RotateValueHolder, {
