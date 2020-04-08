@@ -96,7 +96,7 @@ class SettingsUser extends React.Component {
                         <View>
                             <TouchableOpacity
                                 style={styles.viewCatSettings}
-                                onPress={() => alert("Actives les notifs ou je t'enc***")}
+                                onPress={() => alert("Notifications")}
                             >
                                 <View style={styles.viewIcon}>
                                     <Image
@@ -112,7 +112,7 @@ class SettingsUser extends React.Component {
                             <View style={styles.viewThinLine}></View>
                             <TouchableOpacity
                                 style={styles.viewCatSettings}
-                                onPress={() => alert("Confidentialité et ... je sais pas kiki a mis que ça sur la maquette")}
+                                onPress={() => alert("Politique de confidentialité")}
                             >
                                 <View style={styles.viewIcon}>
                                     <Image
@@ -123,12 +123,12 @@ class SettingsUser extends React.Component {
                                         source={require('../content/img/pictos/cadenas_blanc.png')}
                                     />
                                 </View>
-                                <Text style={styles.textCatSettings}>Confidentialité et</Text>
+                                <Text style={styles.textCatSettings}>Politique de confidentialité</Text>
                             </TouchableOpacity>
                             <View style={styles.viewThinLine}></View>
                             <TouchableOpacity
                                 style={styles.viewCatSettings}
-                                onPress={() => alert("PAS DE PUB OK ?")}
+                                onPress={() => alert("Publicité")}
                             >
                                 <View style={styles.viewIcon}>
                                     <Image
@@ -162,7 +162,7 @@ class SettingsUser extends React.Component {
                         <View>
                             <TouchableOpacity
                                 style={styles.viewCatSettings}
-                                onPress={() => alert("Besoin d'aide ? Et bah va te faire")}
+                                onPress={() => alert("Aide")}
                             >
                                 <View style={styles.viewIcon}>
                                     <Image

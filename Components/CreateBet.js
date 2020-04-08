@@ -100,7 +100,7 @@ class CreateBet extends React.Component {
                 } else if (responseJson == 'answer_missing') {
                     Alert.alert("Réponse manquante","answer_missing")
                 } else {
-                    Alert.alert("Ça marche pas", "Cheh")
+                    Alert.alert("Ça marche pas", "Echec")
                 }
             })
             .catch((error) => {
@@ -124,6 +124,8 @@ class CreateBet extends React.Component {
     //A voir si y'a la même sur iOS
     //Update2 J'ai rajouté une propriété StatusBar dans app.js (Au passage on peut changer pas mal d'options c'est ouf
     //Du coup c'est résolu j'espère que ça a rien changé sur iOS normalement c'est que pour Android StatusBar
+    //Mais y'a toujours le clavier de ses morts
+
 
     render() {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
@@ -166,14 +168,14 @@ class CreateBet extends React.Component {
                     end={[0, 1]}>
 
                     <TextInput
-                        //style={styles.textInputEmail}
+                        style={styles.textInput}
                         placeholder='Titre'
                         placeholderTextColor='#ffffff'
                         onChangeText={label => this.setState({ label })}
                     />
 
                     <TextInput
-                        //style={styles.textInputEmail}
+                        style={styles.textInput}
                         placeholder='Question'
                         placeholderTextColor='#ffffff'
                         onChangeText={description => this.setState({ description })}
@@ -186,6 +188,7 @@ class CreateBet extends React.Component {
                     />
 
                     <TextInput
+                        style={styles.textInput}
                         placeholder='Prix'
                         placeholderTextColor='#ffffff'
                         onChangeText={price => this.setState({ price })}
@@ -208,14 +211,11 @@ class CreateBet extends React.Component {
                     />
 
                     <TextInput
-                        placeholder='Votre réponse'
+                        style={styles.textInput}
+                        placeholder='Je parie sur'
                         placeholderTextColor='#ffffff'
                         onChangeText={userAnswer => this.setState({ userAnswer })}
                     />
-
-                    {/* //TODO Rajouter le champs de la réponse du créateur
-                        // Un textInput */}
-
 
                     <View style={styles.viewBtn}>
                         <TouchableOpacity
@@ -240,39 +240,20 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         width: '100%',
     },
-    viewImg: {
-        flex: 2,
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
     viewForm: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'space-between',
     },
-    viewInputEmail: {
-        backgroundColor: 'white',
+    textInput: {
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
         flexDirection: 'row',
-        borderRadius: 15,
-        height: 60,
-        marginBottom: 0,
+        borderRadius: 10,
+        height: 50,
+        marginBottom: 10,
         alignItems: 'center',
-    },
-    textInputEmail: {
-        height: 60,
-        width: '100%',
-    },
-    viewInputPwd: {
-        backgroundColor: 'white',
-        flexDirection: 'row',
-        height: 60,
-        borderRadius: 15,
-        marginBottom: 0,
-        alignItems: 'center',
-    },
-    textInputPwd: {
-        height: 60,
-        width: '100%',
+        color: '#ffffff',
+        paddingLeft: 20,
     },
     viewBtn: {
         flex: 2,

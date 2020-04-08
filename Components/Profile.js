@@ -245,6 +245,20 @@ class Profile extends React.Component {
 
                         <TouchableOpacity
                             style={styles.divBtn}
+                            onPress={() => this.setState({ content: 3 })}                            >
+                            <Image
+                                style={{
+                                    width: 10,
+                                    height: 10,
+                                    marginRight: 5,
+                                }}
+                                source={require('../content/img/pictos/accueil_blanc.png')}
+                            />
+                            <Text style={styles.textBtn}>Participations</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={styles.divBtn}
                             //onPress={() => this._navEarnings()}
                             onPress={() => this.setState({ content: 2 })}                            >
                             <Image

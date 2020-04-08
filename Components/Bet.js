@@ -104,6 +104,8 @@ class Bet extends React.Component {
 
     _displayBet() {
         const { bet } = this.state;
+        console.log(this.state.bet);
+        console.log("Test");
         if (bet != undefined) {
             return (
                 <LinearGradient
@@ -247,9 +249,7 @@ class Bet extends React.Component {
 
     componentDidMount() {
         this.StartImageRotateFunction();
-        let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
-        let id_user = userData.id_user;
-        getBetInfos(this.props.navigation.state.params.idBet, id_user).then(data => {
+        getBetInfos(this.props.navigation.state.params.idBet).then(data => {
             this.setState({
                 bet: data,
                 isLoading: false,
