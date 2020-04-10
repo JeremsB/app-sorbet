@@ -5,6 +5,7 @@ import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient'
 import BetCard from './BetCard'
 import { connect } from 'react-redux'
+import {getBetsParti} from "../API/BetAPI";
 
 class Profile extends React.Component {
 
@@ -19,12 +20,19 @@ class Profile extends React.Component {
             nb_followers: this._getCountFollowers(id_user),
             nb_bets: this._getCountBets(id_user),
             refreshing: false,
+            betsParticipes: this._getBetsParticipes(id_user),
             content: 1
         }
     }
 
-    _displayBet = (idBet) => {
+    _displayUserBet = (idBet) => {
         this.props.navigation.navigate("BetUser", {
+            idBet: idBet
+        })
+    }
+
+    _displayBet = (idBet) => {
+        this.props.navigation.navigate("Bet", {
             idBet: idBet
         })
     }
@@ -134,6 +142,7 @@ class Profile extends React.Component {
         this.state.nb_follows = this._getCountFollows(id_user);
         this.state.nb_followers = this._getCountFollowers(id_user);
         this.state.nb_bets = this._getCountBets(id_user);
+        this._getBetsParticipes(id_user);
         this.setState({refreshing: false});
     }
 
@@ -146,8 +155,16 @@ class Profile extends React.Component {
         this.props.navigation.navigate("SettingsUser");
     }
 
+    _getBetsParticipes(id_user) {
+        getBetsParti(id_user).then(data => {
+        this.setState({
+                      betsParticipes: data
+                  })
+        })
+    }
+
     _displayContent(){
-        if (this.state.content == 1) {
+        if (this.state.content === 1) {
             return(
                 <ScrollView
                     showsVerticalScrollIndicator={false} style={styles.divCardUser}
@@ -160,12 +177,12 @@ class Profile extends React.Component {
                     <FlatList
                         data={this.state.bets}
                         keyExtractor={(item) => item.id_bet}
-                        renderItem={({ item }) => <BetCard bet={item} displayBet={this._displayBet} />}
+                        renderItem={({ item }) => <BetCard bet={item} displayBet={this._displayUserBet} />}
                     />
                     <Text style={styles.txtCount2}>{this.state.message}</Text>
                 </ScrollView>
             )
-        } else if (this.state.content == 2) {
+        } else if (this.state.content === 2) {
             return(
             <ScrollView
                 showsVerticalScrollIndicator={false} style={styles.divCardUser}
@@ -177,6 +194,24 @@ class Profile extends React.Component {
             >
                 <Text style={styles.txtCount2}>Ça affiche les gains c'est lourd</Text>
             </ScrollView>
+            )
+        } else if (this.state.content === 3) {
+            return(
+                <ScrollView
+                    showsVerticalScrollIndicator={false} style={styles.divCardUser}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.refreshing}
+                            onRefresh={this._onRefresh}
+                        />}
+                >
+                    <FlatList
+                        data={this.state.betsParticipes}
+                        keyExtractor={(item) => item.id_bet}
+                        renderItem={({ item }) => <BetCard bet={item} displayBet={this._displayBet} />}
+                    />
+                    <Text style={styles.txtCount2}>{this.state.message}</Text>
+                </ScrollView>
             )
         }
     }

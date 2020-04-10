@@ -104,8 +104,6 @@ class Bet extends React.Component {
 
     _displayBet() {
         const { bet } = this.state;
-        console.log(this.state.bet);
-        console.log("Test");
         if (bet != undefined) {
             return (
                 <LinearGradient
