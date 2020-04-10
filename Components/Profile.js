@@ -146,11 +146,6 @@ class Profile extends React.Component {
         this.setState({refreshing: false});
     }
 
-
-    _navEarnings() {
-        this.props.navigation.navigate("Earnings");
-    }
-
     _navigateSettingsUser() {
         this.props.navigation.navigate("SettingsUser");
     }

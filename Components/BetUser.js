@@ -13,7 +13,7 @@ import {
 } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { ActivityIndicator } from 'react-native-paper';
-import { getUserBetInfos } from '../API/BetAPI'
+import {getUserBetInfos, officialAnswer} from '../API/BetAPI'
 import {connect} from "react-redux";
 import {FlatList} from "react-native-gesture-handler";
 
@@ -25,6 +25,7 @@ class BetUser extends React.Component {
             isLoading: true,
             bet: undefined,
             topValue: new Animated.Value(0),
+            officialAnswer: undefined,
             varAnim: 0,
         }
         this.RotateValueHolder = new Animated.Value(0);
@@ -94,6 +95,15 @@ class BetUser extends React.Component {
                 </LinearGradient>
             )
         }
+    }
+
+    _officialAnswerBet(id_bet) {
+        officialAnswer(id_bet, this.state.officialAnswer).then(data => {
+            this.setState({
+                message: data,
+            })
+        })
+        alert(this.state.message);
     }
 
     _displayBet() {
@@ -166,34 +176,40 @@ class BetUser extends React.Component {
 
     _displayAnswers(){
         const { bet } = this.state;
+        if (bet.open == 1) {
+            if (bet.waiting == 0) {
+                return (
 
-        if (bet.waiting == 0) {
+                    <View style={styles.red}>
+                        <TextInput
+                            placeholder='Réponse officielle'
+                            placeholderTextColor='#ffffff'
+                            onChangeText={officialAnswer => this.setState({officialAnswer})}
+                        />
+
+                        <TouchableOpacity style={styles.viewAnswers}
+                                          onPress={() => this._officialAnswerBet(bet.id_bet)}>
+                            <Text>Finaliser le pari</Text>
+
+                        </TouchableOpacity>
+                    </View>
+
+                )
+            } else if (bet.waiting == 1) {
+                return (
+
+                    <Text style={styles.testBite}>Au moins un utilisateur doit avoir répondu au pari pour que la réponse
+                        officielle soit donnée</Text>
+
+                )
+            }
+        } else if (bet.open == 0){
             return (
 
-                <View style={styles.red}>
-                    <TextInput
-                        placeholder='Ton choix'
-                        placeholderTextColor='#ffffff'
-                        onChangeText={userAnswer => this.setState({ userAnswer })}
-                    />
-
-                    <TouchableOpacity style={styles.viewAnswers}
-                                      onPress={() => this.answerUserBet()}
-                    >
-
-                        <Text>Répondre</Text>
-
-                    </TouchableOpacity>
-                </View>
-            )
-        } else if (bet.waiting == 1) {
-            return (
-
-                <Text style={styles.testBite}>Vous avez déjà répondu à ce pari</Text>
+                <Text style={styles.testBite}>Pari terminé</Text>
 
             )
         }
-
     }
 
     componentDidMount() {
