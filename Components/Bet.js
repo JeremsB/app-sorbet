@@ -32,23 +32,24 @@ class Bet extends React.Component {
             topValue: new Animated.Value(0),
             varAnim: 0,
             message: undefined,
+            showTheThing: true,
         }
         this.RotateValueHolder = new Animated.Value(0);
     }
 
-    _start = () => {
-        console.log(this.state.varAnim);
-        if (this.state.varAnim === 0) {
+    _startScroll() {
+        if (this.state.varAnim == 0) {
             Animated.spring(
                 this.state.topValue,
                 {
-                    toValue: 300,
+                    toValue: 350,
                     duration: 300,
                 }
             )
             .start();
             this.state.varAnim = 1
-        } else if (this.state.varAnim === 1){
+            this.setState({showTheThing: false})
+        } else if (this.state.varAnim == 1){
             Animated.spring(
                 this.state.topValue,
                 {
@@ -58,6 +59,7 @@ class Bet extends React.Component {
             )
             .start();
             this.state.varAnim = 0
+            this.setState({showTheThing: true})
         }
     };
 
@@ -151,12 +153,11 @@ class Bet extends React.Component {
                                 
                             </View>
                             <Text style={styles.questionBet}>{bet.label}</Text>
-
                         </View>
                         <Animated.View style={[styles.viewScroll, {top: this.state.topValue}]}>
                             <Text style={styles.description}>{bet.description}</Text>
                             <TouchableOpacity style={styles.viewBottomCard}
-                                onPress={() => this._start()}
+                                onPress={() => this._startScroll()}
                             >
                                 <Text style={styles.titleCat}>{bet.category}</Text>
                                 <View style={styles.viewBtn}></View>
@@ -164,7 +165,18 @@ class Bet extends React.Component {
                             </TouchableOpacity>
                         </Animated.View>
                     </ImageBackground>
-                    {this._displayAnswers()}
+                    <View style={styles.red}>
+                    {this.state.showTheThing &&
+                        this._displayAnswers()
+                    }
+                    </View>
+                    <View style={styles.testt}>
+                        <TouchableOpacity
+                            style={styles.divBtn}
+                            onPress={() => this._startScroll()}>
+                            <Text style={styles.textBtn}>Dérouler</Text>
+                        </TouchableOpacity>
+                    </View>
 
                 </LinearGradient>
             )
@@ -174,6 +186,8 @@ class Bet extends React.Component {
     _displayAnswers(){
         const { answers } = this.state;
         const { bet } = this.state;
+        console.log(bet);
+        console.log(answers);
         if (answers != "no_bet_answers") {
 
             return (
@@ -194,21 +208,20 @@ class Bet extends React.Component {
         } else {
             if (bet.answered == 0) {
                 return (
-
-                    <View style={styles.red}>
+                    <View>
                         <TextInput
-                            placeholder='Ton choix'
+                            style={styles.textInput}
+                            placeholder='Ta réponse'
                             placeholderTextColor='#ffffff'
                             onChangeText={userAnswer => this.setState({ userAnswer })}
                         />
-
-                        <TouchableOpacity style={styles.viewAnswers}
-                                          onPress={() => this.answerUserBet()}
-                        >
-
-                            <Text>Répondre</Text>
-
-                        </TouchableOpacity>
+                        <View style={styles.viewBtn2}>
+                            <TouchableOpacity
+                                style={styles.divBtn}
+                                onPress={() => this.answerUserBet()}>
+                                <Text style={styles.textBtn}>Répondre</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 )
             } else if (bet.answered == 1) {
@@ -247,7 +260,9 @@ class Bet extends React.Component {
 
     componentDidMount() {
         this.StartImageRotateFunction();
-        getBetInfos(this.props.navigation.state.params.idBet).then(data => {
+        let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
+        let id_user = userData.id_user;
+        getBetInfos(this.props.navigation.state.params.idBet,id_user).then(data => {
             this.setState({
                 bet: data,
                 isLoading: false,
@@ -374,7 +389,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between',
         backgroundColor: '#ffffff',
-        zIndex: -10,
+        zIndex: -1,
         height: 400,
         marginTop: -350,
         shadowColor: '#000000',
@@ -391,6 +406,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        //backgroundColor: 'blue',
+        zIndex: 2,
     },
     viewBtn: {
         width: 50,
@@ -399,16 +416,59 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     red: {
-        backgroundColor: 'red',
+        marginTop: '15%',
+        paddingLeft: '5%',
+        paddingRight: '5%',
+        zIndex: 0,
+        height: 100
     },
     viewAnswers: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: 30,
+        marginTop: 70,
         backgroundColor: 'rgba(0, 0, 0, 0.15)',
         borderRadius: 10,
     },
+    textInput: {
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        flexDirection: 'row',
+        borderRadius: 10,
+        height: 50,
+        marginBottom: 10,
+        alignItems: 'center',
+        color: '#ffffff',
+        paddingLeft: 20,
+    },
+    viewBtn2: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    divBtn: {
+        backgroundColor: 'white',
+        borderRadius: 15,
+        height: 60,
+        justifyContent: 'center',
+        paddingLeft: 10,
+        alignItems: 'center',
+        width: '100%',
+    },
+    textBtn: {
+        color: '#ff978d',
+        textTransform: 'uppercase',
+        fontSize: 20,
+    },
+    testt: {
+        //marginTop: '120%',
+        paddingLeft: '30%',
+        paddingRight: '30%',
+        //backgroundColor: 'rgba(0, 0, 0, 0.15)',
+        //borderRadius: 10,
+        //marginTop:'60%'
+        bottom: -260,
+        //flex: 2,
+        //position: 'fixed',
+    }
 })
 
 //Connecte le composant à redux (ici on récupère seulement le state global "userData"

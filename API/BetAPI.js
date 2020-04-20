@@ -1,4 +1,4 @@
-export function getBetInfos (id_bet) {
+export function getBetInfos (id_bet, id_user) {
     return fetch('https://sorbet.bet/api/get-bet-infos.php', {
         method: 'post',
         header: {
@@ -7,6 +7,7 @@ export function getBetInfos (id_bet) {
         },
         body: JSON.stringify({
             id_bet: id_bet,
+            id_user: id_user,
         })
     })
         .then((response) => response.json())
