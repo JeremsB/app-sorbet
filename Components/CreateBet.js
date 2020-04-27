@@ -5,6 +5,11 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { connect } from 'react-redux'
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import { Dropdown } from 'react-native-material-dropdown';
+import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
+
+import MaterialBottomTabNavigator
+    from "@react-navigation/material-bottom-tabs/src/navigators/createMaterialBottomTabNavigator";
+import Icon from "react-native-paper/src/components/Icon";
 
 class CreateBet extends React.Component {
 
@@ -107,6 +112,18 @@ class CreateBet extends React.Component {
                 console.error(error);
             });
 
+        this.label.clear();
+        this.description.clear();
+        this.price.clear();
+        this.SectionedMultiSelect._removeAllItems();
+        this.userAnswer.clear();
+        this.setState({
+            label:'',
+            description:'',
+            price:'',
+            userAnswer:'',
+            selectedItems: [],
+        })
     }
 
 
@@ -172,6 +189,7 @@ class CreateBet extends React.Component {
                         placeholder='Titre'
                         placeholderTextColor='#ffffff'
                         onChangeText={label => this.setState({ label })}
+                        ref={input => { this.label = input }}
                     />
 
                     <TextInput
@@ -179,11 +197,16 @@ class CreateBet extends React.Component {
                         placeholder='Question'
                         placeholderTextColor='#ffffff'
                         onChangeText={description => this.setState({ description })}
+                        ref={input => { this.description = input }}
                     />
 
                     <Dropdown
                         label='Catégorie'
                         data={data}
+                        textColor='#ff978d'
+                        baseColor='#fff'
+                        containerStyle={styles.dropdownContainer}
+                        //selectedItemColor='#fff'
                         onChangeText={category => this.setState({ category })}
                     />
 
@@ -191,7 +214,9 @@ class CreateBet extends React.Component {
                         style={styles.textInput}
                         placeholder='Prix'
                         placeholderTextColor='#ffffff'
+                        itemCount='10'
                         onChangeText={price => this.setState({ price })}
+                        ref={input => { this.price = input }}
                     />
 
                     <SectionedMultiSelect
@@ -208,6 +233,38 @@ class CreateBet extends React.Component {
                         onSelectedItemsChange={this.onSelectedItemsChange} // ça on touche pas
                         onConfirm={this.laConfirm} // ça on touche pas
                         selectedItems={this.state.selectedItems} // ça on touche pas
+                        ref={SectionedMultiSelect => this.SectionedMultiSelect = SectionedMultiSelect} //Vide le champ
+                        //après validation
+                        confirmText="Valider"
+                        styles={{
+                            searchBar:{
+                                backgroundColor:'#ff978d'
+                            },
+                            itemText:{
+                                color:'#ff978d'
+                            },
+                            button:{
+                                backgroundColor:'#ff978d'
+                            },
+                            selectToggleText:{
+                                color:'white',
+                                fontSize:14
+                            },
+                            itemIconStyle:{
+                                color:'white'
+                            },
+                            selectToggle :{
+                                backgroundColor:'rgba(0, 0, 0, 0.2)',
+                                borderRadius:10,
+                                height: 50,
+                                marginBottom: 10,
+                                paddingLeft: 20,
+                                paddingRight: 20,
+                                paddingTop: 12,
+                                paddingBottom: 15,
+                            }
+
+                        }}
                     />
 
                     <TextInput
@@ -215,6 +272,7 @@ class CreateBet extends React.Component {
                         placeholder='Je parie sur'
                         placeholderTextColor='#ffffff'
                         onChangeText={userAnswer => this.setState({ userAnswer })}
+                        ref={input => { this.userAnswer = input }}
                     />
 
                     <View style={styles.viewBtn}>
@@ -277,6 +335,16 @@ const styles = StyleSheet.create({
     titleText: {
         color: 'white',
         marginTop: 3
+    },
+    dropdownContainer: {
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        borderRadius: 10,
+        marginBottom: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
+    },
+    confirmText: {
+        backgroundColor: '#ff978d',
     }
 })
 
