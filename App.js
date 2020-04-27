@@ -5,8 +5,9 @@ import Store from './Store/configureStore'
 import { StatusBar } from 'react-native'
 import * as firebase from 'firebase';
 
+const API_KEY = process.env.FIREBASE_API_KEY;
 const firebaseConfig = {
-    apiKey: "AIzaSyApEbLerHRgci8Po3zeySPNVZr0dtNKO4E",
+    apiKey: API_KEY,
     authDomain: "sorbet-6a666.firebaseapp.com",
     databaseURL: "https://sorbet-6a666.firebaseio.com",
     projectId: "sorbet-6a666",
