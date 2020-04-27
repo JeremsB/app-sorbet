@@ -78,14 +78,14 @@ class BetCard extends React.Component {
 
 const styles = StyleSheet.create({
     main_container: {
-        height: 190,
+        height: 100,
         flexDirection: 'row'
     },
     divCard: {
         marginBottom: 20,
         marginTop: 20,
         marginLeft: 20,
-        height: 200,
+        height: 120,
     },
     overlay: {
         backgroundColor: 'rgba(0, 0, 0, 0.6)',
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     },
     contentCard: {
         width: '100%',
-        height: 200,
+        height: 120,
         borderRadius: 15,
         // marginTop: -60,
         flexDirection: 'column',

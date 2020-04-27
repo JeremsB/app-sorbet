@@ -198,7 +198,7 @@ class BetUser extends React.Component {
             } else if (bet.waiting == 1) {
                 return (
 
-                    <Text style={styles.testBite}>Au moins un utilisateur doit avoir répondu au pari pour que la réponse
+                    <Text style={styles.textFinish}>Au moins un utilisateur doit avoir répondu au pari pour que la réponse
                         officielle soit donnée</Text>
 
                 )
@@ -206,7 +206,7 @@ class BetUser extends React.Component {
         } else if (bet.open == 0){
             return (
 
-                <Text style={styles.testBite}>Pari terminé</Text>
+                <Text style={styles.textFinish}>Pari terminé</Text>
 
             )
         }
@@ -235,8 +235,14 @@ class BetUser extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    testBite: {
-      marginTop: 50
+    textFinish: {
+        color: '#ffffff',
+        textTransform: 'uppercase',
+        fontSize: 20,
+        marginTop: '40%',
+        marginLeft: '2%',
+        marginRight: '2%',
+        textAlign: 'center',
     },
     main_container: {
         flex: 1,

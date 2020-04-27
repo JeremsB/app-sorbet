@@ -257,7 +257,7 @@ class Login extends React.Component {
                             <TouchableOpacity
                                 style={styles.divBtn}
                                 onPress={() => this._login()}>
-                                <Text style={styles.textBtn}>Connecte toi !</Text>
+                                <Text style={styles.textBtn}>Connecte-toi !</Text>
                             </TouchableOpacity>
                             <View style={styles.viewFgtPsw}>
                                 <TouchableOpacity
