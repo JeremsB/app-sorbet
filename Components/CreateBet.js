@@ -206,6 +206,7 @@ class CreateBet extends React.Component {
                         textColor='#ff978d'
                         baseColor='#fff'
                         containerStyle={styles.dropdownContainer}
+                        itemCount={7}
                         //selectedItemColor='#fff'
                         onChangeText={category => this.setState({ category })}
                     />

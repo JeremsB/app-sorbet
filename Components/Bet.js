@@ -318,7 +318,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.6)',
         width: '100%',
         height: 275,
-        borderRadius: 30,
+        borderBottomLeftRadius: 30,
+        borderBottomRightRadius: 30,
         flexDirection: 'column',
         alignItems: 'center',
         paddingTop: 50,
@@ -397,7 +398,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.05,
         shadowRadius: 10,
         elevation: 10,
-        borderRadius: 30,
+        borderBottomLeftRadius: 30,
+        borderBottomRightRadius: 30,
         paddingHorizontal: 30,
         paddingTop: 75,
         paddingBottom: 17,
@@ -464,8 +466,9 @@ const styles = StyleSheet.create({
         paddingRight: '30%',
         //backgroundColor: 'rgba(0, 0, 0, 0.15)',
         //borderRadius: 10,
-        //marginTop:'60%'
-        bottom: -260,
+        marginTop:'20%'
+        //bottom:'0%'
+        //bottom: -260,
         //flex: 2,
         //position: 'fixed',
     }

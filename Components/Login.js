@@ -226,7 +226,7 @@ class Login extends React.Component {
                                     />
                                 </View>
                                 <TextInput
-                                    caretHidden
+                                    //caretHidden
                                     style={styles.textInputEmail}
                                     placeholder='Adresse email'
                                     placeholderTextColor='#ffffff'
