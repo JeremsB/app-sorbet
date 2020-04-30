@@ -14,6 +14,7 @@ class AddUser extends React.Component {
         super(props)
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
         let id_user = userData.id_user;
+        //console.log(this.props);
         this.state = {
             refreshing: false,
             users: this._getUsers(id_user),
@@ -43,7 +44,7 @@ class AddUser extends React.Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson == 'no_users_found')
-                    Alert.alert("Pas d'users", "Utilisateurs introuvables (T'es ami avec tout le monde aussi la putain d'ta race");
+                    Alert.alert("Pas d'users", "Utilisateurs introuvables (T'es ami avec tout le monde");
                 else if (responseJson == 'no_id')
                     Alert.alert("Pas d'id", "Faut un id");
                 else
@@ -53,32 +54,6 @@ class AddUser extends React.Component {
                 console.error(error);
             });
     }
-
-    /*
-    _getFriends(id_user) {
-        fetch('https://sorbet.bet/api/get-friends.php',{
-            method: 'post',
-            header:{
-                'Accept': 'application/json',
-                'Content-type': 'application/json'
-            },
-            body:JSON.stringify({
-                id_user: id_user,
-            })
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                if (responseJson == 'no_friends')
-                    Alert.alert("Pas d'amis","Veuillez ajouter des amis");
-                else if (responseJson == 'no_id')
-                    Alert.alert("Pas d'id","Faut un id");
-                else
-                    this.setState({friends : responseJson});
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }*/
 
     render() {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
@@ -104,7 +79,7 @@ class AddUser extends React.Component {
                                 source={require('../content/img/pictos/recherche_blanc.png')}
                             />
                         </View>
-                        <ScrollView
+                        {/*<ScrollView
                             style={styles.viewBtn}
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}
@@ -133,7 +108,7 @@ class AddUser extends React.Component {
                             >
                                 <Text style={styles.textBtn}>Thèmes</Text>
                             </TouchableOpacity>
-                        </ScrollView>
+                        </ScrollView>*/}
                     </View>
                     <View>
                         <ScrollView
@@ -147,7 +122,7 @@ class AddUser extends React.Component {
                         >
                             
                             <FlatList 
-                                data={this.state.users}
+                                data={this.props.otherUsers}
                                 keyExtractor={(item) => item.id_user}
                                 renderItem={({item}) => (<UserCard user={item} userco={userData.id_user}/>)}
                             />
@@ -232,7 +207,8 @@ const styles = StyleSheet.create({
 //Connecte le composant à redux (ici on récupère seulement le state global "userData"
 const mapStateToProps = state => {
     return {
-        userData: state.userData
+        userData: state.userData,
+        otherUsers: state.otherUsers[0]
     }
 }
 

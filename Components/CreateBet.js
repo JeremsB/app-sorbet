@@ -90,6 +90,19 @@ class CreateBet extends React.Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson == 'gg') {
+                    //Vidage de champs
+                    this.label.clear();
+                    this.description.clear();
+                    this.price.clear();
+                    this.SectionedMultiSelect._removeAllItems();
+                    this.userAnswer.clear();
+                    this.setState({
+                        label:'',
+                        description:'',
+                        price:'',
+                        userAnswer:'',
+                        selectedItems: [],
+                    })
                     Alert.alert("Pari crée!", "GG")
                     //TODO redirect vers profile
                 } else if (responseJson == 'label_missing') {
@@ -111,19 +124,6 @@ class CreateBet extends React.Component {
             .catch((error) => {
                 console.error(error);
             });
-
-        this.label.clear();
-        this.description.clear();
-        this.price.clear();
-        this.SectionedMultiSelect._removeAllItems();
-        this.userAnswer.clear();
-        this.setState({
-            label:'',
-            description:'',
-            price:'',
-            userAnswer:'',
-            selectedItems: [],
-        })
     }
 
 
@@ -184,22 +184,6 @@ class CreateBet extends React.Component {
                     start={[1, 0]}
                     end={[0, 1]}>
 
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder='Titre'
-                        placeholderTextColor='#ffffff'
-                        onChangeText={label => this.setState({ label })}
-                        ref={input => { this.label = input }}
-                    />
-
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder='Question'
-                        placeholderTextColor='#ffffff'
-                        onChangeText={description => this.setState({ description })}
-                        ref={input => { this.description = input }}
-                    />
-
                     <Dropdown
                         label='Catégorie'
                         data={data}
@@ -213,7 +197,23 @@ class CreateBet extends React.Component {
 
                     <TextInput
                         style={styles.textInput}
-                        placeholder='Prix'
+                        placeholder='Titre'
+                        placeholderTextColor='#ffffff'
+                        onChangeText={label => this.setState({ label })}
+                        ref={input => { this.label = input }}
+                    />
+
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder='Pari'
+                        placeholderTextColor='#ffffff'
+                        onChangeText={description => this.setState({ description })}
+                        ref={input => { this.description = input }}
+                    />
+
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder='Gain'
                         placeholderTextColor='#ffffff'
                         itemCount='10'
                         onChangeText={price => this.setState({ price })}
@@ -280,7 +280,7 @@ class CreateBet extends React.Component {
                         <TouchableOpacity
                             style={styles.divBtn}
                             onPress={() => this._createBet() }>
-                            <Text style={styles.textBtn}>Créer pari</Text>
+                            <Text style={styles.textBtn}>Créer un Sorbet' !</Text>
                         </TouchableOpacity>
                     </View>
 

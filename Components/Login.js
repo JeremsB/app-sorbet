@@ -4,6 +4,7 @@ import { StyleSheet, View, TextInput, Text, Image, TouchableOpacity, Alert, Imag
 import { LinearGradient } from 'expo-linear-gradient'
 import Swiper from 'react-native-swiper'
 import { connect } from 'react-redux'
+import {getBetsParti} from "../API/BetAPI";
 
 class Login extends React.Component {
 
@@ -13,6 +14,7 @@ class Login extends React.Component {
             timePassed: false,
             userEmail:'',
             userPassword:'',
+            user:'',
         }
         this.RotateValueHolder = new Animated.Value(0);
     }
@@ -44,6 +46,13 @@ class Login extends React.Component {
                     Alert.alert("Authentification incorrecte", "Email / Mot de passe incorrect")
                 } else {
                     this._globalUser(responseJson);
+                    this.setState({user: responseJson});
+                    this._getFollows(this.state.user.id_user);
+                    this._getBets(this.state.user.id_user);
+                    this._getUserBets(this.state.user.id_user);
+                    this._getBetsParticipes(this.state.user.id_user);
+                    this._getOtherUsers(this.state.user.id_user);
+                    //console.log(this.state.user.id_user)
                     this.props.navigation.navigate("Profil");
                 }
             })
@@ -56,6 +65,139 @@ class Login extends React.Component {
     //Appelé juste avant la connexion
     _globalUser(responseJson) {
         const action = { type: "USER_LOGIN", value: responseJson };
+        this.props.dispatch(action);
+    }
+
+    _getFollows(id_user) {
+        fetch('https://sorbet.bet/api/user/get-follows.php', {
+            method: 'post',
+            header: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                id_user: id_user,
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson == 'no_users_found')
+                    Alert.alert("Pas d'users", "Utilisateurs introuvables");
+                else if (responseJson == 'no_id')
+                    Alert.alert("Pas d'id", "Faut un id");
+                else
+                    this.setState({follows: responseJson});
+                this._globalFollows(responseJson);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    _globalFollows(responseJson) {
+        const action = { type: "USER_FOLLOWS", value: responseJson };
+        this.props.dispatch(action);
+    }
+
+    _getBets(id_user) {
+        fetch('https://sorbet.bet/api/get-bets.php', {
+            method: 'post',
+            header: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: id_user,
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson == 'no_bets')
+                    Alert.alert("Pas d'amis", "Veuillez ajouter des amis");
+                else if (responseJson == 'no_id')
+                    Alert.alert("Pas d'id", "Faut un id");
+                else
+                    //this.setState({ bets: responseJson });
+                    this._globalBets(responseJson);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    _globalBets(responseJson) {
+        const action = { type: "OTHER_BETS", value: responseJson };
+        this.props.dispatch(action);
+    }
+
+    _getUserBets(id_user) {
+        fetch('https://sorbet.bet/api/get-user-bets.php', {
+            method: 'post',
+            header: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: id_user,
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson == 'no_bets')
+                    this.setState({ message: "N'attends pas et crée ton Sorbet'!" });
+                else if (responseJson == 'no_id')
+                    Alert.alert("Pas d'id", "Faut un id");
+                else
+                    this._globalUserBets(responseJson);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    _globalUserBets(responseJson) {
+        const action = { type: "USER_BETS", value: responseJson };
+        this.props.dispatch(action);
+    }
+
+    _getBetsParticipes(id_user) {
+        getBetsParti(id_user).then(data => {
+            this._globalBetsParticipes(data)
+        })
+    }
+
+    _globalBetsParticipes(responseJson) {
+        const action = { type: "PARTICIPE_BETS", value: responseJson };
+        this.props.dispatch(action);
+    }
+
+    _getOtherUsers(id_user) {
+        fetch('https://sorbet.bet/api/user/get-others-users.php', {
+            method: 'post',
+            header: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                id_user: id_user,
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson == 'no_users_found')
+                    Alert.alert("Pas d'users", "Utilisateurs introuvables (T'es ami avec tout le monde");
+                else if (responseJson == 'no_id')
+                    Alert.alert("Pas d'id", "Faut un id");
+                else
+                    this._globalOtherUsers(responseJson);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    _globalOtherUsers(responseJson) {
+        const action = { type: "OTHER_USERS", value: responseJson };
         this.props.dispatch(action);
     }
 
@@ -141,10 +283,10 @@ class Login extends React.Component {
                                 />
                             </View>
                             <View style={styles.viewMiddle}>
-                                <Text style={styles.textMiddle}>Parie seul ou avec tes amis et tente de remporter une multitude de gains proposée par nos partenaires</Text>
+                                <Text style={styles.textMiddle}>Parie seul ou avec tes amis et tente de remporter une multitude de gains proposés par nos partenaires</Text>
                             </View>
                             <View style={styles.viewBottom}>
-                                <Text style={styles.textBottom1}>N'attend plus,</Text>
+                                <Text style={styles.textBottom1}>N'attends plus,</Text>
                                 <Text style={styles.textBottom2}>Swipe et connecte-toi</Text>
                             </View>
                         </View>

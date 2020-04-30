@@ -24,7 +24,11 @@ class Profile extends React.Component {
             content: 1
         }
     }
-
+/*
+    componentDidMount() {
+        this._getFollows()
+    }
+*/
     _displayUserBet = (idBet) => {
         this.props.navigation.navigate("BetUser", {
             idBet: idBet
@@ -51,7 +55,7 @@ class Profile extends React.Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson == 'no_bets')
-                    this.setState({ message: "N'attend pas et crée ton Sorbet'!" });
+                    this.setState({ message: "N'attends pas et crée ton Sorbet'!" });
                 else if (responseJson == 'no_id')
                     Alert.alert("Pas d'id", "Faut un id");
                 else
@@ -134,7 +138,7 @@ class Profile extends React.Component {
     }
 
     _onRefresh = () => {
-        let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
+        let userData = this.props.userData[0]; //Récupère le contenu du premier objet du tableau userData
         let id_user = userData.id_user;
         this.setState({ refreshing: true });
         this.state.bets = this._getUserBets(id_user);
@@ -159,7 +163,7 @@ class Profile extends React.Component {
     }
 
     _displayContent(){
-        if (this.state.content === 1) {
+        if (this.state.content === 1) { //Mes paris
             return(
                 <ScrollView
                     showsVerticalScrollIndicator={false} style={styles.divCardUser}
@@ -177,7 +181,7 @@ class Profile extends React.Component {
                     <Text style={styles.txtCount2}>{this.state.message}</Text>
                 </ScrollView>
             )
-        } else if (this.state.content === 2) {
+        } else if (this.state.content === 2) { //Mes gains
             return(
             <ScrollView
                 showsVerticalScrollIndicator={false} style={styles.divCardUser}
@@ -187,10 +191,10 @@ class Profile extends React.Component {
                         onRefresh={this._onRefresh}
                     />}
             >
-                <Text style={styles.txtCount2}>Ça affiche les gains c'est lourd</Text>
+                <Text style={styles.txtCount2}>Les gains</Text>
             </ScrollView>
             )
-        } else if (this.state.content === 3) {
+        } else if (this.state.content === 3) { //Mes participations
             return(
                 <ScrollView
                     showsVerticalScrollIndicator={false} style={styles.divCardUser}
@@ -205,7 +209,6 @@ class Profile extends React.Component {
                         keyExtractor={(item) => item.id_bet}
                         renderItem={({ item }) => <BetCard bet={item} displayBet={this._displayBet} />}
                     />
-                    <Text style={styles.txtCount2}>{this.state.message}</Text>
                 </ScrollView>
             )
         }
@@ -239,8 +242,14 @@ class Profile extends React.Component {
                                 <Text style={styles.txtDescription}>
                                     {userData.description}
                                 </Text>
-                            </View> 
+                            </View>
                         </View>
+                        <TouchableOpacity
+                            style={styles.divSettings}
+                            onPress={() => this._navigateSettingsUser()}
+                        >
+                            <Text style={styles.textSettings}>...</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.divCountUser}>
                         <View style={styles.divCount}>
@@ -248,7 +257,7 @@ class Profile extends React.Component {
                             <Text style={styles.txtCount2}>{this.state.nb_bets}</Text>
                         </View>
                         <View style={styles.divCount}>
-                            <Text style={styles.txtCount}>SUIS</Text>
+                            <Text style={styles.txtCount}>PERSONNES SUIVIES</Text>
                             <Text style={styles.txtCount2}>{this.state.nb_follows}</Text>
                         </View>
                         <View style={styles.divCount}>
@@ -270,7 +279,7 @@ class Profile extends React.Component {
                                 }}
                                 source={require('../content/img/pictos/accueil_blanc.png')}
                             />
-                            <Text style={styles.textBtn}>Mes paris</Text>
+                            <Text style={styles.textBtn}>Mes Sorbets'</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
@@ -302,30 +311,10 @@ class Profile extends React.Component {
                             <Text style={styles.textBtn}>Mes gains</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity
-                            style={styles.divBtn}
-                            onPress={() => this._navigateSettingsUser()}
-                            >
-                            <Text style={styles.textBtn}>. . .</Text>
-                        </TouchableOpacity>
                     </View>
 
                     {this._displayContent()}
-                    {/*<ScrollView
-                        showsVerticalScrollIndicator={false} style={styles.divCardUser}
-                        refreshControl={
-                            <RefreshControl
-                                refreshing={this.state.refreshing}
-                                onRefresh={this._onRefresh}
-                            />}
-                    >
-                        <FlatList
-                            data={this.state.bets}
-                            keyExtractor={(item) => item.id_bet}
-                            renderItem={({ item }) => <BetCard bet={item} displayBet={this._displayBet} />}
-                        />
-                        <Text style={styles.txtCount2}>{this.state.message}</Text>
-                    </ScrollView>*/}
+
                 </LinearGradient>
             </View>
         )
@@ -399,6 +388,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         paddingHorizontal: 15,
+    },
+    divSettings: {
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        borderRadius: 15,
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        paddingHorizontal: 15,
+        textAlign: "left",
+        width: "auto"
+    },
+    textSettings: {
+        color: '#ffffff',
+        fontSize: 14,
+        fontWeight: "bold"
     },
     textBtn: {
         color: '#ffffff',
@@ -481,7 +486,12 @@ const styles = StyleSheet.create({
 //Connecte le composant à redux (ici on récupère seulement le state global "userData"
 const mapStateToProps = state => {
     return {
-        userData: state.userData
+        userData: state.userData,
+        userFollows: state.userFollows,
+        otherBets: state.otherBets,
+        userBets: state.userBets,
+        participeBets: state.participeBets,
+        otherUsers: state.otherUsers
     }
 }
 

@@ -4,6 +4,7 @@ import React from 'react'
 import {StyleSheet, Text, Image, View, TouchableOpacity, Alert} from 'react-native'
 import {Button} from "react-native-web";
 import AddUser from "./AddUser";
+import {connect} from "react-redux";
 
 
 class UserCard extends React.Component {
@@ -24,14 +25,18 @@ class UserCard extends React.Component {
             .then((responseJson) => {
                 if (responseJson == 'follow') {
                     console.log("follow");
+                    this._getFollows(id_user);
+                    this._getOtherUsers(id_user);
                     //Alert.alert("follow","Veuillez ajouter les amis")
-                }else if (responseJson == 'deja_follow')
+                }else if (responseJson == 'deja_follow') {
                     console.log("deja_follow");
                     //Alert.alert("deja_follow","Faut un id")
-                else if (responseJson == 'follow_back')
+                }else if (responseJson == 'follow_back') {
                     console.log("follow_back");
+                    this._getFollows(id_user);
+                    this._getOtherUsers(id_user);
                     //Alert.alert("follow_back","Faut un id")
-                else if (responseJson == 'no_follow_id')
+                }else if (responseJson == 'no_follow_id')
                     console.log("no_id");
                     //Alert.alert("Pas d'id","Faut un id");
             })
@@ -40,15 +45,76 @@ class UserCard extends React.Component {
             });
     }
 
+    _getFollows(id_user) {
+        fetch('https://sorbet.bet/api/user/get-follows.php', {
+            method: 'post',
+            header: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                id_user: id_user,
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson == 'no_users_found')
+                    Alert.alert("Pas d'users", "Utilisateurs introuvables");
+                else if (responseJson == 'no_id')
+                    Alert.alert("Pas d'id", "Faut un id");
+                else
+                    this.setState({follows: responseJson});
+                this._globalFollows(responseJson);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    _globalFollows(responseJson) {
+        const action = { type: "USER_FOLLOWS", value: responseJson };
+        this.props.dispatch(action);
+    }
+
+    _getOtherUsers(id_user) {
+        fetch('https://sorbet.bet/api/user/get-others-users.php', {
+            method: 'post',
+            header: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                id_user: id_user,
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson == 'no_users_found')
+                    Alert.alert("Pas d'users", "Utilisateurs introuvables (T'es ami avec tout le monde");
+                else if (responseJson == 'no_id')
+                    Alert.alert("Pas d'id", "Faut un id");
+                else
+                    this._globalOtherUsers(responseJson);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    _globalOtherUsers(responseJson) {
+        const action = { type: "OTHER_USERS", value: responseJson };
+        this.props.dispatch(action);
+    }
+
     render() {
         const { user, userco } = this.props
         return (
             <View style={styles.cardUser}>
                 <Image
                     style={{
-                        width: 70,
-                        height: 70,
-                        borderRadius: 15,
+                        width: 60,
+                        height: 60,
+                        borderRadius: 10,
                     }}
                     source={{uri: 'https://sorbet.bet/users/'+user.picture}}
                 />
@@ -56,20 +122,19 @@ class UserCard extends React.Component {
                     <View style={styles.viewInfosUsers}>
                     <Text style={styles.titleInfosUser}>{user.login}</Text>
                         <Text style={styles.txtInfosUser}>18 Sorbets</Text>
-                        <Text style={styles.txtInfosUser}>3 amis en commun</Text>
                     </View>
                     {/*TODO rendre ça swag*/}
                     <TouchableOpacity
                         onPress={() => this._follow(userco, user.id_user)}>
-                        <Text>Follow</Text>
+                        <Image
+                            style={{
+                                width: 24,
+                                height: 22,
+                            }}
+                            source={require('../content/img/pictos/utilisateur_ajout.png')}
+                        />
                     </TouchableOpacity>
-                    <Image
-                        style={{
-                            width: 24,
-                            height: 22,
-                        }}
-                        source={require('../content/img/pictos/utilisateur_ajout.png')}
-                    />
+
                 </View>
             </View>
         )
@@ -105,4 +170,12 @@ const styles = StyleSheet.create({
     },
 })
 
-export default UserCard
+const mapStateToProps = (state) => {
+    return {
+        userData: state.userData,
+        userFollows: state.userFollows,
+        otherUsers: state.otherUsers
+    }
+}
+
+export default connect(mapStateToProps)(UserCard)
