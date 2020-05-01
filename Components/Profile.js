@@ -23,12 +23,9 @@ class Profile extends React.Component {
             betsParticipes: this._getBetsParticipes(id_user),
             content: 1
         }
+        console.log(this.props.userBets);
     }
-/*
-    componentDidMount() {
-        this._getFollows()
-    }
-*/
+
     _displayUserBet = (idBet) => {
         this.props.navigation.navigate("BetUser", {
             idBet: idBet
@@ -148,6 +145,7 @@ class Profile extends React.Component {
         this.state.nb_bets = this._getCountBets(id_user);
         this._getBetsParticipes(id_user);
         this.setState({refreshing: false});
+        console.log(this.props.userBets);
     }
 
     _navigateSettingsUser() {
@@ -174,7 +172,7 @@ class Profile extends React.Component {
                         />}
                 >
                     <FlatList
-                        data={this.state.bets}
+                        data={this.props.userBets}
                         keyExtractor={(item) => item.id_bet}
                         renderItem={({ item }) => <BetCard bet={item} displayBet={this._displayUserBet} />}
                     />
@@ -489,7 +487,7 @@ const mapStateToProps = state => {
         userData: state.userData,
         userFollows: state.userFollows,
         otherBets: state.otherBets,
-        userBets: state.userBets,
+        userBets: state.userBets[0],
         participeBets: state.participeBets,
         otherUsers: state.otherUsers
     }

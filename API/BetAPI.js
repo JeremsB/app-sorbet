@@ -1,3 +1,5 @@
+import {Alert} from "react-native";
+
 export function getBetInfos (id_bet, id_user) {
     return fetch('https://sorbet.bet/api/get-bet-infos.php', {
         method: 'post',
@@ -11,17 +13,6 @@ export function getBetInfos (id_bet, id_user) {
         })
     })
         .then((response) => response.json())
-        // .then((responseJson) => {
-        //     if (responseJson == 'no_bet_infos')
-        //         Alert.alert("Pas d'infos", "Veuillez ajouter des amis");
-        //     else if (responseJson == 'no_id')
-        //         Alert.alert("Pas d'id", "Faut un id");
-        //     else
-        //         this.setState({ bet: responseJson });
-        // })
-        // .catch((error) => {
-        //     console.error(error);
-        // });
 }
 
 export function getUserBetInfos (id_bet, id_user) {
@@ -37,17 +28,6 @@ export function getUserBetInfos (id_bet, id_user) {
         })
     })
         .then((response) => response.json())
-    // .then((responseJson) => {
-    //     if (responseJson == 'no_bet_infos')
-    //         Alert.alert("Pas d'infos", "Veuillez ajouter des amis");
-    //     else if (responseJson == 'no_id')
-    //         Alert.alert("Pas d'id", "Faut un id");
-    //     else
-    //         this.setState({ bet: responseJson });
-    // })
-    // .catch((error) => {
-    //     console.error(error);
-    // });
 }
 
 export function getBetAnswers (id) {
@@ -62,17 +42,6 @@ export function getBetAnswers (id) {
         })
     })
         .then((response) => response.json())
-    // .then((responseJson) => {
-    //     if (responseJson == 'no_bet_infos')
-    //         Alert.alert("Pas d'infos", "Veuillez ajouter des amis");
-    //     else if (responseJson == 'no_id')
-    //         Alert.alert("Pas d'id", "Faut un id");
-    //     else
-    //         this.setState({ bet: responseJson });
-    // })
-    // .catch((error) => {
-    //     console.error(error);
-    // });
 }
 
 export function answerUserBet (id_bet, id_user, answer) {
@@ -116,17 +85,6 @@ export function getBetsParti (id_user) {
         })
     })
         .then((response) => response.json())
-    // .then((responseJson) => {
-    //     if (responseJson == 'no_bet_infos')
-    //         Alert.alert("Pas d'infos", "Veuillez ajouter des amis");
-    //     else if (responseJson == 'no_id')
-    //         Alert.alert("Pas d'id", "Faut un id");
-    //     else
-    //         this.setState({ bet: responseJson });
-    // })
-    // .catch((error) => {
-    //     console.error(error);
-    // });
 }
 
 export function officialAnswer(id_bet, answer) {
@@ -142,15 +100,19 @@ export function officialAnswer(id_bet, answer) {
         })
     })
         .then((response) => response.json())
-    // .then((responseJson) => {
-    //     if (responseJson == 'no_bet_infos')
-    //         Alert.alert("Pas d'infos", "Veuillez ajouter des amis");
-    //     else if (responseJson == 'no_id')
-    //         Alert.alert("Pas d'id", "Faut un id");
-    //     else
-    //         this.setState({ bet: responseJson });
-    // })
-    // .catch((error) => {
-    //     console.error(error);
-    // });
+
+}
+
+export function getUserBets(id_user) {
+    return fetch('https://sorbet.bet/api/get-user-bets.php', {
+        method: 'post',
+        header: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: id_user,
+        })
+    })
+        .then((response) => response.json())
 }

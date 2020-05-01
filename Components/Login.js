@@ -4,7 +4,7 @@ import { StyleSheet, View, TextInput, Text, Image, TouchableOpacity, Alert, Imag
 import { LinearGradient } from 'expo-linear-gradient'
 import Swiper from 'react-native-swiper'
 import { connect } from 'react-redux'
-import {getBetsParti} from "../API/BetAPI";
+import {getBetsParti, getUserBets} from "../API/BetAPI";
 
 class Login extends React.Component {
 
@@ -131,28 +131,9 @@ class Login extends React.Component {
     }
 
     _getUserBets(id_user) {
-        fetch('https://sorbet.bet/api/get-user-bets.php', {
-            method: 'post',
-            header: {
-                'Accept': 'application/json',
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                id: id_user,
-            })
+        getUserBets(id_user).then(data => {
+            this._globalUserBets(data)
         })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                if (responseJson == 'no_bets')
-                    this.setState({ message: "N'attends pas et crée ton Sorbet'!" });
-                else if (responseJson == 'no_id')
-                    Alert.alert("Pas d'id", "Faut un id");
-                else
-                    this._globalUserBets(responseJson);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
     }
 
     _globalUserBets(responseJson) {

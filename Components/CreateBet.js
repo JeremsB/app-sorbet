@@ -10,6 +10,7 @@ import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
 import MaterialBottomTabNavigator
     from "@react-navigation/material-bottom-tabs/src/navigators/createMaterialBottomTabNavigator";
 import Icon from "react-native-paper/src/components/Icon";
+import {getUserBets} from "../API/BetAPI";
 
 class CreateBet extends React.Component {
 
@@ -124,6 +125,21 @@ class CreateBet extends React.Component {
             .catch((error) => {
                 console.error(error);
             });
+        this._getUserBets(userData.id_user);
+
+    }
+
+    _getUserBets(id_user) {
+        getUserBets(id_user).then(data => {
+            this._globalUserBets(data)
+        })
+        console.log("get user bets");
+    }
+
+    _globalUserBets(responseJson) {
+        const action = { type: "USER_BETS", value: responseJson };
+        this.props.dispatch(action);
+        console.log("global user bets");
     }
 
 

@@ -115,6 +115,7 @@ class BetUser extends React.Component {
                     style={{ flex: 1, paddingBottom: 50 }}
                     start={[1, 0]}
                     end={[0, 1]}>
+                    {/*}
                     <ImageBackground
                         source={{uri: 'https://sorbet.bet/categories/'+bet.category+'.jpg'}}
                         style={styles.divCard}
@@ -142,6 +143,7 @@ class BetUser extends React.Component {
                                     />
                                     <Text style={styles.titleLocation}>Bruz</Text>
                                     {/* <Text style={styles.titleLocation}>{bet.localisation}</Text> */}
+                    {/*}
                                 </View>
                                 <View style={styles.viewNbBet}>
                                     <Image
@@ -167,7 +169,17 @@ class BetUser extends React.Component {
                                 <Text style={styles.titlePromo}>-30%</Text>
                             </TouchableOpacity>
                         </Animated.View>
-                    </ImageBackground>
+                    </ImageBackground>*/}
+                    <View style={styles.viewBlanche}>
+                        <TouchableOpacity style={styles.viewBottomCard}>
+                            <View style={styles.viewCat}>
+                                <Text style={styles.txtCat}>{bet.category}</Text>
+                            </View>
+                            <View style={styles.viewPrice}>
+                                <Text style={styles.txtPrice}>{bet.price}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                     {this._displayAnswers()}
                 </LinearGradient>
             )
@@ -269,6 +281,7 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
     },
+    /*
     divCard: {
         height: 275,
     },
@@ -295,7 +308,7 @@ const styles = StyleSheet.create({
     viewInfosLoc: {
         flexDirection: 'row',
         marginBottom: 10,
-    },
+    },*/
     row: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -331,7 +344,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontStyle: 'italic',
     },
-    titleCat: {
+    /*titleCat: {
         color: '#F38696',
         textTransform: 'uppercase',
         fontSize: 14,
@@ -371,14 +384,62 @@ const styles = StyleSheet.create({
         height: 10,
         backgroundColor: 'rgba(0, 0, 0, 0.15)',
         borderRadius: 10,
+    },*/
+    viewBlanche: {
+        flexDirection: 'column',
+        //justifyContent: 'space-between',
+        backgroundColor: '#ffffff',
+        height: "40%",
+        borderBottomLeftRadius: 30,
+        borderBottomRightRadius: 30,
+        //paddingHorizontal: 30,
+        //paddingTop: 75,
+        //paddingBottom: 17,
+    },
+    viewBottomCard: {
+        flexDirection: 'row',
+        //justifyContent: 'space-between',
+        alignItems: 'center',
+        bottom: "4%",
+        position: "absolute",
+    },
+    viewCat: {
+        color: '#F38696',
+        textTransform: 'uppercase',
+        fontSize: 14,
+        width: '44%',
+        textAlign: 'left',
+        marginLeft: '6%',
+        left: 0,
+    },
+    viewPrice: {
+        color: '#F38696',
+        textTransform: 'uppercase',
+        fontSize: 14,
+        width: '44%',
+        textAlign: 'right',
+        marginRight: '6%',
+        right: 0,
+    },
+    txtCat: {
+        color: '#F38696',
+        textTransform: 'uppercase',
+        fontSize: 14,
+        textAlign: 'left',
+    },
+    txtPrice: {
+        color: '#F38696',
+        textTransform: 'uppercase',
+        fontSize: 14,
+        textAlign: 'right',
     },
 })
 
 //Connecte le composant à redux (ici on récupère seulement le state global "userData"
 const mapStateToProps = state => {
-    return {
-        userData: state.userData
-    }
+return {
+    userData: state.userData
+}
 }
 
 export default connect(mapStateToProps)(BetUser)
