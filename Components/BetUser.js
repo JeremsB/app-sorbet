@@ -115,62 +115,44 @@ class BetUser extends React.Component {
                     style={{ flex: 1, paddingBottom: 50 }}
                     start={[1, 0]}
                     end={[0, 1]}>
-                    {/*}
-                    <ImageBackground
-                        source={{uri: 'https://sorbet.bet/categories/'+bet.category+'.jpg'}}
-                        style={styles.divCard}
-                        imageStyle={{ borderRadius: 30 }}
-                    >
-                        <View style={styles.contentCard}>
-                            <Image
-                                style={{
-                                    width: 80,
-                                    height: 80,
-                                    borderRadius: 15,
-                                    zIndex: 50,
-                                }}
-                                source={{ uri: 'https://sorbet.bet/users/' + bet.picture }}
-                            />
-                            <Text style={styles.nameBet}>{bet.login}</Text>
-                            <View style={styles.viewInfosLoc}>
-                                <View style={styles.row}>
-                                    <Image
-                                        style={{
-                                            width: 11,
-                                            height: 15,
-                                        }}
-                                        source={require('../content/img/pictos/localisation_blanc.png')}
-                                    />
-                                    <Text style={styles.titleLocation}>Bruz</Text>
-                                    {/* <Text style={styles.titleLocation}>{bet.localisation}</Text> */}
-                    {/*}
-                                </View>
-                                <View style={styles.viewNbBet}>
-                                    <Image
-                                        style={{
-                                            width: 16,
-                                            height: 15,
-                                        }}
-                                        source={require('../content/img/pictos/accueil_blanc.png')}
-                                    />
-                                    <Text style={styles.titleNbBet}>83 Sorbets</Text>
-                                </View>
 
-                            </View>
-                            <Text style={styles.questionBet}>{bet.label}</Text>
-                        </View>
-                        <Animated.View style={[styles.viewScroll, { top: this.state.topValue }]}>
-                            <Text style={styles.description}>{bet.description}</Text>
-                            <TouchableOpacity style={styles.viewBottomCard}
-                                onPress={() => this._start()}
-                            >
-                                <Text style={styles.titleCat}>{bet.category}</Text>
-                                <View style={styles.viewBtn}></View>
-                                <Text style={styles.titlePromo}>-30%</Text>
-                            </TouchableOpacity>
-                        </Animated.View>
-                    </ImageBackground>*/}
                     <View style={styles.viewBlanche}>
+                        <View style={styles.viewImgBg}>
+                            <ImageBackground
+                                source={{uri: 'https://sorbet.bet/categories/'+bet.category+'.jpg'}}
+                                style={styles.viewImgBg}
+                                imageStyle={{ borderBottomLeftRadius: 30, borderBottomRightRadius: 30, }}
+                            >
+                                <View style={styles.viewContent}>
+
+                                    <Image
+                                        style={{
+                                            width: 70,
+                                            height: 70,
+                                            borderRadius: 15,
+                                            zIndex: 50,
+                                        }}
+                                        source={{ uri: 'https://sorbet.bet/users/' + bet.picture }}
+                                    />
+                                    <Text style={styles.creatorLabel}>{bet.login}</Text>
+                                    <View>
+                                        <View style={styles.viewTimeBet}>
+                                            <Image
+                                                style={{
+                                                    width: 16,
+                                                    height: 16,
+                                                }}
+                                                source={require('../content/img/pictos/temps_blanc.png')}
+                                            />
+                                            <Text style={styles.txtTimeBet}>10 Jours</Text>
+                                        </View>
+                                    </View>
+                                    <Text style={styles.txtTimeBet}>{bet.label}</Text>
+                                    <Text style={styles.questionBet}>{bet.description}</Text>
+                                </View>
+                            </ImageBackground>
+                        </View>
+
                         <TouchableOpacity style={styles.viewBottomCard}>
                             <View style={styles.viewCat}>
                                 <Text style={styles.txtCat}>{bet.category}</Text>
@@ -247,15 +229,6 @@ class BetUser extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    textFinish: {
-        color: '#ffffff',
-        textTransform: 'uppercase',
-        fontSize: 20,
-        marginTop: '40%',
-        marginLeft: '2%',
-        marginRight: '2%',
-        textAlign: 'center',
-    },
     main_container: {
         flex: 1,
         flexDirection: 'column',
@@ -281,126 +254,74 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
     },
-    /*
-    divCard: {
-        height: 275,
-    },
-    contentCard: {
-        backgroundColor: 'rgba(0, 0, 0, 0.6)',
-        height: '100%',
-        width: '100%',
-        //height: 275,
-        borderRadius: 30,
-        flexDirection: 'column',
-        alignItems: 'center',
-        paddingTop: 50,
-        shadowColor: '#000000',
-        shadowOpacity: 0.3,
-        shadowOffset: { width: 0, height: 10 },
-        shadowRadius: 10,
-        elevation: 10,
-    },
-    nameBet: {
+    creatorLabel: {
         color: '#ffffff',
         fontWeight: 'bold',
-        paddingVertical: 10,
-    },
-    viewInfosLoc: {
-        flexDirection: 'row',
-        marginBottom: 10,
-    },*/
-    row: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    viewNbBet: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginLeft: 20,
-    },
-    titleLocation: {
-        color: '#ffffff',
-        fontSize: 11,
-        fontWeight: 'bold',
-        fontStyle: 'italic',
-        marginLeft: 5,
-    },
-    titleNbBet: {
-        color: '#ffffff',
-        fontSize: 11,
-        fontWeight: 'bold',
-        fontStyle: 'italic',
-        marginLeft: 5,
+        paddingVertical: 6,
     },
     questionBet: {
         color: '#ffffff',
         textAlign: 'center',
-        marginTop: 20,
-        fontSize: 14,
-    },
-    description: {
+        marginTop: '3%',
         fontSize: 16,
-        color: '#F38696',
-        fontWeight: 'bold',
-        fontStyle: 'italic',
+        paddingLeft: '3%',
+        paddingRight: '3%'
     },
-    /*titleCat: {
-        color: '#F38696',
-        textTransform: 'uppercase',
-        fontSize: 14,
-        width: '40%',
-    },
-    titlePromo: {
-        color: '#F38696',
-        textTransform: 'uppercase',
-        fontSize: 14,
-        textAlign: 'right',
-        width: '40%',
-    },
-    viewScroll: {
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        backgroundColor: '#ffffff',
-        zIndex: -10,
-        height: 400,
-        marginTop: -350,
-        borderRadius: 30,
-        paddingHorizontal: 30,
-        paddingTop: 75,
-        paddingBottom: 17,
-        shadowColor: '#000000',
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.05,
-        shadowRadius: 10,
-        elevation: 10,
-    },
-    viewBottomCard: {
+    viewTimeBet: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
     },
-    viewBtn: {
-        width: 50,
-        height: 10,
-        backgroundColor: 'rgba(0, 0, 0, 0.15)',
-        borderRadius: 10,
-    },*/
+    txtTimeBet: {
+        color: '#ffffff',
+        fontSize: 11,
+        fontWeight: 'bold',
+        fontStyle: 'italic',
+        marginLeft: 5,
+        marginTop: '1%'
+    },
+    viewImgBg: {
+        height: '94.5%',
+        position: 'relative',
+        borderBottomLeftRadius: 30,
+        borderBottomRightRadius: 30,
+        zIndex: 2
+    },
+    viewContent: {
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        height: '94.5%',
+        width: '100%',
+        borderBottomLeftRadius: 30,
+        borderBottomRightRadius: 30,
+        flexDirection: 'column',
+        alignItems: 'center',
+        paddingTop: '10%',
+        paddingBottom: '5%',
+        shadowColor: '#000000',
+        shadowOpacity: 0.3,
+        shadowOffset: { width: 0, height: 10 },
+        shadowRadius: 10,
+        //elevation: 10,
+        position: 'relative',
+        zIndex: 4
+    },
     viewBlanche: {
         flexDirection: 'column',
         //justifyContent: 'space-between',
         backgroundColor: '#ffffff',
-        height: "40%",
+        height: "48%",
         borderBottomLeftRadius: 30,
         borderBottomRightRadius: 30,
         //paddingHorizontal: 30,
         //paddingTop: 75,
         //paddingBottom: 17,
+        position: 'relative',
+        zIndex: 1
     },
     viewBottomCard: {
         flexDirection: 'row',
         //justifyContent: 'space-between',
         alignItems: 'center',
-        bottom: "4%",
+        bottom: "5%",
         position: "absolute",
     },
     viewCat: {
@@ -433,6 +354,15 @@ const styles = StyleSheet.create({
         fontSize: 14,
         textAlign: 'right',
     },
+    textFinish: {
+        color: '#ffffff',
+        textTransform: 'uppercase',
+        fontSize: 18,
+        marginTop: '5%',
+        marginLeft: '2%',
+        marginRight: '2%',
+        textAlign: 'center',
+    }
 })
 
 //Connecte le composant à redux (ici on récupère seulement le state global "userData"

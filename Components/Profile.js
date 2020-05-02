@@ -282,7 +282,7 @@ class Profile extends React.Component {
 
                         <TouchableOpacity
                             style={styles.divBtn}
-                            onPress={() => this.setState({ content: 3 })}                            >
+                            onPress={() => this.setState({ content: 3 })} >
                             <Image
                                 style={{
                                     width: 10,
@@ -297,7 +297,7 @@ class Profile extends React.Component {
                         <TouchableOpacity
                             style={styles.divBtn}
                             //onPress={() => this._navEarnings()}
-                            onPress={() => this.setState({ content: 2 })}                            >
+                            onPress={() => this.setState({ content: 2 })} >
                             <Image
                                 style={{
                                     width: 10,
