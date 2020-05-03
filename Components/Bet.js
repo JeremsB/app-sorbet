@@ -19,6 +19,7 @@ import UserCard from "./UserCard";
 import {FlatList} from "react-native-gesture-handler";
 import {color} from "react-native-reanimated";
 import {connect} from "react-redux";
+import { Emitter } from 'react-native-particles'
 
 class Bet extends React.Component {
 
@@ -29,10 +30,8 @@ class Bet extends React.Component {
             bet: undefined,
             answers: undefined,
             userAnswer: undefined,
-            topValue: new Animated.Value(0),
-            varAnim: 0,
             message: undefined,
-            showTheThing: true,
+            repondu: 0,
         }
         this.RotateValueHolder = new Animated.Value(0);
     }
@@ -80,7 +79,6 @@ class Bet extends React.Component {
 
     _displayBet() {
         const { bet } = this.state;
-        console.log(bet);
         if (bet != undefined) {
             return (
                 <LinearGradient
@@ -88,58 +86,6 @@ class Bet extends React.Component {
                     style={{ flex: 1, paddingBottom: 50}}
                     start={[1, 0]}
                     end={[0, 1]}>
-                    {/*<ImageBackground
-                        source={{uri: 'https://sorbet.bet/categories/'+bet.category+'.jpg'}}
-                        style={styles.divCard}
-                        imageStyle={{ borderRadius: 30 }}
-                    >
-                        <View style={styles.contentCard}>
-                            <Image
-                                style={{
-                                    width: 80,
-                                    height: 80,
-                                    borderRadius: 15,
-                                    zIndex: 50,
-                                }}
-                                source={{ uri: 'https://sorbet.bet/users/' + bet.picture }}
-                            />
-                            <Text style={styles.nameBet}>{bet.login}</Text>
-                            <View style={styles.viewInfosLoc}>
-                                <View style={styles.row}>
-                                    <Image
-                                        style={{
-                                            width: 15,
-                                            height: 15,
-                                        }}
-                                        source={require('../content/img/pictos/accueil_blanc.png')}
-                                    />
-                                    <Text style={styles.titleLocation}>{bet.localisation}</Text>
-                                </View>
-                                <View style={styles.viewNbBet}>
-                                    <Image
-                                        style={{
-                                            width: 15,
-                                            height: 15,
-                                        }}
-                                        source={require('../content/img/pictos/accueil_blanc.png')}
-                                    />
-                                    <Text style={styles.titleNbBet}>83 Sorbets</Text>
-                                </View>
-                                
-                            </View>
-                            <Text style={styles.questionBet}>{bet.label}</Text>
-                        </View>
-                        <Animated.View style={[styles.viewScroll, {top: this.state.topValue}]}>
-                            <Text style={styles.description}>{bet.description}</Text>
-                            <TouchableOpacity style={styles.viewBottomCard}
-                                onPress={() => this._startScroll()}
-                            >
-                                <Text style={styles.titleCat}>{bet.category}</Text>
-                                <View style={styles.viewBtn}></View>
-                                <Text style={styles.titlePromo}>{bet.price}</Text>
-                            </TouchableOpacity>
-                        </Animated.View>
-                    </ImageBackground>*/}
 
                     <View style={styles.viewBlanche}>
                         <View style={styles.viewImgBg}>
@@ -187,22 +133,7 @@ class Bet extends React.Component {
                             </View>
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.viewAnswerInput}>
-                        {this._displayAnswers()}
-                    </View>
-                    {/*<View style={styles.red}>
-                    {this.state.showTheThing &&
-                        this._displayAnswers()
-                    }
-                    </View>
-                    <View style={styles.testt}>
-                        <TouchableOpacity
-                            style={styles.divBtn}
-                            onPress={() => this._startScroll()}>
-                            <Text style={styles.textBtn}>Dérouler</Text>
-                        </TouchableOpacity>
-                    </View>*/}
-
+                    {this._displayAnswers()}
                 </LinearGradient>
             )
         }
@@ -213,6 +144,7 @@ class Bet extends React.Component {
         const { bet } = this.state;
         console.log(bet);
         console.log(answers);
+
         if (answers != "no_bet_answers") { //Si c'est un pari pro
 
             return (
@@ -231,25 +163,47 @@ class Bet extends React.Component {
             )
 
         } else { //Si c'est un pari User
-            if (bet.open = 1) { //Si le pari est ouvert
+            if (bet.open == 1) { //Si le pari est ouvert
                 if (bet.answered == 0) { //Si l'utilisateur n'a pas répondu
-                    return (
-                        <View>
-                            <TextInput
-                                style={styles.textInput}
-                                placeholder='Ta réponse'
-                                placeholderTextColor='#ffffff'
-                                onChangeText={userAnswer => this.setState({userAnswer})}
-                            />
-                            <View style={styles.viewBtn2}>
-                                <TouchableOpacity
-                                    style={styles.divBtn}
-                                    onPress={() => this.answerUserBet()}>
-                                    <Text style={styles.textBtn}>Répondre</Text>
-                                </TouchableOpacity>
+                    if (this.state.repondu == 0) {
+                        return (
+                            <View style={styles.viewAnswerInput}>
+                                <TextInput
+                                    style={styles.answerInput}
+                                    placeholder='Ta réponse'
+                                    placeholderTextColor='#ffffff'
+                                    onChangeText={userAnswer => this.setState({userAnswer})}
+                                />
+                                <View style={styles.viewBtn}>
+                                    <TouchableOpacity
+                                        style={styles.divBtn}
+                                        onPress={() => this.answerUserBet()}>
+                                        <Text style={styles.textBtn}>Répondre</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
-                        </View>
-                    )
+                        )
+                    } else if (this.state.repondu == 1) {
+                        return (
+                            <View style={styles.viewAnswerInput}>
+                                <TextInput
+                                    style={styles.answerInputDisabled}
+                                    placeholder='Ta réponse'
+                                    placeholderTextColor='#ADA5AE'
+                                    editable = {false}
+                                    onChangeText={userAnswer => this.setState({userAnswer})}
+                                />
+                                <View style={styles.viewBtn}>
+                                    <TouchableOpacity
+                                        style={styles.divBtnDisabled}
+                                        disabled
+                                        onPress={() => this.answerUserBet()}>
+                                        <Text style={styles.textBtnDisabled}>Répondre</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        )
+                    }
                 } else if (bet.answered == 1) { //Si l'utilisateur a répondu au pari
                     return (
                         <View>
@@ -260,9 +214,84 @@ class Bet extends React.Component {
             } else { //Si le pari est terminé
 
                 if (bet.win == 0) { //Si l'utilisateur n'a pas gagné
+
                     return (
+
                         <View>
-                            <Text style={styles.textFinish}>Vous avez perdu</Text>
+
+
+                            <View>
+                                <Text style={styles.textFinish}>Vous avez perdu</Text>
+                            </View>
+                            <Emitter
+                                numberOfParticles={10}
+                                emissionRate={1}
+                                interval={10}
+                                particleLife={2000}
+                                direction={-90}
+                                spread={360}
+                                gravity={3}
+                                fromPosition={{ x: 240, y: 0 }}
+                            >
+                                <Image
+                                    style={{
+                                        alignItems: 'center',
+                                        width: 50,
+                                        height: 53.5,
+                                        marginBottom: 10,
+                                        marginTop: 40,
+                                    }}
+                                    source={require('../content/img/sorbet_blanc.png')}
+                                />
+                            </Emitter>
+                            <Emitter
+                                numberOfParticles={10}
+                                emissionRate={1}
+                                interval={10}
+                                particleLife={2000}
+                                direction={-90}
+                                spread={360}
+                                gravity={3}
+                                fromPosition={{ x: 160, y: 0 }}
+                            >
+                                <Image
+                                    style={{
+                                        alignItems: 'center',
+                                        width: 50,
+                                        height: 53.5,
+                                        marginBottom: 10,
+                                        marginTop: 40,
+                                    }}
+                                    source={require('../content/img/sorbet_blanc.png')}
+                                />
+                            </Emitter>
+                            <Emitter
+                                numberOfParticles={10}
+                                emissionRate={1}
+                                interval={10}
+                                particleLife={2000}
+                                direction={-90}
+                                spread={360}
+                                gravity={3}
+                                fromPosition={{ x: 80, y: 0 }}
+                            >
+                                <Image
+                                    style={{
+                                        alignItems: 'center',
+                                        width: 50,
+                                        height: 53.5,
+                                        marginBottom: 10,
+                                        marginTop: 40,
+                                    }}
+                                    source={require('../content/img/sorbet_blanc.png')}
+                                />
+                            </Emitter>
+                            <View style={styles.viewAnswerInput}>
+                                <Text style={styles.labelAnswer}>Votre réponse :</Text>
+                                <Text style={styles.answerText}>{bet.answer}</Text>
+                                <Text style={styles.labelAnswer}>La réponse officielle :</Text>
+                                <Text style={styles.officialAnswerText}>DIDIER</Text>
+                            </View>
                         </View>
                     )
                 } else if (bet.win == 1) { //Si l'utilisateur a gagné
@@ -292,6 +321,7 @@ class Bet extends React.Component {
             })
         //TODO ça marche faut juste faire un redirect qqupart genre vers home
         //Ou alors sur la page du paris avec genre "vous avez déjà répondu"
+        this.setState({repondu: 1})
     }
 
     answerProBet(id){
@@ -329,6 +359,7 @@ class Bet extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    //Page + Chargement
     main_container: {
         flex: 1,
         flexDirection: 'column',
@@ -354,108 +385,7 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
     },
-    /*
-    divCard: {
-        height: 275,
-    },
-    contentCard: {
-        backgroundColor: 'rgba(0, 0, 0, 0.6)',
-        width: '100%',
-        height: 275,
-        borderBottomLeftRadius: 30,
-        borderBottomRightRadius: 30,
-        flexDirection: 'column',
-        alignItems: 'center',
-        paddingTop: 50,
-        shadowColor: '#000000',
-        shadowOpacity: 0.3,
-        shadowOffset: { width: 0, height: 10 },
-        shadowRadius: 10,
-        elevation: 10,
-    },
-    nameBet: {
-        color: '#ffffff',
-        fontWeight: 'bold',
-        paddingVertical: 10,
-    },
-    viewInfosLoc: {
-        flexDirection: 'row',
-        marginBottom: 10,
-    },
-    row: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    viewNbBet: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginLeft: 20,
-    },
-    titleLocation: {
-        color: '#ffffff',
-        fontSize: 11,
-        fontWeight: 'bold',
-        fontStyle: 'italic',
-        marginLeft: 5,
-    },
-    titleNbBet: {
-        color: '#ffffff',
-        fontSize: 11,
-        fontWeight: 'bold',
-        fontStyle: 'italic',
-        marginLeft: 5,
-    },
-    questionBet: {
-        color: '#ffffff',
-        textAlign: 'center',
-        marginTop: 20,
-        fontSize: 14,
-    },
-    description: {
-        fontSize: 16,
-        color: '#F38696',
-        fontWeight: 'bold',
-        fontStyle: 'italic',
-    },
-    titleCat: {
-        color: '#F38696',
-        textTransform: 'uppercase',
-        fontSize: 14,
-        width: '40%',
-    },
-    titlePromo: {
-        color: '#F38696',
-        textTransform: 'uppercase',
-        fontSize: 14,
-        textAlign: 'right',
-        width: '40%',
-    },
-    viewScroll: {
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        backgroundColor: '#ffffff',
-        zIndex: -1,
-        height: 400,
-        marginTop: -350,
-        shadowColor: '#000000',
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.05,
-        shadowRadius: 10,
-        elevation: 10,
-        borderBottomLeftRadius: 30,
-        borderBottomRightRadius: 30,
-        paddingHorizontal: 30,
-        paddingTop: 75,
-        paddingBottom: 17,
-    },
-    viewBottomCard: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        //backgroundColor: 'blue',
-        zIndex: 2,
-    },*/
-
+    //Infos pari
     creatorLabel: {
         color: '#ffffff',
         fontWeight: 'bold',
@@ -477,7 +407,7 @@ const styles = StyleSheet.create({
         color: '#ffffff',
         fontSize: 11,
         fontWeight: 'bold',
-        fontStyle: 'italic',
+        //fontStyle: 'italic',
         marginLeft: 5,
         marginTop: '1%'
     },
@@ -502,26 +432,20 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowOffset: { width: 0, height: 10 },
         shadowRadius: 10,
-        //elevation: 10,
         position: 'relative',
         zIndex: 4
     },
     viewBlanche: {
         flexDirection: 'column',
-        //justifyContent: 'space-between',
         backgroundColor: '#ffffff',
         height: "48%",
         borderBottomLeftRadius: 30,
         borderBottomRightRadius: 30,
-        //paddingHorizontal: 30,
-        //paddingTop: 75,
-        //paddingBottom: 17,
         position: 'relative',
         zIndex: 1
     },
     viewBottomCard: {
         flexDirection: 'row',
-        //justifyContent: 'space-between',
         alignItems: 'center',
         bottom: "5%",
         position: "absolute",
@@ -556,21 +480,16 @@ const styles = StyleSheet.create({
         fontSize: 14,
         textAlign: 'right',
     },
-
-
-    viewBtn: {
-        width: 50,
-        height: 10,
-        backgroundColor: 'rgba(0, 0, 0, 0.15)',
-        borderRadius: 10,
-    },
-    viewAnswerInput: {
-        marginTop: '5%',
-        paddingLeft: '5%',
-        paddingRight: '5%',
+    //Réponses
+    viewAnswerInput: { //Arrière-plan foncé des réponses
+        //marginTop: '5%',
+        padding: '5%',
+        borderRadius: 20,
+        margin: '5%',
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
         //height: 100
     },
-    viewAnswers: {
+    viewAnswers: { //Réponses paris pro
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -578,21 +497,21 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.15)',
         borderRadius: 10,
     },
-    textInput: {
+    answerInput: { //Champ de saisie de la réponse du participant
         backgroundColor: 'rgba(0, 0, 0, 0.2)',
         flexDirection: 'row',
         borderRadius: 10,
-        height: 50,
-        marginBottom: 10,
+        height: 60,
+        marginBottom: '5%',
         alignItems: 'center',
         color: '#ffffff',
         paddingLeft: 20,
     },
-    viewBtn2: {
+    viewBtn: { //Bloc du bouton
         alignItems: 'center',
         justifyContent: 'center',
     },
-    divBtn: {
+    divBtn: { //Bouton
         backgroundColor: 'white',
         borderRadius: 15,
         height: 60,
@@ -601,15 +520,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
     },
-    textBtn: {
+    textBtn: { //Texte du bouton
         color: '#ff978d',
         textTransform: 'uppercase',
         fontSize: 20,
-    },
-    testt: {
-        paddingLeft: '30%',
-        paddingRight: '30%',
-        marginTop:'20%'
     },
     textFinish: {
         color: '#ffffff',
@@ -619,6 +533,59 @@ const styles = StyleSheet.create({
         marginLeft: '2%',
         marginRight: '2%',
         textAlign: 'center',
+    },
+    divBtnDisabled: { //Bouton une fois que la réponse a été saisie (le gris)
+        backgroundColor: '#CFC6D0',
+        borderRadius: 15,
+        height: 60,
+        justifyContent: 'center',
+        paddingLeft: 10,
+        alignItems: 'center',
+        width: '100%',
+    },
+    answerInputDisabled: { //Champ de saisie une fois que la réponse a été saisie (le gris)
+        backgroundColor: '#CFC6D0',
+        flexDirection: 'row',
+        borderRadius: 10,
+        height: 60,
+        marginBottom: '5%',
+        alignItems: 'center',
+        color: '#ADA5AE',
+        paddingLeft: 20,
+    },
+    textBtnDisabled: {
+        color: '#ADA5AE',
+        textTransform: 'uppercase',
+        fontSize: 20,
+    },
+    answerText: { //Texte de la réponse de l'utilisateur
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        fontWeight: 'bold',
+        borderRadius: 10,
+        height: 50,
+        marginBottom: '5%',
+        alignItems: 'center',
+        color: '#ffffff',
+        textAlign: 'center',
+        textAlignVertical: 'center',
+    },
+    officialAnswerText: { //Texte de la réponse officielle
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        borderRadius: 10,
+        height: 50,
+        fontWeight: 'bold',
+        alignItems: 'center',
+        color: '#ffffff',
+        textAlign: 'center',
+        textAlignVertical: 'center',
+    },
+    labelAnswer: {
+        fontStyle: 'italic',
+        fontSize: 13,
+        color: '#ffffff',
+        fontWeight: 'bold',
+        marginBottom: '2%',
+        marginLeft: '1%'
     }
 })
 

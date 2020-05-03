@@ -174,20 +174,21 @@ class BetUser extends React.Component {
             if (bet.waiting == 0) {
                 return (
 
-                    <View style={styles.red}>
+                    <View style={styles.viewAnswerInput}>
                         <TextInput
+                            style={styles.answerInput}
                             placeholder='Réponse officielle'
                             placeholderTextColor='#ffffff'
                             onChangeText={officialAnswer => this.setState({officialAnswer})}
                         />
-
-                        <TouchableOpacity style={styles.viewAnswers}
-                                          onPress={() => this._officialAnswerBet(bet.id_bet)}>
-                            <Text>Finaliser le pari</Text>
-
-                        </TouchableOpacity>
+                        <View style={styles.viewBtn}>
+                            <TouchableOpacity
+                                style={styles.divBtn}
+                                onPress={() => this._officialAnswerBet(bet.id_bet)}>
+                                <Text style={styles.textBtn}>Finaliser le Sorbet'</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-
                 )
             } else if (bet.waiting == 1) {
                 return (
@@ -362,7 +363,44 @@ const styles = StyleSheet.create({
         marginLeft: '2%',
         marginRight: '2%',
         textAlign: 'center',
-    }
+    },
+
+    viewAnswerInput: {
+        //marginTop: '5%',
+        padding: '5%',
+        borderRadius: 20,
+        margin: '5%',
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        //height: 100
+    },
+    answerInput: {
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        flexDirection: 'row',
+        borderRadius: 10,
+        height: 60,
+        marginBottom: '5%',
+        alignItems: 'center',
+        color: '#ffffff',
+        paddingLeft: 20,
+    },
+    viewBtn: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    divBtn: {
+        backgroundColor: 'white',
+        borderRadius: 15,
+        height: 60,
+        justifyContent: 'center',
+        paddingLeft: 10,
+        alignItems: 'center',
+        width: '100%',
+    },
+    textBtn: {
+        color: '#ff978d',
+        textTransform: 'uppercase',
+        fontSize: 20,
+    },
 })
 
 //Connecte le composant à redux (ici on récupère seulement le state global "userData"
