@@ -13,9 +13,10 @@ import {
 } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { ActivityIndicator } from 'react-native-paper';
-import {getUserBetInfos, officialAnswer} from '../API/BetAPI'
+import {getUserAnswer, getUserBetInfos, officialAnswer} from '../API/BetAPI'
 import {connect} from "react-redux";
 import {FlatList} from "react-native-gesture-handler";
+import {Emitter} from "react-native-particles";
 
 class BetUser extends React.Component {
 
@@ -26,34 +27,10 @@ class BetUser extends React.Component {
             bet: undefined,
             topValue: new Animated.Value(0),
             officialAnswer: undefined,
-            varAnim: 0,
+            userAnswer: undefined,
         }
         this.RotateValueHolder = new Animated.Value(0);
     }
-
-    _start = () => {
-        if (this.state.varAnim == 0) {
-            Animated.spring(
-                this.state.topValue,
-                {
-                    toValue: 300,
-                    duration: 300,
-                }
-            )
-                .start();
-            this.state.varAnim = 1
-        } else if (this.state.varAnim == 1) {
-            Animated.spring(
-                this.state.topValue,
-                {
-                    toValue: 0,
-                    duration: 300,
-                }
-            )
-                .start();
-            this.state.varAnim = 0
-        }
-    };
 
     StartImageRotateFunction() {
         this.RotateValueHolder.setValue(0);
@@ -170,7 +147,8 @@ class BetUser extends React.Component {
 
     _displayAnswers(){
         const { bet } = this.state;
-        if (bet.open == 1) {
+        const { userAnswer } = this.state;
+        if (bet.open == 1) { //Pari Ouvert
             if (bet.waiting == 0) {
                 return (
 
@@ -198,12 +176,167 @@ class BetUser extends React.Component {
 
                 )
             }
-        } else if (bet.open == 0){
-            return (
+        } else if (bet.open == 0){ //Pari Fermé
 
-                <Text style={styles.textFinish}>Pari terminé</Text>
+            if (bet.win == 0) { //Si l'utilisateur n'a pas gagné
 
-            )
+                return (
+
+                    <View>
+
+
+                        <View>
+                            <Text style={styles.textFinish}>Tu as perdu...</Text>
+                        </View>
+                        <Emitter
+                            numberOfParticles={10}
+                            emissionRate={1}
+                            interval={10}
+                            particleLife={2000}
+                            direction={-90}
+                            spread={360}
+                            gravity={3}
+                            fromPosition={{ x: 240, y: 0 }}
+                        >
+                            <Image
+                                style={{
+                                    alignItems: 'center',
+                                    width: 50,
+                                    height: 53.5,
+                                    marginBottom: 10,
+                                    marginTop: 40,
+                                }}
+                                source={require('../content/img/pictos/dislike.png')}
+                            />
+                        </Emitter>
+                        <Emitter
+                            numberOfParticles={10}
+                            emissionRate={1}
+                            interval={10}
+                            particleLife={2000}
+                            direction={-90}
+                            spread={360}
+                            gravity={3}
+                            fromPosition={{ x: 160, y: 0 }}
+                        >
+                            <Image
+                                style={{
+                                    alignItems: 'center',
+                                    width: 50,
+                                    height: 53.5,
+                                    marginBottom: 10,
+                                    marginTop: 40,
+                                }}
+                                source={require('../content/img/pictos/dislike.png')}
+                            />
+                        </Emitter>
+                        <Emitter
+                            numberOfParticles={10}
+                            emissionRate={1}
+                            interval={10}
+                            particleLife={2000}
+                            direction={-90}
+                            spread={360}
+                            gravity={3}
+                            fromPosition={{ x: 80, y: 0 }}
+                        >
+                            <Image
+                                style={{
+                                    alignItems: 'center',
+                                    width: 50,
+                                    height: 53.5,
+                                    marginBottom: 10,
+                                    marginTop: 40,
+                                }}
+                                source={require('../content/img/pictos/dislike.png')}
+                            />
+                        </Emitter>
+                        <View style={styles.viewAnswerInput}>
+                            <Text style={styles.labelAnswer}>Ta réponse :</Text>
+                            <Text style={styles.answerText}>{userAnswer.user_answer}</Text>
+                            <Text style={styles.labelAnswer}>La réponse officielle :</Text>
+                            <Text style={styles.officialAnswerText}>{bet.answer}</Text>
+                        </View>
+                    </View>
+                )
+            } else if (bet.win == 1) { //Si l'utilisateur a gagné
+                return (
+                    <View>
+                        <View>
+                            <Text style={styles.textFinish}>Tu as gagné !</Text>
+                        </View>
+                        <Emitter
+                            numberOfParticles={10}
+                            emissionRate={1}
+                            interval={10}
+                            particleLife={2000}
+                            direction={-90}
+                            spread={360}
+                            gravity={3}
+                            fromPosition={{ x: 240, y: 0 }}
+                        >
+                            <Image
+                                style={{
+                                    alignItems: 'center',
+                                    width: 50,
+                                    height: 53.5,
+                                    marginBottom: 10,
+                                    marginTop: 40,
+                                }}
+                                source={require('../content/img/sorbet_blanc.png')}
+                            />
+                        </Emitter>
+                        <Emitter
+                            numberOfParticles={10}
+                            emissionRate={1}
+                            interval={10}
+                            particleLife={2000}
+                            direction={-90}
+                            spread={360}
+                            gravity={3}
+                            fromPosition={{ x: 160, y: 0 }}
+                        >
+                            <Image
+                                style={{
+                                    alignItems: 'center',
+                                    width: 50,
+                                    height: 53.5,
+                                    marginBottom: 10,
+                                    marginTop: 40,
+                                }}
+                                source={require('../content/img/sorbet_blanc.png')}
+                            />
+                        </Emitter>
+                        <Emitter
+                            numberOfParticles={10}
+                            emissionRate={1}
+                            interval={10}
+                            particleLife={2000}
+                            direction={-90}
+                            spread={360}
+                            gravity={3}
+                            fromPosition={{ x: 80, y: 0 }}
+                        >
+                            <Image
+                                style={{
+                                    alignItems: 'center',
+                                    width: 50,
+                                    height: 53.5,
+                                    marginBottom: 10,
+                                    marginTop: 40,
+                                }}
+                                source={require('../content/img/sorbet_blanc.png')}
+                            />
+                        </Emitter>
+                        <View style={styles.viewAnswerInput}>
+                            <Text style={styles.labelAnswer}>Ta réponse :</Text>
+                            <Text style={styles.answerText}>{userAnswer.user_answer}</Text>
+                            <Text style={styles.labelAnswer}>La réponse officielle :</Text>
+                            <Text style={styles.officialAnswerText}>{bet.answer}</Text>
+                        </View>
+                    </View>
+                )
+            }
         }
     }
 
@@ -215,6 +348,11 @@ class BetUser extends React.Component {
             this.setState({
                 bet: data,
                 isLoading: false,
+            })
+        })
+        getUserAnswer(id_user,this.props.navigation.state.params.idBet).then(data => {
+            this.setState({
+                userAnswer: data
             })
         })
     }
@@ -401,6 +539,35 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
         fontSize: 20,
     },
+    answerText: { //Texte de la réponse de l'utilisateur
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        fontWeight: 'bold',
+        borderRadius: 10,
+        height: 50,
+        marginBottom: '5%',
+        alignItems: 'center',
+        color: '#ffffff',
+        textAlign: 'center',
+        textAlignVertical: 'center',
+    },
+    officialAnswerText: { //Texte de la réponse officielle
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        borderRadius: 10,
+        height: 50,
+        fontWeight: 'bold',
+        alignItems: 'center',
+        color: '#ffffff',
+        textAlign: 'center',
+        textAlignVertical: 'center',
+    },
+    labelAnswer: {
+        fontStyle: 'italic',
+        fontSize: 13,
+        color: '#ffffff',
+        fontWeight: 'bold',
+        marginBottom: '2%',
+        marginLeft: '1%'
+    }
 })
 
 //Connecte le composant à redux (ici on récupère seulement le state global "userData"

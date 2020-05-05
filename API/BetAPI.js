@@ -116,3 +116,18 @@ export function getUserBets(id_user) {
     })
         .then((response) => response.json())
 }
+
+export function getUserAnswer(id_user, id_bet) {
+    return fetch('https://sorbet.bet/api/bet/get-user-answer.php', {
+        method: 'post',
+        header: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            id_user: id_user,
+            id_bet: id_bet,
+        })
+    })
+        .then((response) => response.json())
+}

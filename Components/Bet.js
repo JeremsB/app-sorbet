@@ -14,7 +14,7 @@ import {
 } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { ActivityIndicator } from 'react-native-paper';
-import {answerUserBet, getBetAnswers, getBetInfos} from '../API/BetAPI'
+import {answerUserBet, getBetAnswers, getBetInfos, getUserAnswer} from '../API/BetAPI'
 import UserCard from "./UserCard";
 import {FlatList} from "react-native-gesture-handler";
 import {color} from "react-native-reanimated";
@@ -142,6 +142,7 @@ class Bet extends React.Component {
     _displayAnswers(){
         const { answers } = this.state;
         const { bet } = this.state;
+        const { userAnswer } = this.state;
         console.log(bet);
         console.log(answers);
 
@@ -221,7 +222,84 @@ class Bet extends React.Component {
 
 
                             <View>
-                                <Text style={styles.textFinish}>Vous avez perdu</Text>
+                                <Text style={styles.textFinish}>Tu as perdu...</Text>
+                            </View>
+                            <Emitter
+                                numberOfParticles={10}
+                                emissionRate={1}
+                                interval={10}
+                                particleLife={2000}
+                                direction={-90}
+                                spread={360}
+                                gravity={3}
+                                fromPosition={{ x: 240, y: 0 }}
+                            >
+                                <Image
+                                    style={{
+                                        alignItems: 'center',
+                                        width: 50,
+                                        height: 53.5,
+                                        marginBottom: 10,
+                                        marginTop: 40,
+                                    }}
+                                    source={require('../content/img/pictos/dislike.png')}
+                                />
+                            </Emitter>
+                            <Emitter
+                                numberOfParticles={10}
+                                emissionRate={1}
+                                interval={10}
+                                particleLife={2000}
+                                direction={-90}
+                                spread={360}
+                                gravity={3}
+                                fromPosition={{ x: 160, y: 0 }}
+                            >
+                                <Image
+                                    style={{
+                                        alignItems: 'center',
+                                        width: 50,
+                                        height: 53.5,
+                                        marginBottom: 10,
+                                        marginTop: 40,
+                                    }}
+                                    source={require('../content/img/pictos/dislike.png')}
+                                />
+                            </Emitter>
+                            <Emitter
+                                numberOfParticles={10}
+                                emissionRate={1}
+                                interval={10}
+                                particleLife={2000}
+                                direction={-90}
+                                spread={360}
+                                gravity={3}
+                                fromPosition={{ x: 80, y: 0 }}
+                            >
+                                <Image
+                                    style={{
+                                        alignItems: 'center',
+                                        width: 50,
+                                        height: 53.5,
+                                        marginBottom: 10,
+                                        marginTop: 40,
+                                    }}
+                                    source={require('../content/img/pictos/dislike.png')}
+                                />
+                            </Emitter>
+                            <View style={styles.viewAnswerInput}>
+                                <Text style={styles.labelAnswer}>Ta réponse :</Text>
+                                <Text style={styles.answerText}>{userAnswer.user_answer}</Text>
+                                <Text style={styles.labelAnswer}>La réponse officielle :</Text>
+                                <Text style={styles.officialAnswerText}>{bet.answer}</Text>
+                            </View>
+                        </View>
+                    )
+                } else if (bet.win == 1) { //Si l'utilisateur a gagné
+                    return (
+                        <View>
+                            <View>
+                                <Text style={styles.textFinish}>Tu as gagné !</Text>
                             </View>
                             <Emitter
                                 numberOfParticles={10}
@@ -287,17 +365,11 @@ class Bet extends React.Component {
                                 />
                             </Emitter>
                             <View style={styles.viewAnswerInput}>
-                                <Text style={styles.labelAnswer}>Votre réponse :</Text>
-                                <Text style={styles.answerText}>{bet.answer}</Text>
+                                <Text style={styles.labelAnswer}>Ta réponse :</Text>
+                                <Text style={styles.answerText}>{userAnswer.user_answer}</Text>
                                 <Text style={styles.labelAnswer}>La réponse officielle :</Text>
-                                <Text style={styles.officialAnswerText}>DIDIER</Text>
+                                <Text style={styles.officialAnswerText}>{bet.answer}</Text>
                             </View>
-                        </View>
-                    )
-                } else if (bet.win == 1) { //Si l'utilisateur a gagné
-                    return (
-                        <View>
-                            <Text style={styles.textFinish}>Vous avez gagné</Text>
                         </View>
                     )
                 }
@@ -344,6 +416,11 @@ class Bet extends React.Component {
         getBetAnswers(this.props.navigation.state.params.idBet).then(data => {
             this.setState({
                 answers: data
+            })
+        })
+        getUserAnswer(id_user,this.props.navigation.state.params.idBet).then(data => {
+            this.setState({
+                userAnswer: data
             })
         })
     }
