@@ -140,6 +140,7 @@ class CreateBet extends React.Component {
         const action = { type: "USER_BETS", value: responseJson };
         this.props.dispatch(action);
         console.log("global user bets");
+        console.log(action);
     }
 
 

@@ -27,7 +27,7 @@ class BetUser extends React.Component {
             bet: undefined,
             topValue: new Animated.Value(0),
             officialAnswer: undefined,
-            userAnswer: undefined,
+            userAnswer: "",
         }
         this.RotateValueHolder = new Animated.Value(0);
     }
@@ -148,6 +148,7 @@ class BetUser extends React.Component {
     _displayAnswers(){
         const { bet } = this.state;
         const { userAnswer } = this.state;
+        let test = this.state.userAnswer.user_answer;
         if (bet.open == 1) { //Pari Ouvert
             if (bet.waiting == 0) {
                 return (
@@ -183,8 +184,6 @@ class BetUser extends React.Component {
                 return (
 
                     <View>
-
-
                         <View>
                             <Text style={styles.textFinish}>Tu as perdu...</Text>
                         </View>
@@ -330,7 +329,7 @@ class BetUser extends React.Component {
                         </Emitter>
                         <View style={styles.viewAnswerInput}>
                             <Text style={styles.labelAnswer}>Ta réponse :</Text>
-                            <Text style={styles.answerText}>{userAnswer.user_answer}</Text>
+                            <Text style={styles.answerText}>{test}</Text>
                             <Text style={styles.labelAnswer}>La réponse officielle :</Text>
                             <Text style={styles.officialAnswerText}>{bet.answer}</Text>
                         </View>

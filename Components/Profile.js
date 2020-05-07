@@ -244,10 +244,16 @@ class Profile extends React.Component {
                         </View>
                         <TouchableOpacity
                             style={styles.divSettings}
-                            onPress={() => this._navigateSettingsUser()}
-                        >
-                            <Text style={styles.textSettings}>...</Text>
+                            onPress={() => this._navigateSettingsUser()}>
+                            <Image
+                                style={{
+                                    width: 20,
+                                    height: 20,
+                                }}
+                                source={require('../content/img/pictos/settings1.png')}
+                            />
                         </TouchableOpacity>
+
                     </View>
                     <View style={styles.divCountUser}>
                         <View style={styles.divCount}>
@@ -266,46 +272,20 @@ class Profile extends React.Component {
                     <View style={styles.viewBtn}>
 
                         <TouchableOpacity
-                            style={styles.divBtn}
-                            onPress={() => this.setState({ content: 1 })}
-                            >
-                            <Image
-                                style={{
-                                    width: 10,
-                                    height: 10,
-                                    marginRight: 5,
-                                }}
-                                source={require('../content/img/pictos/accueil_blanc.png')}
-                            />
+                            style= {this.state.content == 1 ? styles.divBtnActif : styles.divBtn }
+                            onPress={() => this.setState({ content: 1 })}>
                             <Text style={styles.textBtn}>Mes Sorbets'</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                            style={styles.divBtn}
-                            onPress={() => this.setState({ content: 3 })} >
-                            <Image
-                                style={{
-                                    width: 10,
-                                    height: 10,
-                                    marginRight: 5,
-                                }}
-                                source={require('../content/img/pictos/accueil_blanc.png')}
-                            />
+                            style= {this.state.content == 3 ? styles.divBtnActif : styles.divBtn }
+                            onPress={() => this.setState({ content: 3 })}>
                             <Text style={styles.textBtn}>Participations</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                            style={styles.divBtn}
-                            //onPress={() => this._navEarnings()}
-                            onPress={() => this.setState({ content: 2 })} >
-                            <Image
-                                style={{
-                                    width: 10,
-                                    height: 10,
-                                    marginRight: 5,
-                                }}
-                                source={require('../content/img/pictos/cadeau_blanc.png')}
-                            />
+                            style= {this.state.content == 2 ? styles.divBtnActif : styles.divBtn }
+                            onPress={() => this.setState({ content: 2 })}>
                             <Text style={styles.textBtn}>Mes gains</Text>
                         </TouchableOpacity>
 
@@ -327,6 +307,7 @@ const styles = StyleSheet.create({
     },
     divInfosUser: {
         flexDirection: 'row',
+        //marginTop: '-5%'
     },
     divRightInfosUser: {
         marginLeft: 20,
@@ -387,8 +368,19 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 15,
     },
-    divSettings: {
+    divBtnActif: {
         backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        borderRadius: 15,
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        paddingHorizontal: 15,
+        borderColor: 'white',
+        borderWidth: 1,
+    },
+    divSettings: {
+        //backgroundColor: 'rgba(0, 0, 0, 0.2)',
         borderRadius: 15,
         height: 30,
         justifyContent: 'center',
@@ -406,6 +398,8 @@ const styles = StyleSheet.create({
     textBtn: {
         color: '#ffffff',
         fontSize: 12,
+        fontWeight: 'bold',
+        //fontStyle: 'italic',
     },
     divCardUser: {
         marginTop: 20,

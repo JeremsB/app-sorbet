@@ -29,7 +29,7 @@ class Bet extends React.Component {
             isLoading: true,
             bet: undefined,
             answers: undefined,
-            userAnswer: undefined,
+            userAnswer: "",
             message: undefined,
             repondu: 0,
         }
@@ -142,9 +142,10 @@ class Bet extends React.Component {
     _displayAnswers(){
         const { answers } = this.state;
         const { bet } = this.state;
-        const { userAnswer } = this.state;
         console.log(bet);
         console.log(answers);
+        let test = this.state.userAnswer.user_answer;
+        console.log(test);
 
         if (answers != "no_bet_answers") { //Si c'est un pari pro
 
@@ -289,7 +290,7 @@ class Bet extends React.Component {
                             </Emitter>
                             <View style={styles.viewAnswerInput}>
                                 <Text style={styles.labelAnswer}>Ta réponse :</Text>
-                                <Text style={styles.answerText}>{userAnswer.user_answer}</Text>
+                                <Text style={styles.answerText}>{test}</Text>
                                 <Text style={styles.labelAnswer}>La réponse officielle :</Text>
                                 <Text style={styles.officialAnswerText}>{bet.answer}</Text>
                             </View>
@@ -366,7 +367,7 @@ class Bet extends React.Component {
                             </Emitter>
                             <View style={styles.viewAnswerInput}>
                                 <Text style={styles.labelAnswer}>Ta réponse :</Text>
-                                <Text style={styles.answerText}>{userAnswer.user_answer}</Text>
+                                <Text style={styles.answerText}>{test}</Text>
                                 <Text style={styles.labelAnswer}>La réponse officielle :</Text>
                                 <Text style={styles.officialAnswerText}>{bet.answer}</Text>
                             </View>
@@ -419,6 +420,9 @@ class Bet extends React.Component {
             })
         })
         getUserAnswer(id_user,this.props.navigation.state.params.idBet).then(data => {
+            console.log(id_user);
+            console.log(this.props.navigation.state.params.idBet);
+            console.log(data);
             this.setState({
                 userAnswer: data
             })

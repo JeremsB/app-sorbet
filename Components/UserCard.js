@@ -123,7 +123,6 @@ class UserCard extends React.Component {
                     <Text style={styles.titleInfosUser}>{user.login}</Text>
                         <Text style={styles.txtInfosUser}>18 Sorbets</Text>
                     </View>
-                    {/*TODO rendre ça swag*/}
                     <TouchableOpacity
                         onPress={() => this._follow(userco, user.id_user)}>
                         <Image
@@ -145,8 +144,9 @@ const styles = StyleSheet.create({
     main_container: {
         height: 190,
         flexDirection: 'row'
-    }, cardUser: {
-        marginVertical: 10,
+    },
+    cardUser: {
+        marginVertical: 5,
         flexDirection: 'row',
         backgroundColor: 'rgba(0, 0, 0, 0.2)',
         borderRadius: 15,
