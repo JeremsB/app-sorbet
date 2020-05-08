@@ -162,10 +162,9 @@ class Profile extends React.Component {
 
     _displayContent(){
         if (this.state.content === 1) { //Mes paris
-            console.log(this.props.userBets);
             if (this.props.userBets == 'no_bets') {
                 return(
-                    <Text style={styles.txtCount2}>N'attends pas et créé ton Sorbet' dès maintenant !</Text>
+                    <Text style={styles.txtEmpty}>N'attends pas et créé ton Sorbet' dès maintenant !</Text>
                 )
             } else {
                 return (
@@ -187,20 +186,10 @@ class Profile extends React.Component {
             }
         } else if (this.state.content === 2) { //Mes gains
             return(
-            <ScrollView
-                showsVerticalScrollIndicator={false} style={styles.divCardUser}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={this.state.refreshing}
-                        onRefresh={this._onRefresh}
-                    />}
-            >
-                <Text style={styles.txtCount2}>Les gains</Text>
-            </ScrollView>
-            )
-        } else if (this.state.content === 3) { //Mes participations
-            return(
-                <ScrollView
+                <View>
+                    <Text style={styles.txtEmpty}>Viens vite tenter de remporter des super prix en participant à des Sorbet's</Text>
+
+                {/*<ScrollView
                     showsVerticalScrollIndicator={false} style={styles.divCardUser}
                     refreshControl={
                         <RefreshControl
@@ -208,13 +197,32 @@ class Profile extends React.Component {
                             onRefresh={this._onRefresh}
                         />}
                 >
-                    <FlatList
-                        data={this.state.betsParticipes}
-                        keyExtractor={(item) => item.id_bet}
-                        renderItem={({ item }) => <BetCard bet={item} displayBet={this._displayBet} />}
-                    />
-                </ScrollView>
+                </ScrollView>*/}
+                </View>
             )
+        } else if (this.state.content === 3) { //Mes participations
+            if (this.props.userBets == 'no_bets') {
+                return(
+                    <Text style={styles.txtEmpty}>Viens vite participer à des Sorbet's avec tes amis ou des grandes marques !</Text>
+                )
+            } else {
+                return (
+                    <ScrollView
+                        showsVerticalScrollIndicator={false} style={styles.divCardUser}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={this.state.refreshing}
+                                onRefresh={this._onRefresh}
+                            />}
+                    >
+                        <FlatList
+                            data={this.state.betsParticipes}
+                            keyExtractor={(item) => item.id_bet}
+                            renderItem={({item}) => <BetCard bet={item} displayBet={this._displayBet}/>}
+                        />
+                    </ScrollView>
+                )
+            }
         }
     }
 
@@ -280,19 +288,19 @@ class Profile extends React.Component {
                         <TouchableOpacity
                             style= {this.state.content == 1 ? styles.divBtnActif : styles.divBtn }
                             onPress={() => this.setState({ content: 1 })}>
-                            <Text style={styles.textBtn}>Mes Sorbets'</Text>
+                            <Text style= {this.state.content == 1 ? styles.textBtnActif : styles.textBtn }>Mes Sorbets'</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
                             style= {this.state.content == 3 ? styles.divBtnActif : styles.divBtn }
                             onPress={() => this.setState({ content: 3 })}>
-                            <Text style={styles.textBtn}>Participations</Text>
+                            <Text style= {this.state.content == 3 ? styles.textBtnActif : styles.textBtn }>Participations</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
                             style= {this.state.content == 2 ? styles.divBtnActif : styles.divBtn }
                             onPress={() => this.setState({ content: 2 })}>
-                            <Text style={styles.textBtn}>Mes gains</Text>
+                            <Text style= {this.state.content == 2 ? styles.textBtnActif : styles.textBtn }>Mes gains</Text>
                         </TouchableOpacity>
 
                     </View>
@@ -316,12 +324,29 @@ const styles = StyleSheet.create({
         //marginTop: '-5%'
     },
     divRightInfosUser: {
-        marginLeft: 20,
-        flexDirection: 'column',
+        marginLeft: '5%',
+        //flexDirection: 'column',
         justifyContent: 'space-around',
+        width: '58%'
+    },
+    divSettings: {
+        //borderRadius: 15,
+        //height: 30,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        flexDirection: 'row',
+        //paddingHorizontal: 15,
+        textAlign: "right",
+        //width: "100%"
+    },
+    textSettings: {
+        color: '#ffffff',
+        fontSize: 14,
+        fontWeight: "bold"
     },
     divNameUser: {
         flexDirection: 'row',
+        marginTop: '-5%',
     },
     firstName: {
         marginRight: 5,
@@ -337,6 +362,7 @@ const styles = StyleSheet.create({
         fontSize: 9,
         color: '#ffffff',
         width: 150,
+        marginTop: '-10%',
     },
     divCountUser: {
         marginTop: 20,
@@ -360,6 +386,14 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 17,
     },
+    txtEmpty: {
+        color: '#ffffff',
+        fontWeight: 'bold',
+        fontSize: 17,
+        textAlign: 'center',
+        marginTop: '2%',
+        fontStyle: 'italic',
+    },
     viewBtn: {
         flexDirection: 'row',
         marginTop: 10,
@@ -375,37 +409,24 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
     },
     divBtnActif: {
-        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+        backgroundColor: 'white',
         borderRadius: 15,
         height: 30,
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
         paddingHorizontal: 15,
-        borderColor: 'white',
-        borderWidth: 1,
-    },
-    divSettings: {
-        //backgroundColor: 'rgba(0, 0, 0, 0.2)',
-        borderRadius: 15,
-        height: 30,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row',
-        paddingHorizontal: 15,
-        textAlign: "left",
-        width: "auto"
-    },
-    textSettings: {
-        color: '#ffffff',
-        fontSize: 14,
-        fontWeight: "bold"
     },
     textBtn: {
         color: '#ffffff',
         fontSize: 12,
         fontWeight: 'bold',
         //fontStyle: 'italic',
+    },
+    textBtnActif: {
+        color: '#ff978d',
+        fontSize: 12,
+        fontWeight: 'bold',
     },
     divCardUser: {
         marginTop: 20,

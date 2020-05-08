@@ -104,7 +104,7 @@ class CreateBet extends React.Component {
                         userAnswer:'',
                         selectedItems: [],
                     })
-                    Alert.alert("Pari crée!", "GG")
+                    Alert.alert("Sorbet' créé !", "Attends maintenant les réponses de tes amis !")
                     //TODO redirect vers profile
                 } else if (responseJson == 'label_missing') {
                     Alert.alert("Titre manquant", "label_missing")
@@ -222,7 +222,7 @@ class CreateBet extends React.Component {
 
                     <TextInput
                         style={styles.textInput}
-                        placeholder='Pari'
+                        placeholder='Sorbet&apos;'
                         placeholderTextColor='#ffffff'
                         onChangeText={description => this.setState({ description })}
                         ref={input => { this.description = input }}

@@ -142,10 +142,7 @@ class Bet extends React.Component {
     _displayAnswers(){
         const { answers } = this.state;
         const { bet } = this.state;
-        console.log(bet);
-        console.log(answers);
         let test = this.state.userAnswer.user_answer;
-        console.log(test);
 
         if (answers != "no_bet_answers") { //Si c'est un pari pro
 
@@ -397,7 +394,8 @@ class Bet extends React.Component {
     }
 
     answerProBet(id){
-        alert(id);
+        //alert(id);
+        alert("Belle tentative mais c'est pas fini d'être développé ! (Le bon code ça ne pousse pas dans les arbres)");
         //TODO la fonction qui ajoute la réponse en base
         //Créer ligne dans t_bet_user_answer
         //Créer ligne dans t_bet_participant avec answered à 1
