@@ -162,23 +162,29 @@ class Profile extends React.Component {
 
     _displayContent(){
         if (this.state.content === 1) { //Mes paris
-            return(
-                <ScrollView
-                    showsVerticalScrollIndicator={false} style={styles.divCardUser}
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={this.state.refreshing}
-                            onRefresh={this._onRefresh}
-                        />}
-                >
-                    <FlatList
-                        data={this.props.userBets}
-                        keyExtractor={(item) => item.id_bet}
-                        renderItem={({ item }) => <BetCard bet={item} displayBet={this._displayUserBet} />}
-                    />
-                    <Text style={styles.txtCount2}>{this.state.message}</Text>
-                </ScrollView>
-            )
+            console.log(this.props.userBets);
+            if (this.props.userBets == 'no_bets') {
+                return(
+                    <Text style={styles.txtCount2}>N'attends pas et créé ton Sorbet' dès maintenant !</Text>
+                )
+            } else {
+                return (
+                    <ScrollView
+                        showsVerticalScrollIndicator={false} style={styles.divCardUser}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={this.state.refreshing}
+                                onRefresh={this._onRefresh}
+                            />}
+                    >
+                        <FlatList
+                            data={this.props.userBets}
+                            keyExtractor={(item) => item.id_bet}
+                            renderItem={({item}) => <BetCard bet={item} displayBet={this._displayUserBet}/>}
+                        />
+                    </ScrollView>
+                )
+            }
         } else if (this.state.content === 2) { //Mes gains
             return(
             <ScrollView

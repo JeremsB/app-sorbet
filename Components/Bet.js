@@ -155,11 +155,10 @@ class Bet extends React.Component {
                     data={answers}
                     keyExtractor={(item) => item.id_answer}
                     renderItem={({item}) =>
-                        <TouchableOpacity style={styles.viewAnswers}
+                        <TouchableOpacity //style={styles.viewAnswers}
                                           onPress={() => this.answerProBet(item.id)}
                         >
-                            <Text>{item.answer}</Text>
-                            <Text>{item.id}</Text>
+                            <Text style={styles.txtAnswerPro}>{item.answer}</Text>
                         </TouchableOpacity>}
                 />
             )
@@ -573,10 +572,27 @@ const styles = StyleSheet.create({
     viewAnswers: { //Réponses paris pro
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
-        marginTop: 70,
-        backgroundColor: 'rgba(0, 0, 0, 0.15)',
+        //alignItems: 'center',
+        textAlign: 'center',
+        //marginTop: 70,
+        //backgroundColor: 'rgba(0, 0, 0, 0.15)',
+        backgroundColor: 'white',
         borderRadius: 10,
+    },
+    txtAnswerPro: {
+        marginTop: '3%',
+        marginLeft:'10%',
+        marginRight:'10%',
+        borderRadius: 10,
+        height: 40,
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        fontSize: 14,
+        color: '#ff978d',
+
+        backgroundColor: 'white'
     },
     answerInput: { //Champ de saisie de la réponse du participant
         backgroundColor: 'rgba(0, 0, 0, 0.2)',
