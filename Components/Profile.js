@@ -21,9 +21,12 @@ class Profile extends React.Component {
             nb_bets: this._getCountBets(id_user),
             refreshing: false,
             betsParticipes: this._getBetsParticipes(id_user),
-            content: 1
+            content: 1,
         }
-        console.log(this.props.userBets);
+        //console.log("props");
+        //console.log(this.props.participeBets[0]);
+        //console.log("state");
+        //console.log(this.state.betsParticipes);
     }
 
     _displayUserBet = (idBet) => {
@@ -145,7 +148,7 @@ class Profile extends React.Component {
         this.state.nb_bets = this._getCountBets(id_user);
         this._getBetsParticipes(id_user);
         this.setState({refreshing: false});
-        console.log(this.props.userBets);
+        //console.log(this.props.userBets);
     }
 
     _navigateSettingsUser() {
@@ -201,7 +204,7 @@ class Profile extends React.Component {
                 </View>
             )
         } else if (this.state.content === 3) { //Mes participations
-            if (this.props.userBets == 'no_bets') {
+            if (this.props.participeBets[0] == 'no_bets') {
                 return(
                     <Text style={styles.txtEmpty}>Viens vite participer à des Sorbet's avec tes amis ou des grandes marques !</Text>
                 )
@@ -216,7 +219,7 @@ class Profile extends React.Component {
                             />}
                     >
                         <FlatList
-                            data={this.state.betsParticipes}
+                            data={this.props.participeBets[0]}
                             keyExtractor={(item) => item.id_bet}
                             renderItem={({item}) => <BetCard bet={item} displayBet={this._displayBet}/>}
                         />

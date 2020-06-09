@@ -25,12 +25,14 @@ class CreateBet extends React.Component {
             userAnswer:'', //La réponse du créateur
             selectedItems: [], //Les participants
         }
+        console.log(this.props.userFollowsCreate);
+        console.log(this.props.userFollowsCreate[0]);
     }
 
     onSelectedItemsChange = (selectedItems) => {
         this.setState({ selectedItems });
     };
-
+/*
     componentDidMount() {
         this._getFollows();
     }
@@ -61,7 +63,7 @@ class CreateBet extends React.Component {
                 console.error(error);
             });
     }
-
+*/
     _createBet(selectedItems) {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
 
@@ -133,14 +135,14 @@ class CreateBet extends React.Component {
         getUserBets(id_user).then(data => {
             this._globalUserBets(data)
         })
-        console.log("get user bets");
+        //console.log("get user bets");
     }
 
     _globalUserBets(responseJson) {
         const action = { type: "USER_BETS", value: responseJson };
         this.props.dispatch(action);
-        console.log("global user bets");
-        console.log(action);
+        //console.log("global user bets");
+        //console.log(action);
     }
 
 
@@ -172,7 +174,7 @@ class CreateBet extends React.Component {
                 label: 'Personnes suivies',
                 id: 0,
                 children:
-                    this.state.follows
+                    this.props.userFollowsCreate[0]
             }
         ];
 
@@ -368,7 +370,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        userData: state.userData
+        userData: state.userData,
+        userFollowsCreate: state.userFollowsCreate,
     }
 }
 

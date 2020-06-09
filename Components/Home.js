@@ -16,7 +16,7 @@ class Home extends React.Component {
         let id_user = userData.id_user;
         this.state = {
             refreshing: false,
-            bets: this._getBets(id_user)
+            //bets: this._getBets(id_user)
         }
     }
 
@@ -24,7 +24,7 @@ class Home extends React.Component {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
         let id_user = userData.id_user;
         this.setState({ refreshing: true });
-        this.state.bets = this._getBets(id_user)
+        //this.state.bets = this._getBets(id_user)
         this.setState({refreshing: false});
     }
     
@@ -33,7 +33,7 @@ class Home extends React.Component {
             idBet: idBet
         })
     }
-
+/*
     _getBets(id_user) {
         fetch('https://sorbet.bet/api/get-bets.php', {
             method: 'post',
@@ -58,7 +58,7 @@ class Home extends React.Component {
                 console.error(error);
             });
     }
-
+*/
     _navAddUser(id_user) {
         //const userData = this.props.navigation.getParam("user");
         this.props.navigation.navigate("AddUser", id_user);
@@ -82,7 +82,7 @@ class Home extends React.Component {
                             />}
                     >
                             <FlatList
-                                data={this.state.bets}
+                                data={this.props.otherBets[0]}
                                 keyExtractor={(item) => item.id_bet}
                                 renderItem={({ item }) => <BetCard bet={item} displayBet={this._displayBet} />}
                             />
@@ -106,7 +106,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        userData: state.userData
+        userData: state.userData,
+        otherBets: state.otherBets,
     }
 }
 

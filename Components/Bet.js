@@ -14,7 +14,7 @@ import {
 } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { ActivityIndicator } from 'react-native-paper';
-import {answerUserBet, getBetAnswers, getBetInfos, getUserAnswer} from '../API/BetAPI'
+import {answerUserBet, getBetAnswers, getBetInfos, getBetsParti, getUserAnswer, getUserBets} from '../API/BetAPI'
 import UserCard from "./UserCard";
 import {FlatList} from "react-native-gesture-handler";
 import {color} from "react-native-reanimated";
@@ -386,6 +386,8 @@ class Bet extends React.Component {
                     Alert.alert("Pas d'id", "Faut un id");
                 } else {
                     alert(responseJson);
+                    this._getUserBets(id_user);
+                    this._getBetsParticipes(id_user);
                 }
             })
         //TODO ça marche faut juste faire un redirect qqupart genre vers home
@@ -393,9 +395,33 @@ class Bet extends React.Component {
         this.setState({repondu: 1})
     }
 
+    _getUserBets(id_user) {
+        getUserBets(id_user).then(data => {
+            this._globalUserBets(data)
+        })
+    }
+
+    _globalUserBets(responseJson) {
+        const action = { type: "USER_BETS", value: responseJson };
+        this.props.dispatch(action);
+        //console.log("global user bets");
+        //console.log(action);
+    }
+
+    _getBetsParticipes(id_user) {
+        getBetsParti(id_user).then(data => {
+            this._globalBetsParticipes(data)
+        })
+    }
+
+    _globalBetsParticipes(responseJson) {
+        const action = { type: "PARTICIPE_BETS", value: responseJson };
+        this.props.dispatch(action);
+    }
+
     answerProBet(id){
         //alert(id);
-        alert("Belle tentative mais c'est pas fini d'être développé ! (Le bon code ça ne pousse pas dans les arbres)");
+        alert("Belle tentative mais ce n'est pas encore développé ! (Le bon code ça ne pousse pas dans les arbres)");
         //TODO la fonction qui ajoute la réponse en base
         //Créer ligne dans t_bet_user_answer
         //Créer ligne dans t_bet_participant avec answered à 1
@@ -417,9 +443,9 @@ class Bet extends React.Component {
             })
         })
         getUserAnswer(id_user,this.props.navigation.state.params.idBet).then(data => {
-            console.log(id_user);
-            console.log(this.props.navigation.state.params.idBet);
-            console.log(data);
+            //console.log(id_user);
+            //console.log(this.props.navigation.state.params.idBet);
+            //console.log(data);
             this.setState({
                 userAnswer: data
             })
@@ -589,7 +615,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 14,
         color: '#ff978d',
-
         backgroundColor: 'white'
     },
     answerInput: { //Champ de saisie de la réponse du participant

@@ -48,6 +48,7 @@ class Login extends React.Component {
                     this._globalUser(responseJson);
                     this.setState({user: responseJson});
                     this._getFollows(this.state.user.id_user);
+                    this._getFollowsCreate(this.state.user.id_user);
                     this._getBets(this.state.user.id_user);
                     this._getUserBets(this.state.user.id_user);
                     this._getBetsParticipes(this.state.user.id_user);
@@ -179,6 +180,36 @@ class Login extends React.Component {
 
     _globalOtherUsers(responseJson) {
         const action = { type: "OTHER_USERS", value: responseJson };
+        this.props.dispatch(action);
+    }
+
+    _getFollowsCreate(id_user) {
+        fetch('https://sorbet.bet/api/user/get-follows-create-bet.php', {
+            method: 'post',
+            header: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                id_user: id_user,
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson == 'no_users_found')
+                    Alert.alert("Pas d'users", "Utilisateurs introuvables");
+                else if (responseJson == 'no_id')
+                    Alert.alert("Pas d'id", "Faut un id");
+                else
+                    this._globalFollowsCreate(responseJson)
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    _globalFollowsCreate(responseJson) {
+        const action = { type: "USER_FOLLOWS_CREATE", value: responseJson };
         this.props.dispatch(action);
     }
 

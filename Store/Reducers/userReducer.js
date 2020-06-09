@@ -1,6 +1,6 @@
 // Store/Reducers/userReducer.js
 
-const initialState = { userData: [], userFollows: [], otherBets: [], userBets: [], participeBets: [], otherUsers: [] }
+const initialState = { userData: [], userFollows: [], otherBets: [], userBets: [], participeBets: [], otherUsers: [], userFollowsCreate: [] }
 
 function userLogin(state = initialState, action) {
     let nextState
@@ -103,6 +103,23 @@ function userLogin(state = initialState, action) {
                 nextState = {
                     ...state,
                     otherUsers: [...state.otherUsers, action.value]
+                }
+            }
+            return nextState || state
+
+        case 'USER_FOLLOWS_CREATE':
+            const userfollowscreate = state.userFollowsCreate
+            if (userfollowscreate != null){
+                state.userFollowsCreate = [];
+                nextState = {
+                    ...state,
+                    userFollowsCreate: [...state.userFollowsCreate, action.value]
+                }
+            }
+            else {
+                nextState = {
+                    ...state,
+                    userFollowsCreate: [...state.userFollowsCreate, action.value]
                 }
             }
             return nextState || state

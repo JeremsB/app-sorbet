@@ -24,21 +24,23 @@ class UserCard extends React.Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson == 'follow') {
-                    console.log("follow");
+                    //console.log("follow");
                     this._getFollows(id_user);
                     this._getOtherUsers(id_user);
+                    this._getFollowsCreate(id_user);
                     //Alert.alert("follow","Veuillez ajouter les amis")
                 }else if (responseJson == 'deja_follow') {
-                    console.log("deja_follow");
+                    //console.log("deja_follow");
                     //Alert.alert("deja_follow","Faut un id")
                 }else if (responseJson == 'follow_back') {
-                    console.log("follow_back");
+                    //console.log("follow_back");
                     this._getFollows(id_user);
                     this._getOtherUsers(id_user);
+                    this._getFollowsCreate(id_user);
                     //Alert.alert("follow_back","Faut un id")
                 }else if (responseJson == 'no_follow_id')
-                    console.log("no_id");
-                    //Alert.alert("Pas d'id","Faut un id");
+                    //console.log("no_id");
+                    Alert.alert("Pas d'id","Faut un id");
             })
             .catch((error) => {
                 console.error(error);
@@ -73,6 +75,37 @@ class UserCard extends React.Component {
 
     _globalFollows(responseJson) {
         const action = { type: "USER_FOLLOWS", value: responseJson };
+        this.props.dispatch(action);
+    }
+
+    _getFollowsCreate(id_user) {
+        fetch('https://sorbet.bet/api/user/get-follows-create-bet.php', {
+            method: 'post',
+            header: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                id_user: id_user,
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson == 'no_users_found')
+                    Alert.alert("Pas d'users", "Utilisateurs introuvables");
+                else if (responseJson == 'no_id')
+                    Alert.alert("Pas d'id", "Faut un id");
+                else
+                    this._globalFollowsCreate(responseJson)
+                    console.log(responseJson)
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    _globalFollowsCreate(responseJson) {
+        const action = { type: "USER_FOLLOWS_CREATE", value: responseJson };
         this.props.dispatch(action);
     }
 
