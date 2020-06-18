@@ -26,12 +26,11 @@ class Login extends React.Component {
     _login() {
         const {userEmail} = this.state;
         const {userPassword} = this.state;
-
         fetch('https://sorbet.bet/api/login.php',{
             method: 'post',
             header:{
                 'Accept': 'application/json',
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
             },
             body:JSON.stringify({
                 email: userEmail,
@@ -44,6 +43,8 @@ class Login extends React.Component {
                     Alert.alert("Erreur formulaire", "Veuillez remplir tous les champs")
                 } else if (responseJson == 'email_inconnu') {
                     Alert.alert("Authentification incorrecte", "Email / Mot de passe incorrect")
+                } else if (responseJson == 'Permission non accordée') {
+                    Alert.alert("Permission non accordée", "Service inacessible")
                 } else {
                     this._globalUser(responseJson);
                     this.setState({user: responseJson});
@@ -105,7 +106,7 @@ class Login extends React.Component {
             method: 'post',
             header: {
                 'Accept': 'application/json',
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
             },
             body: JSON.stringify({
                 id: id_user,
@@ -113,12 +114,6 @@ class Login extends React.Component {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                if (responseJson == 'no_bets')
-                    Alert.alert("Pas d'amis", "Veuillez ajouter des amis");
-                else if (responseJson == 'no_id')
-                    Alert.alert("Pas d'id", "Faut un id");
-                else
-                    //this.setState({ bets: responseJson });
                     this._globalBets(responseJson);
             })
             .catch((error) => {

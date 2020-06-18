@@ -250,8 +250,7 @@ class Profile extends React.Component {
                         />
                         <View style={styles.divRightInfosUser}>
                             <View style={styles.divNameUser}>
-                                <Text style={styles.firstName}>{userData.firstname}</Text>
-                                <Text style={styles.lastName}>{userData.lastname}</Text>
+                                <Text style={styles.firstName}>{userData.login}{"\n"}({userData.firstname} {userData.lastname})</Text>
                             </View>
                             <View>
                                 <Text style={styles.txtDescription}>
@@ -330,7 +329,7 @@ const styles = StyleSheet.create({
         marginLeft: '5%',
         //flexDirection: 'column',
         justifyContent: 'space-around',
-        width: '58%'
+        width: '58%',
     },
     divSettings: {
         //borderRadius: 15,
@@ -349,7 +348,7 @@ const styles = StyleSheet.create({
     },
     divNameUser: {
         flexDirection: 'row',
-        marginTop: '-5%',
+        //marginTop: '-5%',
     },
     firstName: {
         marginRight: 5,
@@ -358,7 +357,7 @@ const styles = StyleSheet.create({
     },
     lastName: {
         color: '#ffffff',
-        textTransform: 'uppercase',
+        //textTransform: 'uppercase',
         fontSize: 15,
     },
     txtDescription: {

@@ -66,7 +66,8 @@ class Home extends React.Component {
     }
 
     render() {
-        return (
+        if (this.props.otherBets[0] == null){
+            return(
             <View style={styles.main_container}>
                 <LinearGradient
                     colors={['#E577A2', '#ff978d']}
@@ -81,15 +82,38 @@ class Home extends React.Component {
                                 onRefresh={this._onRefresh}
                             />}
                     >
+                        <Text style={styles.txtEmpty}>Pas de Sorbet's disponibles pour le moment !</Text>
+                        <Text style={styles.txtEmpty}>↓ Tire vers le bas pour rafraîchir ↓</Text>
+                    </ScrollView>
+                </LinearGradient>
+            </View>
+            )
+        } else {
+            return (
+                <View style={styles.main_container}>
+                    <LinearGradient
+                        colors={['#E577A2', '#ff978d']}
+                        style={{flex:1, paddingTop: 70, paddingBottom: 50, paddingLeft: 30, paddingRight: 30}}
+                        start={[1, 0]}
+                        end={[0, 1]}>
+                        <ScrollView
+                            showsVerticalScrollIndicator={false} style={styles.scrollView}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={this.state.refreshing}
+                                    onRefresh={this._onRefresh}
+                                />}
+                        >
                             <FlatList
                                 data={this.props.otherBets[0]}
                                 keyExtractor={(item) => item.id_bet}
                                 renderItem={({ item }) => <BetCard bet={item} displayBet={this._displayBet} />}
                             />
-                    </ScrollView>
-                </LinearGradient>
-            </View>
-        )
+                        </ScrollView>
+                    </LinearGradient>
+                </View>
+            )
+        }
     }
 }
 
@@ -101,6 +125,14 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         marginBottom: 75,
+    },
+    txtEmpty: {
+        color: '#ffffff',
+        fontWeight: 'bold',
+        fontSize: 17,
+        textAlign: 'center',
+        marginTop: '2%',
+        fontStyle: 'italic',
     },
 })
 
