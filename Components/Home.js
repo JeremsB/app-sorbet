@@ -66,7 +66,7 @@ class Home extends React.Component {
     }
 
     render() {
-        if (this.props.otherBets[0] == null){
+        if (this.props.otherBets[0] == "no_bets"){
             return(
             <View style={styles.main_container}>
                 <LinearGradient

@@ -14,19 +14,15 @@ class Profile extends React.Component {
         let userData = this.props.userData[0]; //Recupère le contenu du premier objet du tableau userData
         let id_user = userData.id_user;
         this.state = {
-            bets: this._getUserBets(id_user),
+          //  bets: this._getUserBets(id_user),
             message: "",
             nb_follows: this._getCountFollows(id_user),
             nb_followers: this._getCountFollowers(id_user),
             nb_bets: this._getCountBets(id_user),
             refreshing: false,
-            betsParticipes: this._getBetsParticipes(id_user),
+            //betsParticipes: this._getBetsParticipes(id_user),
             content: 1,
         }
-        //console.log("props");
-        //console.log(this.props.participeBets[0]);
-        //console.log("state");
-        //console.log(this.state.betsParticipes);
     }
 
     _displayUserBet = (idBet) => {
@@ -40,7 +36,7 @@ class Profile extends React.Component {
             idBet: idBet
         })
     }
-
+/*
     _getUserBets(id_user) {
         fetch('https://sorbet.bet/api/get-user-bets.php', {
             method: 'post',
@@ -65,7 +61,7 @@ class Profile extends React.Component {
                 console.error(error);
             });
     }
-
+*/
     _getCountFollows(id_user) {
         fetch('https://sorbet.bet/api/user/get-count-follows.php', {
             method: 'post',
@@ -141,20 +137,19 @@ class Profile extends React.Component {
         let userData = this.props.userData[0]; //Récupère le contenu du premier objet du tableau userData
         let id_user = userData.id_user;
         this.setState({ refreshing: true });
-        this.state.bets = this._getUserBets(id_user);
+        //this.state.bets = this._getUserBets(id_user);
         this.state.message = "";
         this.state.nb_follows = this._getCountFollows(id_user);
         this.state.nb_followers = this._getCountFollowers(id_user);
         this.state.nb_bets = this._getCountBets(id_user);
-        this._getBetsParticipes(id_user);
+        //this._getBetsParticipes(id_user);
         this.setState({refreshing: false});
-        //console.log(this.props.userBets);
     }
 
     _navigateSettingsUser() {
         this.props.navigation.navigate("SettingsUser");
     }
-
+/*
     _getBetsParticipes(id_user) {
         getBetsParti(id_user).then(data => {
         this.setState({
@@ -162,7 +157,7 @@ class Profile extends React.Component {
                   })
         })
     }
-
+*/
     _displayContent(){
         if (this.state.content === 1) { //Mes paris
             if (this.props.userBets == 'no_bets') {

@@ -10,7 +10,7 @@ import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
 import MaterialBottomTabNavigator
     from "@react-navigation/material-bottom-tabs/src/navigators/createMaterialBottomTabNavigator";
 import Icon from "react-native-paper/src/components/Icon";
-import {getUserBets} from "../API/BetAPI";
+import {getBetsParti, getUserBets} from "../API/BetAPI";
 
 class CreateBet extends React.Component {
 
@@ -25,8 +25,6 @@ class CreateBet extends React.Component {
             userAnswer:'', //La réponse du créateur
             selectedItems: [], //Les participants
         }
-        console.log(this.props.userFollowsCreate);
-        console.log(this.props.userFollowsCreate[0]);
     }
 
     onSelectedItemsChange = (selectedItems) => {
@@ -128,7 +126,7 @@ class CreateBet extends React.Component {
                 console.error(error);
             });
         this._getUserBets(userData.id_user);
-
+        this._getBetsParticipes(userData.id_user);
     }
 
     _getUserBets(id_user) {
@@ -141,8 +139,17 @@ class CreateBet extends React.Component {
     _globalUserBets(responseJson) {
         const action = { type: "USER_BETS", value: responseJson };
         this.props.dispatch(action);
-        //console.log("global user bets");
-        //console.log(action);
+    }
+
+    _getBetsParticipes(id_user) {
+        getBetsParti(id_user).then(data => {
+            this._globalBetsParticipes(data)
+        })
+    }
+
+    _globalBetsParticipes(responseJson) {
+        const action = { type: "PARTICIPE_BETS", value: responseJson };
+        this.props.dispatch(action);
     }
 
 
